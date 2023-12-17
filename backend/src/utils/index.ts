@@ -1,4 +1,5 @@
 import { AppError } from "../interfaces";
+import { UserModel } from "models/User";
 import crypto from "crypto";
 
 export const errorHandler = (statusCode: number, message: string) => {
@@ -13,4 +14,15 @@ export const authenticate = (salt: string, password: string) => {
     .createHmac("Sha256", [salt, password].join("/"))
     .update(process.env.APP_SECRET as string)
     .digest("hex");
+};
+
+// checking password
+export const checkUserPassword = (
+  user: Record<string, any>,
+  password: string
+) => {
+  return (
+    authenticate(user.authentication.salt, password) ===
+    user.authentication.password
+  );
 };
