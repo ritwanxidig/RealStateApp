@@ -1,6 +1,6 @@
 import express from "express";
 
-import { getAll } from "models/User";
+import { getAll } from "../models/User";
 
 export const getAllUsers = async (
   req: express.Request,
