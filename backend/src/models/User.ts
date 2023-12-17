@@ -1,40 +1,45 @@
 import { Roles } from "../constants/index";
-import mongoose, { Schema, mongo } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
-const userSchema = new Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  username: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-  },
-  roles: {
-    type: [String],
-    required: true,
-    default: [Roles.User],
-  },
-  authentication: {
-    password: {
+const userSchema = new Schema(
+  {
+    name: {
       type: String,
       required: true,
-      select: false,
     },
-    salt: {
+    username: {
       type: String,
-      select: false,
+      required: true,
     },
-    sessionToken: {
+    email: {
       type: String,
-      select: false,
+      required: true,
+    },
+    roles: {
+      type: [String],
+      required: true,
+      default: [Roles.User],
+    },
+    authentication: {
+      password: {
+        type: String,
+        required: true,
+        select: false,
+      },
+      salt: {
+        type: String,
+        select: false,
+      },
+      sessionToken: {
+        type: String,
+        select: false,
+      },
     },
   },
-});
+  {
+    timestamps: true,
+  }
+);
 
 export const UserModel = mongoose.model("User", userSchema);
 
