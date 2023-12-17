@@ -34,6 +34,11 @@ export const login = async (
       user.authentication.salt,
       user._id.toString()
     );
+
+    await UserModel.findByIdAndUpdate(user._id, {
+      $set: { "authentication.sessionToken": sessionToken },
+    });
+
     res.cookie("session-token", sessionToken, {
       path: "/",
       expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 0.5),
