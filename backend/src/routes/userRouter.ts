@@ -1,5 +1,5 @@
 import { IsAuthenticated, IsAuthorized } from "../middleware";
-import { getAllUsers, getUserById } from "../controllers/UserController";
+import { createUser, getAllUsers, getUserById } from "../controllers/UserController";
 import express from "express";
 import { Roles } from "../constants";
 
@@ -10,9 +10,11 @@ export default (router: express.Router) => {
     IsAuthorized([Roles.Admin, Roles.User]),
     getAllUsers
   );
-  router.get(
-    "/users/:id",
+  router.get("/users/:id", IsAuthenticated, getUserById);
+  router.post(
+    "/users",
     IsAuthenticated,
-    getUserById
+    IsAuthorized([Roles.User]),
+    createUser
   );
 };
