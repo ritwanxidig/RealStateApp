@@ -6,6 +6,7 @@ import {
   errorHandler,
   random,
 } from "../utils";
+import { rest } from "lodash";
 
 export const login = async (
   req: express.Request,
@@ -35,19 +36,20 @@ export const login = async (
       user._id.toString()
     );
 
-    await UserModel.findByIdAndUpdate(user._id, {
-      $set: { "authentication.sessionToken": sessionToken },
-    });
+    user.authentication.sessionToken = sessionToken;
 
-    res.cookie("session-token", sessionToken, {
+    await user.save();
+
+    res.cookie("session-token", user.authentication.sessionToken, {
       path: "/",
+      domain: "localhost",
       expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 0.5),
       httpOnly: true,
-      secure: true,
-      maxAge: 1000 * 60 * 60 * 24 * 0.5,
     });
 
-    return res.status(200).json(user);
+    const { username, name, email: Email } = user;
+
+    return res.status(200).json({ name, username, Email });
   } catch (error) {
     next(error);
   }
