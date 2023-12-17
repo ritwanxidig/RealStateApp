@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response, NextFunction } from "express";
 import { AppError } from "interfaces";
 import { getBySessionToken } from "../models/User";
 import { errorHandler } from "../utils";
@@ -38,4 +38,22 @@ export const IsAuthenticated = async (
   }
   merge(req, { identity: tokenUser });
   next();
+};
+
+export const IsAuthorized =  (authorizedRoles: string[]) => {
+  return (req: Request, res: Response, next: NextFunction) => {
+    const user = get(req, "identity") as Record<string, any>;
+    if (!user) {
+      return next(errorHandler(401, "you are not authenticated to access!"));
+    }
+
+    const isAuthorized = user?.roles?.some(
+      (role: string) => role && authorizedRoles.includes(role)
+    );
+    if (!isAuthorized) {
+      return next(errorHandler(401, "you are not authorized!"));
+    }
+
+    next();
+  };
 };
