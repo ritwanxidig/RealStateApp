@@ -1,6 +1,40 @@
 import express from "express";
 import { UserModel, create, getByEmail, getByUsername } from "../models/User";
-import { authenticate, errorHandler, random } from "../utils";
+import {
+  authenticate,
+  checkUserPassword,
+  errorHandler,
+  random,
+} from "../utils";
+
+export const login = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return next(errorHandler(400, "Please provide email and password"));
+    }
+
+    const user = await getByEmail(email).select(
+      "+authentication.salt +authentication.password"
+    );
+    if (!user) {
+      return next(errorHandler(404, "User not found"));
+    }
+
+    const PasswordIsCorrect = checkUserPassword(user, password);
+    if (!PasswordIsCorrect) {
+      return next(errorHandler(400, "Incorrect Password"));
+    }
+
+    return res.status(200).json(user);
+  } catch (error) {
+    next(error);
+  }
+};
 
 export const registration = async (
   req: express.Request,
