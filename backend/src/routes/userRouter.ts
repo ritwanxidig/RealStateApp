@@ -4,6 +4,7 @@ import {
   createUser,
   getAllUsers,
   getUserById,
+  deleteUser,
 } from "../controllers/UserController";
 import express from "express";
 import { Roles } from "../constants";
@@ -12,7 +13,7 @@ export default (router: express.Router) => {
   router.get(
     "/users",
     IsAuthenticated,
-    IsAuthorized([Roles.Admin]),
+    IsAuthorized([Roles.User]),
     getAllUsers
   );
   router.get("/users/:id", IsAuthenticated, getUserById);
@@ -27,5 +28,11 @@ export default (router: express.Router) => {
     IsAuthenticated,
     IsAuthorized([Roles.Admin]),
     updateUser
+  );
+  router.delete(
+    "/users/:id",
+    IsAuthenticated,
+    // IsAuthorized([Roles.Admin]),
+    deleteUser
   );
 };

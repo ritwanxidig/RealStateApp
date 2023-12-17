@@ -108,3 +108,20 @@ export const updateUser = async (
     next(error);
   }
 };
+
+export const deleteUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+    const deletedUser = await remove(id);
+    if (!deletedUser) {
+      return next(errorHandler(404, "User not found!"));
+    }
+    return res.status(200).json("deleted successfully");
+  } catch (error) {
+    next(error);
+  }
+};
