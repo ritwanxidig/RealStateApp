@@ -30,6 +30,18 @@ export const login = async (
       return next(errorHandler(400, "Incorrect Password"));
     }
 
+    const sessionToken = authenticate(
+      user.authentication.salt,
+      user._id.toString()
+    );
+    res.cookie("session-token", sessionToken, {
+      path: "/",
+      expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 0.5),
+      httpOnly: true,
+      secure: true,
+      maxAge: 1000 * 60 * 60 * 24 * 0.5,
+    });
+
     return res.status(200).json(user);
   } catch (error) {
     next(error);
