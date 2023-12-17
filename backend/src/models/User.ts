@@ -53,5 +53,5 @@ export const getBySessionToken = (sessionToken: string) =>
   UserModel.findOne({ "authentication.sessionToken": sessionToken });
 export const create = (user: Record<string, any>) => UserModel.create(user);
 export const update = (id: string, user: Record<string, any>) =>
-  UserModel.findByIdAndUpdate(id, user);
+  UserModel.findByIdAndUpdate(id, user, { new: true });
 export const remove = (id: string) => UserModel.findByIdAndDelete(id);

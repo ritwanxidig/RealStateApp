@@ -1,6 +1,14 @@
 import express, { Request, Response, NextFunction } from "express";
 
-import { create, getAll, getByEmail, getById, getByUsername } from "../models/User";
+import {
+  create,
+  getAll,
+  getByEmail,
+  getById,
+  getByUsername,
+  update,
+  remove,
+} from "../models/User";
 import { authenticate, errorHandler, random } from "../utils";
 
 export const getAllUsers = async (
@@ -51,7 +59,7 @@ export const createUser = async (
     if (existByEmail) {
       return next(errorHandler(400, "Email already exists!"));
     }
-    
+
     const salt = random();
     const hash = authenticate(salt, password);
     const newUser = await create({
@@ -61,9 +69,42 @@ export const createUser = async (
       roles: [req.body.role || "user"],
       authentication: { salt, password: hash },
     });
-    const { name: newName, username: newUsername, email: newEmail, roles } = newUser;
+    const {
+      name: newName,
+      username: newUsername,
+      email: newEmail,
+      roles,
+    } = newUser;
     return res.status(201).json({ newName, newEmail, newUsername, roles });
   } catch (error) {
     return next(error);
+  }
+};
+
+export const updateUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  // update only the values to be updated
+  try {
+    const { id } = req.params;
+
+    const updatedUser = await update(id, {
+      $set: {
+        name: req.body.name,
+        username: req.body.username,
+        email: req.body.email,
+        roles: req.body.role && [req.body.role],
+      },
+    });
+
+    if (!updatedUser) {
+      return next(errorHandler(404, "User not found!"));
+    }
+    const { name, username, email, roles } = updatedUser;
+    return res.status(200).json({ name, username, email, roles });
+  } catch (error) {
+    next(error);
   }
 };
