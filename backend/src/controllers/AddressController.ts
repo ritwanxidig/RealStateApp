@@ -11,6 +11,7 @@ import {
   getCountryById,
   getCityById,
   updateCity,
+  removeCity,
 } from "../models/Address";
 import { errorHandler } from "../utils";
 
@@ -150,7 +151,7 @@ export const EditCity = async (
 ) => {
   try {
     const { countryName, cityId } = req.params;
-    
+
     const { name } = req.body;
     if (!name) {
       return next(errorHandler(400, "Please provide the name "));
@@ -168,6 +169,34 @@ export const EditCity = async (
     }
 
     const city = await updateCity(cityId, countryName, name);
+    return res.status(200).json(city);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const DeleteCity = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { countryName, cityId } = req.params;
+    console.log(cityId);
+    
+    // get the country
+    const country = await getByCountryName(countryName);
+    // check if the country exists
+    if (!country) {
+      return next(errorHandler(400, `${countryName} Country not found`));
+    }
+    // check if the city already exists
+    const existCity = await getCityById(cityId, countryName);
+    if (!existCity) {
+      return next(errorHandler(400, "this city dos not exists"));
+    }
+
+    const city = await removeCity(cityId, countryName);
     return res.status(200).json(city);
   } catch (error) {
     next(error);
