@@ -14,6 +14,7 @@ import {
   removeCity,
 } from "../models/Address";
 import { errorHandler } from "../utils";
+import mongoose from "mongoose";
 
 export const getAllCountries = async (
   req: Request,
@@ -151,6 +152,9 @@ export const EditCity = async (
 ) => {
   try {
     const { countryName, cityId } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(cityId)) {
+      return next(errorHandler(400, "Please provide a valid CityId"));
+    }
 
     const { name } = req.body;
     if (!name) {
@@ -182,8 +186,12 @@ export const DeleteCity = async (
 ) => {
   try {
     const { countryName, cityId } = req.params;
-    console.log(cityId);
-    
+
+    // check the ID is
+    if (!mongoose.Types.ObjectId.isValid(cityId)) {
+      return next(errorHandler(400, "Please provide a valid CityId"));
+    }
+
     // get the country
     const country = await getByCountryName(countryName);
     // check if the country exists
