@@ -16,6 +16,12 @@ export const getAllCountries = () => countryModel.find({});
 export const getByCountryName = (countryName: string) =>
   countryModel.findOne({ name: { $regex: new RegExp(countryName, "i") } });
 
+export const getCountryById = (countryId: string) =>
+  countryModel.findById(countryId);
+
+export const deleteCountry = (countryId: string) =>
+  countryModel.findByIdAndDelete(countryId);
+
 // 2. get all cities of a country
 export const getCities = (countryName: string) =>
   countryModel
@@ -52,6 +58,9 @@ export const getLocationByName = (
 // 4. add specific country
 export const createCountry = (country: Record<string, any>) =>
   countryModel.create(country);
+
+export const updateCountry = (id: string, country: Record<string, any>) =>
+  countryModel.findByIdAndUpdate(id, { $set: { ...country } }, { new: true });
 
 // 5. add specific city to a country
 export const createCity = (country: Record<string, any>, name: string) =>
