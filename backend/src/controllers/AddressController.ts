@@ -9,6 +9,8 @@ import {
   updateCountry as EditCountry,
   deleteCountry as RemoveCountry,
   getCountryById,
+  getCityById,
+  updateCity,
 } from "../models/Address";
 import { errorHandler } from "../utils";
 
@@ -82,54 +84,92 @@ export const deleteCountry = async (
   }
 };
 
-// export const getAllCities = async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction
-// ) => {
-//   try {
-//     const { countryName } = req.params;
-//     if (!countryName)
-//       return next(errorHandler(400, "Please provide country name"));
-//     // check if the country exists
-//     const existCountry = await getByCountryName(countryName);
-//     if (!existCountry) {
-//       return next(errorHandler(400, "Country not found"));
-//     }
-//     const cities = await getCities(countryName);
-//     return res.status(200).json(cities);
-//   } catch (error) {
-//     next(error);
-//   }
-// };
+export const getAllCities = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { countryName } = req.params;
+    if (!countryName)
+      return next(errorHandler(400, "Please provide country name"));
+    // check if the country exists
+    const existCountry = await getByCountryName(countryName);
+    if (!existCountry) {
+      return next(errorHandler(400, "Country not found"));
+    }
+    const cities = await getCities(countryName);
+    return res.status(200).json(cities);
+  } catch (error) {
+    next(error);
+  }
+};
 
-// export const createNewCity = async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction
-// ) => {
-//   try {
-//     const { cityName } = req.body;
-//     const { countryName } = req.params;
-//     if (!countryName || !cityName) {
-//       return next(
-//         errorHandler(400, "Please provide country name and city name")
-//       );
-//     }
-//     // check if the city already exists
-//     const existCity = await getCityByName(countryName, cityName);
-//     if (existCity) {
-//       return next(errorHandler(400, "City already exists"));
-//     }
-//     // get the country
-//     const country = await getByCountryName(countryName);
-//     // check if the country exists
-//     if (!country) {
-//       return next(errorHandler(400, "Country not found"));
-//     }
-//     const city = await createCity({ name: countryName }, cityName);
-//     return res.status(200).json(city);
-//   } catch (error) {
-//     next(error);
-//   }
-// };
+export const createNewCity = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { cityName } = req.body;
+    const { countryName } = req.params;
+    if (!countryName || !cityName) {
+      return next(
+        errorHandler(400, "Please provide country name and city name")
+      );
+    }
+
+    // get the country
+    const country = await getByCountryName(countryName);
+    // check if the country exists
+    if (!country) {
+      return next(errorHandler(400, `${countryName} Country not found`));
+    }
+    // check if the city already exists
+    const existCity = await getCityByName(countryName, cityName);
+    if (existCity) {
+      return next(
+        errorHandler(
+          400,
+          `${cityName} City already exists in the ${countryName} country`
+        )
+      );
+    }
+
+    const city = await createCity({ name: countryName }, cityName);
+    return res.status(200).json(city);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const EditCity = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { countryName, cityId } = req.params;
+    
+    const { name } = req.body;
+    if (!name) {
+      return next(errorHandler(400, "Please provide the name "));
+    }
+    // get the country
+    const country = await getByCountryName(countryName);
+    // check if the country exists
+    if (!country) {
+      return next(errorHandler(400, `${countryName} Country not found`));
+    }
+    // check if the city already exists
+    const existCity = await getCityById(cityId, countryName);
+    if (!existCity) {
+      return next(errorHandler(400, "this city dos not exists"));
+    }
+
+    const city = await updateCity(cityId, countryName, name);
+    return res.status(200).json(city);
+  } catch (error) {
+    next(error);
+  }
+};

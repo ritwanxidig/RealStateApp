@@ -66,8 +66,25 @@ export const updateCountry = (id: string, country: Record<string, any>) =>
 export const createCity = (country: Record<string, any>, name: string) =>
   countryModel.findOneAndUpdate(
     { name: country.name },
-    { $push: { cities: { name } } }
+    { $push: { cities: { name } } },
+    { new: true }
   );
+
+export const updateCity = (
+  cityId: string,
+  country: string,
+  updatedName: string
+) =>
+  countryModel.findOneAndUpdate(
+    { name: { $regex: new RegExp(country, "i") }, "cities._id": cityId },
+    { $set: { "cities.$.name": updatedName } },
+    { new: true }
+  ).select("cities");
+
+export const getCityById = (cityId: string, country: string) =>
+  countryModel
+    .find({ name: { $regex: new RegExp(country, "i") }, "cities._id": cityId })
+    .select("cities.$");
 
 // 6. add specific location to a city of a country
 export const addLocation = async (
@@ -78,7 +95,8 @@ export const addLocation = async (
   try {
     const result = await countryModel.findOneAndUpdate(
       { name: country, "cities.name": city },
-      { $push: { "cities.$.locations": { name: location } } }
+      { $push: { "cities.$.locations": { name: location } } },
+      { new: true }
     );
     return result;
   } catch (error) {
