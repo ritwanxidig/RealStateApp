@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 const countrySchema = new mongoose.Schema({
   name: String,
   cities: {
-    type: [{ name: String, locations: [{ name: String }] }],
+    type: [{ name: String, locations: { type: [{ name: String }] } }],
     required: true,
   },
 });
@@ -43,19 +43,6 @@ export const getLocations = (country: string, city: string) =>
       "cities.name": { $regex: new RegExp(city, "i") },
     })
     .select("cities.locations");
-
-export const getLocationByName = (
-  country: string,
-  city: string,
-  location: string
-) =>
-  countryModel
-    .find({
-      name: { $regex: new RegExp(country, "i") },
-      "cities.name": { $regex: new RegExp(city, "i") },
-    })
-    .select("cities.locations")
-    .where("cities.locations.name", { $regex: new RegExp(location, "i") });
 
 // 4. add specific country
 export const createCountry = (country: Record<string, any>) =>
@@ -105,19 +92,38 @@ export const getCityById = (cityId: string, country: string) =>
 //     })
 //     .select("cities.locations");
 
-export const addLocation = async (
+export const getLocationByName = (
   country: string,
   city: string,
   location: string
+) =>
+  countryModel
+    .findOne({
+      name: { $regex: new RegExp(country, "i") },
+      "cities.name": { $regex: new RegExp(city, "i") },
+      "cities.locations.name": { $regex: new RegExp(location, "i") },
+    })
+    .select("cities.locations.$");
+
+export const addLocation = async (
+  country: string,
+  city: string,
+  locationName: string
 ) => {
   try {
+
     const result = await countryModel.findOneAndUpdate(
-      { name: country, "cities.name": city },
-      { $push: { "cities.$.locations": { name: location } } },
+      {
+        name: { $regex: new RegExp(country, "i") },
+        "cities.name": { $regex: new RegExp(city, "i") },
+      },
+      { $push: { "cities.$.locations": { name: locationName } } },
       { new: true }
-    );
+    ).select("cities.locations");
+
     return result;
   } catch (error) {
+    console.error("Error in addLocation:", error);
     throw error;
   }
 };

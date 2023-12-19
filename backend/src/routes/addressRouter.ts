@@ -2,6 +2,7 @@ import {
   DeleteCity,
   EditCity,
   GetAllLocations,
+  addNewLocation,
   createCountry,
   createNewCity,
   deleteCountry,
@@ -23,4 +24,5 @@ export default (router: express.Router) => {
   router.delete("/cities/:countryName/:cityId", DeleteCity);
 
   router.get("/locations/:countryName/:cityName", GetAllLocations);
+  router.post("/locations/:countryName/:cityName", addNewLocation);
 };
