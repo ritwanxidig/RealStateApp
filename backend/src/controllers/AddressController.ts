@@ -12,6 +12,7 @@ import {
   getCityById,
   updateCity,
   removeCity,
+  getLocations
 } from "../models/Address";
 import { errorHandler } from "../utils";
 import mongoose from "mongoose";
@@ -206,6 +207,31 @@ export const DeleteCity = async (
 
     const city = await removeCity(cityId, countryName);
     return res.status(200).json(city);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const GetAllLocations = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { countryName, cityName } = req.params;
+
+    // check if the country exists
+    const existCountry = await getByCountryName(countryName);
+    if (!existCountry) {
+      return next(errorHandler(400, "Country not found"));
+    }
+    // check if the city already exists
+    const existCity = await getCityByName(countryName, cityName);
+    if (!existCity) {
+      return next(errorHandler(400, "this city dos not exists"));
+    }
+    // const locations = await getLocations(countryName, cityName);
+    return res.status(200).json(existCity);
   } catch (error) {
     next(error);
   }

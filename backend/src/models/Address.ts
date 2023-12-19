@@ -27,16 +27,18 @@ export const getCities = (countryName: string) =>
   countryModel
     .findOne({ name: { $regex: new RegExp(countryName, "i") } })
     .select("cities");
+
 export const getCityByName = (countryName: string, cityName: string) =>
   countryModel
-    .findOne({ name: { $regex: new RegExp(countryName, "i") } })
-    .select("cities")
-    .where("cities.name", { $regex: new RegExp(cityName, "i") });
-
+    .find({
+      name: { $regex: new RegExp(countryName, "i") },
+      "cities.name": { $regex: new RegExp(cityName, "i") },
+    })
+    .select("cities.$");
 // 3. get all locations of a specific city of a country
 export const getLocations = (country: string, city: string) =>
   countryModel
-    .find({
+    .findOne({
       name: { $regex: new RegExp(country, "i") },
       "cities.name": { $regex: new RegExp(city, "i") },
     })
@@ -95,7 +97,14 @@ export const getCityById = (cityId: string, country: string) =>
     .find({ name: { $regex: new RegExp(country, "i") }, "cities._id": cityId })
     .select("cities.$");
 
-// 6. add specific location to a city of a country
+// export const getAllLocations = (country: string, city: string) =>
+//   countryModel
+//     .findOne({
+//       name: { $regex: new RegExp(country, "i") },
+//       "cities.name": { $regex: new RegExp(city, "i") },
+//     })
+//     .select("cities.locations");
+
 export const addLocation = async (
   country: string,
   city: string,
