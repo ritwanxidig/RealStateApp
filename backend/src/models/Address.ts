@@ -150,25 +150,49 @@ export const updateLocation = async (
   updatedName: string
 ) => {
   try {
-    return await countryModel.findOneAndUpdate(
-      {
-        name: { $regex: new RegExp(country, "i") },
-        "cities.name": { $regex: new RegExp(city, "i") },
-        "cities.locations._id": locationId,
-      },
-      {
-        $set: { "cities.$[outer].locations.$[inner].name": updatedName },
-      },
-      {
-        arrayFilters: [
-          { "outer.name": { $regex: new RegExp(city, "i") } },
-          { "inner._id": locationId },
-        ],
-        new: true,
-      }
-    ).select("cities.locations");
+    return await countryModel
+      .findOneAndUpdate(
+        {
+          name: { $regex: new RegExp(country, "i") },
+          "cities.name": { $regex: new RegExp(city, "i") },
+          "cities.locations._id": locationId,
+        },
+        {
+          $set: { "cities.$[outer].locations.$[inner].name": updatedName },
+        },
+        {
+          arrayFilters: [
+            { "outer.name": { $regex: new RegExp(city, "i") } },
+            { "inner._id": locationId },
+          ],
+          new: true,
+        }
+      )
+      .select("cities.locations");
   } catch (error) {
     console.error("Error in updateLocation:", error);
+    throw error;
+  }
+};
+
+export const deleteLocation = async (
+  locationId: string,
+  country: string,
+  city: string
+) => {
+  try {
+    return await countryModel
+      .findOneAndUpdate(
+        {
+          name: { $regex: new RegExp(country, "i") },
+          "cities.name": { $regex: new RegExp(city, "i") },
+        },
+        { $pull: { "cities.locations": { _id: locationId } } },
+        { new: true }
+      )
+      .select("cities.locations");
+  } catch (error) {
+    console.error("Error in deleteLocation:", error);
     throw error;
   }
 };
