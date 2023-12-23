@@ -181,16 +181,16 @@ export const deleteLocation = async (
   city: string
 ) => {
   try {
-    return await countryModel
-      .findOneAndUpdate(
-        {
-          name: { $regex: new RegExp(country, "i") },
-          "cities.name": { $regex: new RegExp(city, "i") },
-        },
-        { $pull: { "cities.locations": { _id: locationId } } },
-        { new: true }
-      )
-      .select("cities.locations");
+    return await countryModel.findOneAndUpdate(
+      {
+        name: { $regex: new RegExp(country, "i") },
+        "cities.name": { $regex: new RegExp(city, "i") },
+      },
+      {
+        $pull: { "cities.$.locations": { _id: locationId } },
+      },
+      { new: true }
+    ).select("cities.locations");
   } catch (error) {
     console.error("Error in deleteLocation:", error);
     throw error;

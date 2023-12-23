@@ -9,6 +9,7 @@ import {
   editLocation,
   getAllCities,
   getAllCountries,
+  removeLocation,
   updateCountry,
 } from "../controllers/AddressController";
 import express from "express";
@@ -27,4 +28,10 @@ export default (router: express.Router) => {
   router.get("/locations/:countryName/:cityName", GetAllLocations);
   router.post("/locations/:countryName/:cityName", addNewLocation);
   router.put("/locations/:countryName/:cityName/:locationId", editLocation);
+  router.delete(
+    "/locations/:countryName/:cityName/:locationId",
+    removeLocation
+  );
+
+  
 };
