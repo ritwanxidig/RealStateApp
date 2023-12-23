@@ -1,4 +1,4 @@
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
 
 const countrySchema = new mongoose.Schema({
@@ -105,25 +105,70 @@ export const getLocationByName = (
     })
     .select("cities.locations.$");
 
+export const getLocationById = (
+  country: string,
+  city: string,
+  locationId: string
+) =>
+  countryModel
+    .findOne({
+      name: { $regex: new RegExp(country, "i") },
+      "cities.name": { $regex: new RegExp(city, "i") },
+      "cities.locations._id": locationId,
+    })
+    .select("cities.locations.$");
+
 export const addLocation = async (
   country: string,
   city: string,
   locationName: string
 ) => {
   try {
-
-    const result = await countryModel.findOneAndUpdate(
-      {
-        name: { $regex: new RegExp(country, "i") },
-        "cities.name": { $regex: new RegExp(city, "i") },
-      },
-      { $push: { "cities.$.locations": { name: locationName } } },
-      { new: true }
-    ).select("cities.locations");
+    const result = await countryModel
+      .findOneAndUpdate(
+        {
+          name: { $regex: new RegExp(country, "i") },
+          "cities.name": { $regex: new RegExp(city, "i") },
+        },
+        { $push: { "cities.$.locations": { name: locationName } } },
+        { new: true }
+      )
+      .select("cities.locations");
 
     return result;
   } catch (error) {
     console.error("Error in addLocation:", error);
+    throw error;
+  }
+};
+
+// create function to update specific location
+export const updateLocation = async (
+  locationId: string,
+  country: string,
+  city: string,
+  updatedName: string
+) => {
+  try {
+    return await countryModel.findOneAndUpdate(
+      {
+        name: { $regex: new RegExp(country, "i") },
+        "cities.name": { $regex: new RegExp(city, "i") },
+        "cities.locations._id": locationId,
+      },
+      {
+        $set: { "cities.$[outer].locations.$[inner].name": updatedName },
+      },
+      {
+        arrayFilters: [
+          { "outer.name": { $regex: new RegExp(city, "i") } },
+          { "inner._id": locationId },
+        ],
+        new: true,
+      }
+    ).select("cities.locations");
+  } catch (error) {
+    console.error("Error in updateLocation:", error);
     throw error;
   }
 };
