@@ -105,18 +105,24 @@ export const getLocationByName = (
     })
     .select("cities.locations.$");
 
-export const getLocationById = (
+export const getLocationById = async (
   country: string,
   city: string,
   locationId: string
-) =>
-  countryModel
-    .findOne({
-      name: { $regex: new RegExp(country, "i") },
-      "cities.name": { $regex: new RegExp(city, "i") },
-      "cities.locations._id": locationId,
-    })
-    .select("cities.locations.$");
+) => {
+  try {
+    return await countryModel
+      .findOne({
+        name: { $regex: new RegExp(country, "i") },
+        "cities.name": { $regex: new RegExp(city, "i") },
+        "cities.locations._id": locationId,
+      })
+      .select("cities.locations.$");
+  } catch (error) {
+    console.log("Error in getLocationById:", error);
+    throw error;
+  }
+};
 
 export const addLocation = async (
   country: string,
@@ -181,16 +187,18 @@ export const deleteLocation = async (
   city: string
 ) => {
   try {
-    return await countryModel.findOneAndUpdate(
-      {
-        name: { $regex: new RegExp(country, "i") },
-        "cities.name": { $regex: new RegExp(city, "i") },
-      },
-      {
-        $pull: { "cities.$.locations": { _id: locationId } },
-      },
-      { new: true }
-    ).select("cities.locations");
+    return await countryModel
+      .findOneAndUpdate(
+        {
+          name: { $regex: new RegExp(country, "i") },
+          "cities.name": { $regex: new RegExp(city, "i") },
+        },
+        {
+          $pull: { "cities.$.locations": { _id: locationId } },
+        },
+        { new: true }
+      )
+      .select("cities.locations");
   } catch (error) {
     console.error("Error in deleteLocation:", error);
     throw error;
