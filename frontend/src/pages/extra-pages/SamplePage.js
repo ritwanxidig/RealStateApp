@@ -127,7 +127,7 @@ const SamplePage = () => {
           </button>
         }
       >
-        <Box sx={{ height: 400, width: '100%' }}>
+        <Box sx={{ height: 400, width: '99%' }}>
           <StyledDataGrid rows={rows} columns={columns} />
         </Box>
       </MainCard>
