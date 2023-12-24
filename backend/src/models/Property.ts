@@ -1,76 +1,77 @@
 import mongoose from "mongoose";
 
-const propertySchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  description: {
-    type: String,
-    required: true,
-  },
-  price: {
-    type: Number,
-    required: true,
-  },
-  discount: {
-    type: Number,
-    required: true,
-    default: 0,
-  },
-  imageUrls: {
-    type: [String],
-    required: true,
-  },
-  type: {
-    type: String,
-    required: true,
-  },
-  beds: {
-    type: Number,
-    required: true,
-  },
-  baths: {
-    type: Number,
-    required: true,
-  },
-  furnished: {
-    type: Boolean,
-    required: true,
-  },
-  parking: {
-    type: Boolean,
-    required: true,
-  },
-  offer: {
-    type: Boolean,
-    required: true,
-    default: false,
-  },
-  area: {
-    type: String,
-    required: true,
-  },
-  address: {
-    country: {
+const propertySchema = new mongoose.Schema(
+  {
+    name: {
       type: String,
       required: true,
     },
-    city: {
+    description: {
+      type: String,
+      default: "",
+    },
+    price: {
+      type: Number,
+      required: true,
+    },
+    discount: {
+      type: Number,
+      default: 0,
+    },
+    imageUrls: {
+      type: [String],
+      required: true,
+    },
+    type: {
       type: String,
       required: true,
     },
-    location: {
+    beds: {
+      type: Number,
+      required: true,
+    },
+    baths: {
+      type: Number,
+      required: true,
+    },
+    furnished: {
+      type: Boolean,
+      default: false,
+    },
+    parking: {
+      type: Boolean,
+      default: false,
+    },
+    offer: {
+      type: Boolean,
+      default: false,
+    },
+    area: {
       type: String,
       required: true,
     },
+    address: {
+      country: {
+        type: String,
+        required: true,
+      },
+      city: {
+        type: String,
+        required: true,
+      },
+      location: {
+        type: String,
+        required: true,
+      },
+    },
+    userRef: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
   },
-  userRef: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
-});
+  { timestamps: true }
+);
 
 export const PropertyModel = mongoose.model("Property", propertySchema);
 
