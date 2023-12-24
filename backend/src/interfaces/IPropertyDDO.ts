@@ -1,4 +1,9 @@
+import { ObjectId } from "mongoose";
+
 export interface IPropertyDDO {
+  _id: string;
+  _createdAt: Date;
+  _updatedAt: Date;
   name: String;
   description: String;
   price: Number;
@@ -17,6 +22,5 @@ export interface IPropertyDDO {
     username: String;
     email: String;
     roles: string[];
-    
   };
 }
