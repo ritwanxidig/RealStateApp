@@ -16,7 +16,7 @@ import { CodeOutlined, CopyOutlined } from '@ant-design/icons';
 
 // ==============================|| CLIPBOARD & HIGHLIGHTER   ||============================== //
 
-const   Highlighter = ({ children }) => {
+const Highlighter = ({ children }) => {
   const [highlight, setHighlight] = useState(false);
 
   return (

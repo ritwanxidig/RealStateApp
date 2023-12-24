@@ -1,9 +1,7 @@
 import React from 'react';
 import { Table } from 'antd';
 
-const StyledDataGrid = ({columns, rows}) => {
-
-
+const StyledDataGrid = ({ columns, rows }) => {
   return (
     <div>
       <Table
