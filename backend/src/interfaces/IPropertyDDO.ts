@@ -2,8 +2,8 @@ export interface IPropertyDDO {
   name: String;
   description: String;
   price: Number;
-  discount: 0;
-  imageUrls: [String];
+  discount: Number;
+  imageUrls: string[];
   type: String;
   beds: Number;
   baths: Number;
@@ -12,5 +12,11 @@ export interface IPropertyDDO {
   offer: boolean;
   area: String;
   address: { country: String; city: String; location: String };
-  user: String;
+  user: {
+    name: String;
+    username: String;
+    email: String;
+    roles: string[];
+    
+  };
 }
