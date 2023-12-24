@@ -14,8 +14,9 @@ import 'assets/third-party/apex-chart.css';
 
 // project import
 import App from './App';
-import { store } from 'store';
+import { store, persistor } from 'store';
 import reportWebVitals from './reportWebVitals';
+import { PersistGate } from 'redux-persist/integration/react';
 
 // ==============================|| MAIN - REACT DOM RENDER  ||============================== //
 
@@ -25,7 +26,9 @@ root.render(
   <StrictMode>
     <ReduxProvider store={store}>
       <BrowserRouter>
-        <App />
+        <PersistGate loading={null} persistor={persistor}>
+          <App />
+        </PersistGate>
       </BrowserRouter>
     </ReduxProvider>
   </StrictMode>
