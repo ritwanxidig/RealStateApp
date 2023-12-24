@@ -3,6 +3,7 @@ import {
   createProperty,
   getAll,
   getByPropertyId,
+  removePropertyById,
   updatePropertyById,
 } from "../models/Property";
 import { errorHandler } from "../utils";
@@ -172,6 +173,40 @@ export const editProperty = async (
       );
 
     return res.status(200).json(updatedData);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const deleteProperty = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { id } = req.params;
+  try {
+    // get the requested user
+    const requestedUser = get(req, "identity") as Record<string, any>;
+
+    // check if the id is valid objectID
+    if (!isValidObjectId(id))
+      return next(errorHandler(400, "please insert valid Id"));
+
+    // get the target document
+    const targetOne = await getByPropertyId(id);
+
+    // check if the document exists before
+    if (!targetOne)
+      return next(errorHandler(400, "this property does not exist"));
+
+    // check if the requested is the owner of this document
+    if (requestedUser._id.toString() !== targetOne.userRef.toString())
+      return next(
+        errorHandler(403, "you can't delete this, b/c you are not the owner")
+      );
+    //  then, delete
+    await removePropertyById(id);
+    return res.status(200).json("property successfully deleted");
   } catch (error) {
     next(error);
   }
