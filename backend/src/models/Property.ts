@@ -78,12 +78,12 @@ export const PropertyModel = mongoose.model("Property", propertySchema);
 // CRUD for property
 export const getAll = () => PropertyModel.find();
 
-export const getById = (id: string) => PropertyModel.findById(id);
+export const getByPropertyId = (id: string) => PropertyModel.findById(id);
 
-export const create = (property: Record<string, any>) =>
+export const createProperty = (property: Record<string, any>) =>
   new PropertyModel(property).save();
 
-export const update = (id: string, property: Record<string, any>) =>
+export const updatePropertyById = (id: string, property: Record<string, any>) =>
   PropertyModel.findByIdAndUpdate(id, property, { new: true });
 
-export const remove = (id: string) => PropertyModel.findByIdAndDelete(id);
+export const removePropertyById = (id: string) => PropertyModel.findByIdAndDelete(id);
