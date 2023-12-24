@@ -81,7 +81,7 @@ export const removeCity = (cityId: string, country: string) =>
 
 export const getCityById = (cityId: string, country: string) =>
   countryModel
-    .find({ name: { $regex: new RegExp(country, "i") }, "cities._id": cityId })
+    .findOne({ name: { $regex: new RegExp(country, "i") }, "cities._id": cityId })
     .select("cities.$");
 
 // export const getAllLocations = (country: string, city: string) =>
