@@ -1,7 +1,12 @@
-import express, { Request, Response, NextFunction } from "express";
-import { PropertyModel, create, getAll } from "../models/Property";
+import { Request, Response, NextFunction } from "express";
+import {
+  createProperty,
+  getAll,
+  getByPropertyId,
+  updatePropertyById,
+} from "../models/Property";
 import { errorHandler } from "../utils";
-import { get, identity } from "lodash";
+import { get } from "lodash";
 import { IPropertyDDO } from "../interfaces/IPropertyDDO";
 import {
   getCityById,
@@ -9,7 +14,7 @@ import {
   getLocationById,
 } from "../models/Address";
 import { getById } from "../models/User";
-import { ObjectId } from "mongoose";
+import { isValidObjectId } from "mongoose";
 
 export const getAllProperties = async (
   req: Request,
@@ -34,6 +39,9 @@ export const getAllProperties = async (
           property.address.location
         );
         const propertyDDO: IPropertyDDO = {
+          _id: property._id.toString(),
+          _createdAt: property.createdAt,
+          _updatedAt: property.updatedAt,
           name: property.name,
           description: property.description,
           price: property.price,
@@ -69,7 +77,7 @@ export const getAllProperties = async (
   }
 };
 
-export const createProperty = async (
+export const addProperty = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -85,7 +93,7 @@ export const createProperty = async (
   try {
     const loggedInUser = get(req, "identity") as Record<string, any>;
     const userRef = loggedInUser._id;
-    const property = await create({ userRef, ...req.body });
+    const property = await createProperty({ userRef, ...req.body });
 
     if (!property) {
       return next(errorHandler(400, "Property not created"));
@@ -99,6 +107,9 @@ export const createProperty = async (
       address.location
     );
     const propertyDDO: IPropertyDDO = {
+      _id: property._id.toString(),
+      _createdAt: property.createdAt,
+      _updatedAt: property.updatedAt,
       name: property.name,
       description: property.description,
       price: property.price,
@@ -125,6 +136,42 @@ export const createProperty = async (
     };
 
     return res.status(200).json(property);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const editProperty = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { id } = req.params;
+  const payload = req.body;
+  try {
+    if (!isValidObjectId(id))
+      return next(errorHandler(400, "please insert valid objectId"));
+    // check if the property with id exists
+    const targetOne = await getByPropertyId(id);
+    if (!targetOne)
+      return next(errorHandler(400, "this property does not exist"));
+
+    // check if the user is owner
+    const requestedUser = get(req, "identity") as Record<string, any>;
+    if (requestedUser._id.toString() !== targetOne.userRef.toString())
+      return next(
+        errorHandler(403, "you can't edit this, b/c you are not the owner")
+      );
+
+    // update all the other data except the createdUser
+    const toUpdateData = { userRef: targetOne.userRef, ...payload };
+    const updatedData = await updatePropertyById(id, toUpdateData);
+    if (!updatedData)
+      return next(
+        errorHandler(400, "something went wrong in propertyController line 171")
+      );
+
+    return res.status(200).json(updatedData);
   } catch (error) {
     next(error);
   }
