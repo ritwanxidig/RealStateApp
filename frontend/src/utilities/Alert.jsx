@@ -32,6 +32,7 @@ const CustomAlert = () => {
             open={open}
             autoHideDuration={7000}
             onClose={handleClose}
+            sx={{mt: 3}}
             TransitionComponent={SlideTransition}
             children={
                 <Alert variant='filled'
