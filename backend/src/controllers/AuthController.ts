@@ -8,6 +8,15 @@ import {
 } from "../utils";
 import { rest } from "lodash";
 
+export const logOut = (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  res.clearCookie("session-token");
+  return res.sendStatus(200).json("Logged out successfully");
+};
+
 export const login = async (
   req: express.Request,
   res: express.Response,
@@ -47,9 +56,9 @@ export const login = async (
       httpOnly: true,
     });
 
-    const { username, name, email: Email } = user;
+    const { username, name, email: Email, roles, _id: userId } = user;
 
-    return res.status(200).json({ name, username, Email });
+    return res.status(200).json({ name, username, Email, roles, userId });
   } catch (error) {
     next(error);
   }
