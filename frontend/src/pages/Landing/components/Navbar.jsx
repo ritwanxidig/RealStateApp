@@ -1,31 +1,18 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, IconButton, Drawer, List, ListItem, ListItemText, useMediaQuery, Button, Box, Avatar, Menu } from '@mui/material';
-import { IconLogin, IconLogin2, IconMenu, IconX } from '@tabler/icons-react';
-import { SampleProfile1 } from '../../../assets/index'
+import { AppBar, Toolbar, IconButton, Drawer, List, useMediaQuery, Button, Box } from '@mui/material';
+import { IconLogin2, IconMenu, IconX } from '@tabler/icons-react';
 import { styled } from '@mui/system';
 import Logo from '../../../components/logo/Logo'
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import StyledButton from '../../../components/shared/StyledButton';
+import NavbarAvatar from './navbarComponents/NavbarAvatar';
+import NavbarLoginBtn from './navbarComponents/NavbarLoginBtn';
+import CustomAppBar from './navbarComponents/CustomAppBar';
+import CustomToolbar from './navbarComponents/CustomToolbar'
 
-const CustomAppBar = styled(AppBar)(({ theme }) => ({
-    background: theme.palette.mode === 'dark' ? theme.palette.primary[900] : 'white', // You can customize the background color
-    color: theme.palette.primary.main,
-    boxShadow: 'none',
-    position: 'fixed',
-    marginBottom: '10rem',
-    top: 0,
-    left: 0,
-    right: 0,
-    // margin: '0 10px'
-}));
 
-const CustomToolbar = styled(Toolbar)({
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: '100%',
-});
+
+
 
 const MenuButton = styled(IconButton)(({ theme }) => ({
     color: theme.palette.primary.main,
@@ -47,108 +34,7 @@ const DrawerContainer = styled(Drawer)({
 });
 
 // profile
-const Profile = () => {
-    const [anchorElement, setAnchorElement] = React.useState(null);
-    const { darkMode } = useSelector(state => state.theme)
-    const handleClick = (event) => {
-        setAnchorElement(event.currentTarget);
-    };
 
-    const handleClose = () => {
-        setAnchorElement(null);
-    };
-
-    return (
-        <Box>
-            <IconButton onClick={handleClick}>
-                <Avatar src={SampleProfile1} />
-            </IconButton>
-
-            <Menu
-                id="profile-menu"
-                anchorEl={anchorElement}
-                keepMounted
-                open={Boolean(anchorElement)}
-                onClose={handleClose}
-                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-                elevation={3}
-                PaperProps={{
-                    sx: {
-                        backgroundColor: darkMode ? 'primary.900' : '',
-                        width: '150px',
-                        borderRadius: '8px',
-                        padding: '8px 5px',
-                        boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
-                    },
-                }}>
-
-                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px', }}>
-                    <Avatar src={SampleProfile1} />
-                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', ml: 1 }}>
-                        <Typography variant='body1' fontSize='12px' fontWeight={600} >Ridwan</Typography>
-                        <Typography variant='body2' fontSize='12px'>Admin</Typography>
-                    </Box>
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: 1
-                        }}>
-                        <StyledButton
-                            variant="contained"
-                            LinkComponent={Link}
-                            to="/app/"
-                            sx={{
-                                borderRadius: '50px',
-                                padding: '5px 18px',
-                                color: 'white',
-                            }}>
-                            Dashboard
-                        </StyledButton>
-                        <StyledButton
-                            variant="outlined"
-                            LinkComponent={Link}
-                            to="/auth/login"
-                            sx={{
-                                borderRadius: '50px',
-                                padding: '5px 32px',
-                                color: 'white',
-                            }}>
-                            Log out
-                        </StyledButton>
-                    </Box>
-
-                </Box>
-            </Menu>
-        </Box>
-    )
-}
-
-const LoginButton = () => (
-    <Button variant="contained"
-        LinkComponent={Link}
-        to="/auth/login"
-        sx={{
-            borderRadius: '50px',
-            padding: '10px 20px',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '5px',
-            boxShadow: 'none',
-            textTransform: 'none',
-            color: 'white',
-            backgroundColor: 'primary.main',
-            fontFamily: 'Plus Jakarta Sans',
-            '&:hover': {
-                boxShadow: 'none',
-                backgroundColor: 'primary.dark',
-            },
-        }}>
-        Login
-        <IconLogin2 />
-    </Button>
-)
 
 const Navbar = ({ pathname }) => {
     const [drawerOpen, setDrawerOpen] = React.useState(false);
@@ -203,7 +89,7 @@ const Navbar = ({ pathname }) => {
                     </Box>
 
                     <Box>
-                        {isAuthenticated ? <Profile /> : <LoginButton />}
+                        {isAuthenticated ? <NavbarAvatar /> : <NavbarLoginBtn />}
 
                     </Box>
                 </CustomToolbar>
@@ -216,7 +102,6 @@ const Navbar = ({ pathname }) => {
             <CustomAppBar position="fixed">
                 <CustomToolbar>
                     <Logo />
-
                     <MenuButton onClick={handleDrawerOpen}>
                         <IconMenu />
                     </MenuButton>
@@ -266,7 +151,7 @@ const Navbar = ({ pathname }) => {
                                 {item.label}
                             </NavigationItem>
                         ))}
-                        {isAuthenticated ? <Profile /> : <LoginButton />}
+                        {isAuthenticated ? <NavbarAvatar /> : <NavbarLoginBtn />}
 
                     </List>
                 </DrawerContainer>
