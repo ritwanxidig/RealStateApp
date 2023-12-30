@@ -43,7 +43,7 @@ export const getAllProperties = async (
           _id: property._id.toString(),
           _createdAt: property.createdAt,
           _updatedAt: property.updatedAt,
-          name: property.name,
+          name: property?.name,
           description: property.description,
           price: property.price,
           discount: property.discount,
@@ -61,10 +61,10 @@ export const getAllProperties = async (
             location: location.cities[0].locations[0].name,
           },
           user: {
-            name: createdUser.name,
-            username: createdUser.username,
-            email: createdUser.email,
-            roles: createdUser.roles,
+            name: createdUser?.name,
+            username: createdUser?.username,
+            email: createdUser?.email,
+            roles: createdUser?.roles,
           },
         };
         return propertyDDO;
