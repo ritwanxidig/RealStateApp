@@ -6,10 +6,10 @@ import HomePage from '../pages/Landing/Home';
 import Landing from '../pages/Landing/Landing';
 import About from '../pages/Landing/About';
 import Contact from '../pages/Landing/Contact';
-import Error400 from '../utilities/views/authentication/Error400';
+import Error400 from '../views/authentication/Error400';
 import { useSelector } from 'react-redux';
-import ErrorModal from '../utilities/views/ErrorModal';
-import CustomAlert from '../utilities/views/Alert';
+import ErrorModal from '../views/utilities/ErrorModal';
+import CustomAlert from '../views/utilities/Alert';
 import PrivateRoute from './PrivateRoute'
 
 const Router = () => {

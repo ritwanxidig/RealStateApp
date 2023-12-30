@@ -1,6 +1,6 @@
 import { Box, Container, Typography, Button } from '@mui/material';
-import ErrorImg from '../../../assets/images/backgrounds/404-error-idea.gif';
-import StyledButton from '../../../components/shared/StyledButton';
+import ErrorImg from '../../assets/images/backgrounds/404-error-idea.gif';
+import StyledButton from '../../components/shared/StyledButton';
 import { Link } from 'react-router-dom';
 
 const Error400 = () => {

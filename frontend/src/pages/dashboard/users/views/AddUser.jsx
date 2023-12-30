@@ -1,5 +1,5 @@
 import React from 'react'
-import CustomModal from '../../../../utilities/CustomModal'
+import CustomModal from '../../../../views/utilities/CustomModal'
 import { Box } from '@mui/material'
 import CustomField from '../../../../components/form/CustomField'
 
