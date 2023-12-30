@@ -22,6 +22,7 @@ const api = createApi({
   endpoints: (builder) => ({
     // auth endpoints
     login: PostEndpoint(builder, "auth/login"),
+    signInWithGoogle: PostEndpoint(builder, "auth/google"),
     logout: PostEndpoint(builder, "auth/logout"),
     register: PostEndpoint(builder, "auth/register"),
 
@@ -37,6 +38,7 @@ const api = createApi({
 export const {
   // hooks for auth
   useLoginMutation,
+  useSignInWithGoogleMutation,
   useLogoutMutation,
   useRegisterMutation,
   // hooks for users
