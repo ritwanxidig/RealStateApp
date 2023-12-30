@@ -6,7 +6,6 @@ import {
   errorHandler,
   random,
 } from "../utils";
-import { rest } from "lodash";
 
 export const logOut = (
   req: express.Request,
@@ -101,6 +100,90 @@ export const registration = async (
     });
 
     return res.status(200).json(user);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const signInWithGoogle = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  try {
+    const { name: ProvidedName, email, profilePic } = req.body;
+
+    if (!ProvidedName || !email || !profilePic) {
+      return next(
+        errorHandler(400, "Please provide name, email and profilePic")
+      );
+    }
+
+    // if user already exists
+    const user = await getByEmail(email).select(
+      "+authentication.salt +authentication.password"
+    );
+    if (user) {
+      const sessionToken = authenticate(
+        user.authentication.salt,
+        user._id.toString()
+      );
+
+      user.authentication.sessionToken = sessionToken;
+
+      await user.save();
+
+      res.cookie("session-token", user.authentication.sessionToken, {
+        path: "/",
+        domain: "localhost",
+        expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 0.5),
+        httpOnly: true,
+      });
+
+      const { username, name, email: Email, roles, _id: userId } = user;
+
+      return res
+        .status(200)
+        .json({ name, username, Email, roles, userId, profilePic });
+    }
+
+    // if user is new to the application
+    const generatedUsername =
+      ProvidedName.split(" ").join("_").toLowerCase() +
+      "_" +
+      Math.round(Math.random() * 1000);
+    const generatedPassword = random();
+    const salt = random();
+    const hashedPassword = authenticate(salt, generatedPassword);
+
+    const newUser = await create({
+      name: ProvidedName,
+      username: generatedUsername,
+      email,
+      authentication: { salt, password: hashedPassword },
+    });
+
+    const sessionToken = authenticate(
+      newUser.authentication.salt,
+      newUser._id.toString()
+    );
+
+    newUser.authentication.sessionToken = sessionToken;
+
+    await newUser.save();
+
+    res.cookie("session-token", newUser.authentication.sessionToken, {
+      path: "/",
+      domain: "localhost",
+      expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 0.5),
+      httpOnly: true,
+    });
+
+    const { username, name, email: Email, roles, _id: userId } = newUser;
+
+    return res
+      .status(200)
+      .json({ name, username, Email, roles, userId, profilePic });
   } catch (error) {
     next(error);
   }
