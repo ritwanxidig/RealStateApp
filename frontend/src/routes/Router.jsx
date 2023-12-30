@@ -10,6 +10,7 @@ import Error400 from '../utilities/authentication/Error400';
 import { useSelector } from 'react-redux';
 import ErrorModal from '../utilities/ErrorModal';
 import CustomAlert from '../utilities/Alert';
+import PrivateRoute from './PrivateRoute'
 
 const Router = () => {
     const Login = Loadable(lazy(() => import('../pages/authPages/Login')));
@@ -38,9 +39,11 @@ const Router = () => {
 
                 {/* protected routes */}
                 <Route path='/app' element={<MainLayout />} >
-                    <Route path='/app/' element={<Home />} />
-                    <Route path='/app/home' element={<Home />} />
-                    <Route path='/app/users' element={<Users_List />} />
+                    <Route path='/app' element={<PrivateRoute />}>
+                        <Route path='/app/' element={<Navigate to="/app/home" />} />
+                        <Route path='/app/home' element={<Home />} />
+                        <Route path='/app/users' element={<Users_List />} />
+                    </Route>
                 </Route>
 
                 {/* auth routes */}
