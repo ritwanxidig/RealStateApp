@@ -137,7 +137,7 @@ const StyledDataGrid = ({ data, columns }) => {
             pagination={{}}
             initialState={{
               pagination: {
-                paginationModel: { page: 0, pageSize: 15 },
+                paginationModel: { page: 0, pageSize: 10 },
               },
             }}
             slots={{ toolbar: CustomToolbar }}
@@ -148,12 +148,12 @@ const StyledDataGrid = ({ data, columns }) => {
                 },
               },
             }}
-            pageSizeOptions={[15, 25, 50]}
+            pageSizeOptions={[10, 20, 50]}
             disableRowSelectionOnClick
           />
         </Box>
       ) : (
-        <p>There is no data, please check your connection</p>
+        <p className="text-sm p-4" >There is no data, please check your connection</p>
       )}
     </div>
   );
