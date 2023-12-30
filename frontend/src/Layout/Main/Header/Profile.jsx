@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
     Avatar,
     Box,
@@ -19,8 +19,12 @@ import { FaList as IconListCheck, FaInbox as IconMail, FaUser as IconUser } from
 import ProfileImg from '../../../assets/images/profile/user-1.jpg';
 import { useTheme } from '@emotion/react';
 import { IconChevronDown, IconInbox, IconSubtask, IconX } from '@tabler/icons-react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import StyledButton from '../../../components/shared/StyledButton';
+import { useLogoutMutation } from '../../../app/services/api';
+import { authActions } from '../../../app/slices/authSlice';
+import { errorActions } from '../../../app/slices/errorSlice';
+import { alertActions } from '../../../app/slices/alertSlice';
 
 const StyledAvatar = styled(Avatar)({
     width: 35,
@@ -52,6 +56,10 @@ const Profile = () => {
     const { darkMode } = useSelector(state => state.theme)
 
     const theme = useTheme();
+    const { authenticatedUser } = useSelector(state => state.auth);
+    const [logout] = useLogoutMutation();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleClick2 = (event) => {
         setAnchorEl2(event.currentTarget);
@@ -67,6 +75,29 @@ const Profile = () => {
         '&:hover': {
         },
     });
+
+    const handleLogout = async () => {
+        try {
+            await logout().then(res => {
+                window.location.reload();
+                dispatch(authActions.logout({}));
+                dispatch(alertActions.setAlert({ type: "success", message: res.message }));
+                navigate("/");
+            }).catch(err => {
+                console.log(err);
+                dispatch(alertActions.setAlert({
+                    type: "error",
+                    message: err?.data?.message || "Something went wrong"
+                }));
+            })
+        } catch (error) {
+            console.log(error);
+            dispatch(errorActions.setError({
+                title: error?.data?.status || "Server Error",
+                message: error?.data?.message || "Something went wrong"
+            }))
+        }
+    }
 
 
 
@@ -89,10 +120,14 @@ const Profile = () => {
                 <StyledAvatar src={ProfileImg} />
                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', ml: 1 }}>
                     <span className='text-[12px] font-bold flex w-full items-center gap-2'>
-                        <Typography variant='body' fontSize='12px' fontWeight={600} >Ridwan</Typography>
+                        <Typography variant='body' fontSize='12px' fontWeight={600} >
+                            {authenticatedUser?.name}
+                        </Typography>
                         <IconChevronDown size='1rem' />
                     </span>
-                    <Typography variant='body2' fontSize='12px'>Admin</Typography>
+                    <Typography variant='body2' fontSize='12px' textTransform="capitalize">
+                        {authenticatedUser?.roles.join(",")}
+                    </Typography>
                 </Box>
             </Box>
 
@@ -130,7 +165,7 @@ const Profile = () => {
                 >
                     <Typography variant='h5' fontWeight={400} >User Profile</Typography>
                     <IconButton
-                    onClick={handleClose2}
+                        onClick={handleClose2}
                         sx={{
                             color: darkMode ? 'grey.400' : 'black'
                         }}
@@ -154,20 +189,21 @@ const Profile = () => {
                     <ProfileComponentList title="User Profile" subtitle="Personal Information" Icon={IconUser} darkMode={darkMode} />
                     {/* My Tasks */}
                     <ProfileComponentList title="My Tasks" subtitle="To-do and Daily Tasks" Icon={IconListCheck} darkMode={darkMode} />
-                    
+
                 </Box>
                 <Divider />
                 <Box
                     sx={{
                         display: 'flex',
                         width: '100%',
-                        mt:4,
+                        mt: 4,
                     }}
                 >
                     <StyledButton
                         variant='contained'
                         color='primary'
-                        sx={{ width: '100%', py:1.5 }}
+                        sx={{ width: '100%', py: 1.5 }}
+                        onClick={handleLogout}
                     >
                         Logout
                     </StyledButton>
