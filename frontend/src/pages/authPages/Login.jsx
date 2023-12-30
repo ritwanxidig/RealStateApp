@@ -6,10 +6,56 @@ import { Link } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { useTheme } from "@emotion/react"
 import CustomField from "../../components/form/CustomField"
+import { useFormik } from "formik";
+import { useLoginMutation } from "../../app/services/api";
+import { errorActions } from "../../app/slices/errorSlice";
+import { authActions } from "../../app/slices/authSlice";
+import * as yup from "yup";
+
+const validationSchema = yup.object({
+  email: yup
+    .string('Enter your email')
+    .email('Enter a valid email')
+    .required('Email is required'),
+  password: yup
+    .string('Enter your password')
+    .min(4, 'Password should be of minimum 4 characters length')
+    .required('Password is required'),
+});
 
 const Login = () => {
-  const { darkMode } = useSelector(state => state.theme);
-  const theme = useTheme();
+  const [login, { isLoading, isError, error }] = useLoginMutation()
+
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    validationSchema: validationSchema,
+    onSubmit: async (values, { resetForm }) => {
+      try {
+        const response = await login(values).unwrap().then((res) => {
+          authActions.login(res.data)
+          resetForm();
+
+        }).catch((err) => {
+          console.log(err);
+          if (err?.data?.message === 'User not found') {
+            setFieldError("email", "User not found")
+          }
+          if (err?.data?.message === 'Incorrect Password') {
+            setFieldError("password", "Wrong password")
+          }
+        })
+      } catch (error) {
+        console.log(error);
+        errorActions.setError({ isError: isError, error: { title: error?.data?.status || "Server Error", message: error.data.message || "Something went wrong" } })
+      } finally {
+      }
+    },
+  });
+
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit, setFieldError } = formik
 
   return (
     <AuthPage title="Sign In">
@@ -25,6 +71,11 @@ const Login = () => {
           <CustomField
             input
             label="Email"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.email}
+            touched={touched.email}
+            error={errors.email}
             type="email"
             name="email"
             id="email"
@@ -37,6 +88,11 @@ const Login = () => {
           <CustomField
             input
             label="Password"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.password}
+            touched={touched.password}
+            error={errors.password}
             type="password"
             name="password"
             id="password"
@@ -61,14 +117,24 @@ const Login = () => {
             Forgot Password ?
           </Typography>
         </Stack>
-        <Button variant="contained" sx={{
-          width: '100%', fontFamily: 'Plus Jakarta Sans', boxShadow: 'none', textTransform: 'none', fontSize: '16px',
-          '&:hover': {
+        <Button
+          variant="contained"
+          sx={{
+            width: '100%',
+            fontFamily: 'Plus Jakarta Sans',
             boxShadow: 'none',
-          }
-        }}>Login</Button>
-        <Typography sx={{ textDecoration: 'none', fontFamily: 'Plus Jakarta Sans', display: 'flex' }}>
-          <Typography  sx={{ fontFamily: 'Plus Jakarta Sans', fontWeight: '600', fontSize: '16px' }}>Don't have an account?</Typography>
+            textTransform: 'none',
+            fontSize: '16px',
+            '&:hover': {
+              boxShadow: 'none',
+            }
+          }}
+          onClick={handleSubmit}
+        >
+          Login
+        </Button>
+        <Typography variant="h1" sx={{ textDecoration: 'none', fontFamily: 'Plus Jakarta Sans', display: 'flex' }}>
+          <Typography component="span" sx={{ fontFamily: 'Plus Jakarta Sans', fontWeight: '600', fontSize: '16px' }}>Don't have an account?</Typography>
           <Link to="/auth/register" >
             <Typography sx={{ color: 'primary.main', fontFamily: 'Plus Jakarta Sans', fontWeight: '600', fontSize: '16px', ml: 1 }}>
               Register</Typography></Link>
