@@ -178,9 +178,15 @@ const Profile = () => {
                         <Avatar src={ProfileImg} sx={{ width: 100, height: 100, mx: 'auto', my: 2 }} />
                     </Box>
                     <Box sx={{ marginTop: -2 }}>
-                        <Typography variant='body' fontSize='14px' fontWeight={700} >Ridwan</Typography>
-                        <Typography variant='body2' fontSize='12px' color={darkMode ? 'grey.400' : ''} >Admin</Typography>
-                        <Typography variant='body2' fontSize='12px' color={darkMode ? 'grey.400' : ''} sx={{ display: 'flex', alignItems: 'center', gap: .5 }}> <IconInbox size={16} /> 6I8e0@example.com</Typography>
+                        <Typography variant='body' fontSize='14px' fontWeight={700} >
+                            {authenticatedUser?.name}
+                        </Typography>
+                        <Typography variant='body2' fontSize='12px' color={darkMode ? 'grey.400' : ''} textTransform="capitalize" >
+                            {authenticatedUser?.roles.join(" |")}
+                        </Typography>
+                        <Typography variant='body2' fontSize='12px' color={darkMode ? 'grey.400' : ''} sx={{ display: 'flex', alignItems: 'center', gap: .5 }}> <IconInbox size={16} />
+                            {authenticatedUser?.Email}
+                        </Typography>
                     </Box>
                 </Box>
                 <Divider />
