@@ -32,6 +32,13 @@ const api = createApi({
     addUser: PostEndpoint(builder, "users"),
     updateUser: UpdateEndpoint(builder, "users"),
     deleteUser: DeleteEndpoint(builder, "users"),
+
+    // properties endpoints
+    getProperties: QueryEndpoint(builder, "properties"),
+    getProperty: QueryParamsEndpoint(builder, "properties"),
+    addProperty: PostEndpoint(builder, "properties"),
+    updateProperty: UpdateEndpoint(builder, "properties"),
+    deleteProperty: DeleteEndpoint(builder, "properties"),
   }),
 });
 
@@ -47,6 +54,13 @@ export const {
   useAddUserMutation,
   useUpdateUserMutation,
   useDeleteUserMutation,
+
+  // hooks for properties
+  useGetPropertiesQuery,
+  useGetPropertyQuery,
+  useAddPropertyMutation,
+  useUpdatePropertyMutation,
+  useDeletePropertyMutation,
 } = api;
 
 export default api;
