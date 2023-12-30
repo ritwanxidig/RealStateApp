@@ -1,11 +1,10 @@
 import React from 'react'
 import AuthPage from './AuthPage'
-import { Box, Button, Checkbox, CircularProgress, FormControlLabel, FormGroup, Stack, Typography } from '@mui/material'
+import { Box, Button, CircularProgress, Typography } from '@mui/material'
 import CustomField from '../../components/form/CustomField'
 import { Link, useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import { useRegisterMutation } from '../../app/services/api'
-import { errorActions } from '../../app/slices/errorSlice'
 import { alertActions } from '../../app/slices/alertSlice'
 import * as yup from 'yup';
 import { useDispatch } from 'react-redux'

@@ -1,6 +1,6 @@
 import React from 'react';
-import { AppBar, Toolbar, IconButton, Drawer, List, useMediaQuery, Button, Box } from '@mui/material';
-import { IconLogin2, IconMenu, IconX } from '@tabler/icons-react';
+import { IconButton, Drawer, List, useMediaQuery, Box } from '@mui/material';
+import { IconMenu, IconX } from '@tabler/icons-react';
 import { styled } from '@mui/system';
 import Logo from '../../../components/logo/Logo'
 import { Link } from 'react-router-dom';
@@ -43,7 +43,7 @@ const Navbar = ({ pathname }) => {
 
     const { darkMode } = useSelector(state => state.theme)
 
-    const { isAuthenticated, authenticatedUser } = useSelector(state => state.auth)
+    const { isAuthenticated } = useSelector(state => state.auth)
 
     const navItems = [
         { label: 'Home', path: '/' },

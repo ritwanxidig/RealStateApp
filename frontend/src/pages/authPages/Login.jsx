@@ -1,10 +1,8 @@
 import React from "react"
 import AuthPage from "./AuthPage"
 import { Box, Button, Checkbox, FormControlLabel, FormGroup, Stack, Typography } from "@mui/material"
-import CustomInput from "../../components/form/CustomInput"
 import { Link, useNavigate } from "react-router-dom"
-import { useDispatch, useSelector } from "react-redux"
-import { useTheme } from "@emotion/react"
+import { useDispatch } from "react-redux"
 import CustomField from "../../components/form/CustomField"
 import { useFormik } from "formik";
 import { useLoginMutation } from "../../app/services/api";
@@ -25,7 +23,7 @@ const validationSchema = yup.object({
 });
 
 const Login = () => {
-  const [login, { isLoading, isError, error }] = useLoginMutation();
+  const [login] = useLoginMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

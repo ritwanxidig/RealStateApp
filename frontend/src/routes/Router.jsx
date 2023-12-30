@@ -21,7 +21,11 @@ const Router = () => {
     const Users_List = Loadable(lazy(() => import('../pages/dashboard/users/list')));
 
     // accessing error slice
-    const { error, isError } = useSelector((state) => state.error);
+    useSelector((state) => state.error);
+
+    // checking the session in the cookie if it exists or not
+   
+    // React.useEffect
 
     return (
         <Fragment>
@@ -38,8 +42,8 @@ const Router = () => {
                 </Route>
 
                 {/* protected routes */}
-                <Route path='/app' element={<MainLayout />} >
-                    <Route path='/app' element={<PrivateRoute />}>
+                <Route path='/app' element={<PrivateRoute />}>
+                    <Route path='/app' element={<MainLayout />} >
                         <Route path='/app/' element={<Navigate to="/app/home" />} />
                         <Route path='/app/home' element={<Home />} />
                         <Route path='/app/users' element={<Users_List />} />

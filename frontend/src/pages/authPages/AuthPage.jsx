@@ -1,12 +1,10 @@
 import { useTheme } from '@emotion/react'
-import { Box, Button, Checkbox, FormControlLabel, FormGroup, Stack, Typography, useMediaQuery } from '@mui/material'
+import { Box, Typography, useMediaQuery } from '@mui/material'
 import React from 'react'
 import { LoginBack } from '../../assets'
 import Logo from '../../components/logo/Logo'
 import GoogleOAuth from './components/GoogleOAuth'
 import AppleOAuth from './components/AppleOAuth'
-import CustomInput from '../../components/form/CustomInput'
-import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 const AuthPage = (props) => {

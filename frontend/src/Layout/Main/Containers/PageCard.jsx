@@ -1,8 +1,7 @@
 import React from 'react';
-import { Card, CardContent, Typography, Stack, Box, CardHeader, useMediaQuery } from '@mui/material';
+import { Card, CardContent, Typography, Box, CardHeader, useMediaQuery } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { IconHomeDot } from '@tabler/icons-react';
 import { BannerBackground } from '../../../assets';
 
 const PageCard = ({
@@ -11,9 +10,6 @@ const PageCard = ({
     headsubtitle,
     children,
     action,
-    footer,
-    middlecontent,
-    link,
 }) => {
     const { darkMode } = useSelector((state) => state.theme);
     const path = window.location.pathname.split('/').map(path => path + '/');
