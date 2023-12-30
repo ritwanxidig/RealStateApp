@@ -2,8 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-.btn1 {
-  @apply px-4 py-1 rounded-full transition font-semibold hover:opacity-90;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.input-design {
+  @apply outline-none border border-gray-300 rounded-lg w-full px-3 py-2 focus:ring-1 disabled:bg-gray-500;
+}
+.normal-btn {
+  @apply p-2 bg-blue-500 rounded text-white hover:bg-blue-600 transition-all;
+}
+.normalCancel-btn {
+  @apply p-2 bg-red-500 rounded text-white hover:bg-red-600 transition-all;
 }
 
 ::-webkit-scrollbar {
@@ -15,4 +28,33 @@
 }
 ::-webkit-scrollbar-track {
   background-color: transparent;
+}
+
+/* color-picker style  */
+
+#preview {
+  background: transparent
+    url("https://ej2.syncfusion.com/react/demos/src/color-picker/images/pen.png")
+    no-repeat;
+  display: inline-block;
+  height: 80px;
+  margin: 10px 0;
+  min-width: 300px;
+  max-width: 600px;
+  background-color: #008000;
+}
+.table-class {
+  @apply min-w-full border text-center text-sm font-light dark:border-neutral-500;
+}
+.table-head {
+  @apply border-b font-medium dark:border-neutral-500;
+}
+.th-class {
+  @apply border-r dark:border-neutral-500;
+}
+.tr-class {
+  @apply border-b dark:border-neutral-500;
+}
+.td-class {
+  @apply border-r px-6 py-2 dark:border-neutral-500;
 }

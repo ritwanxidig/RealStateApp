@@ -1,39 +1,58 @@
-import Loadable from 'components/Loadable';
-import MainLayout from 'layout/MainLayout/index';
-import MinimalLayout from 'layout/MinimalLayout/index';
-import Home from 'pages/Landing/Home';
-import Login from 'pages/authentication/Login';
-import Register from 'pages/authentication/Register';
-import React, { Fragment, lazy } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import React, { lazy, Fragment } from 'react'
+import { Navigate, Routes, Route } from 'react-router'
+import Loadable from '../components/shared/Loadable'
+import MainLayout from '../Layout/Main/MainLayout';
+import HomePage from '../pages/Landing/Home';
+import Landing from '../pages/Landing/Landing';
+import About from '../pages/Landing/About';
+import Contact from '../pages/Landing/Contact';
+import Error400 from '../utilities/authentication/Error400';
+import { useSelector } from 'react-redux';
+import ErrorModal from '../utilities/ErrorModal';
 
 const Router = () => {
-  // pages
-  const DashboardDefault = Loadable(lazy(() => import('pages/dashboard')));
+    const Login = Loadable(lazy(() => import('../pages/authPages/Login')));
+    const Register = Loadable(lazy(() => import('../pages/authPages/Register')));
 
-  // render - sample page
-  const SamplePage = Loadable(lazy(() => import('pages/extra-pages/SamplePage')));
+    // protected routes
+    const Home = Loadable(lazy(() => import('../pages/dashboard/Home')));
+    const Users_List = Loadable(lazy(() => import('../pages/dashboard/users/list')));
 
-  // render - utilities
-  //   const Typography = Loadable(lazy(() => import('pages/components-overview/Typography')));
-  //   const Color = Loadable(lazy(() => import('pages/components-overview/Color')));
-  //   const Shadow = Loadable(lazy(() => import('pages/components-overview/Shadow')));
-  //   const AntIcons = Loadable(lazy(() => import('pages/components-overview/AntIcons')));
-  return (
-    <Fragment>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/" element={<MinimalLayout />}>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-        </Route>
-        <Route path="/app" element={<MainLayout />}>
-          <Route path="/app/" element={<DashboardDefault />} />
-          <Route path="/app/sample-page" element={<SamplePage />} />
-        </Route>
-      </Routes>
-    </Fragment>
-  );
-};
+    // accessing error slice
+    const { error, isError } = useSelector((state) => state.error);
 
-export default Router;
+    return (
+        <Fragment>
+            {/* Global Error Handler */}
+            {isError && <ErrorModal />}
+            <Routes>
+                {/* public routes */}
+                <Route element={<Landing />}>
+                    <Route path='/' element={<HomePage />} />
+                    <Route path='/about' element={<About />} />
+                    <Route path='/contact' element={<Contact />} />
+                </Route>
+
+                {/* protected routes */}
+                <Route path='/app' element={<MainLayout />} >
+                    <Route path='/app/' element={<Home />} />
+                    <Route path='/app/home' element={<Home />} />
+                    <Route path='/app/users' element={<Users_List />} />
+                </Route>
+
+                {/* auth routes */}
+                <Route path='/auth'>
+                    <Route path='/auth/login' element={<Login />} />
+                    <Route path='/auth/register' element={<Register />} />
+
+                    {/* Errors routes */}
+                    <Route path="/auth/404" element={<Error400 />} />
+                </Route>
+                {/* unknown routes */}
+                <Route path="*" element={<Navigate to="/auth/404" />} />
+            </Routes>
+        </Fragment>
+    )
+}
+
+export default Router
