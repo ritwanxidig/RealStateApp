@@ -153,10 +153,10 @@ export const BluelighTheme = createTheme({
       main: "#89bcfa",
     },
     success: {
-      main: "#6e96c8",
+      main: "#5d5fef",
     },
     error: {
-      main: "#9d8c7b",
+      main: "#e63033",
     },
     warning: {
       main: "#c4af9a",
@@ -235,10 +235,10 @@ export const BlueDarkTheme = createTheme({
       main: "#89bcfa",
     },
     success: {
-      main: "#6e96c8",
+      main: "#5d5fef",
     },
     error: {
-      main: "#9d8c7b",
+      main: "#e63033",
     },
     warning: {
       main: "#c4af9a",

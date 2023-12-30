@@ -9,6 +9,7 @@ import Contact from '../pages/Landing/Contact';
 import Error400 from '../utilities/authentication/Error400';
 import { useSelector } from 'react-redux';
 import ErrorModal from '../utilities/ErrorModal';
+import CustomAlert from '../utilities/Alert';
 
 const Router = () => {
     const Login = Loadable(lazy(() => import('../pages/authPages/Login')));
@@ -24,7 +25,9 @@ const Router = () => {
     return (
         <Fragment>
             {/* Global Error Handler */}
-            {isError && <ErrorModal />}
+            <ErrorModal />
+            {/* using global alert */}
+            <CustomAlert />
             <Routes>
                 {/* public routes */}
                 <Route element={<Landing />}>
