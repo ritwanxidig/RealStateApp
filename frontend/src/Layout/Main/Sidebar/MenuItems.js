@@ -25,9 +25,9 @@ const MenuItems = [
   },
   {
     id: uniqueId(),
-    title: "Houses",
+    title: "Properties",
     icon: IconHome,
-    href: "/app/houses",
+    href: "/app/properties",
   },
   {
     id: uniqueId(),
