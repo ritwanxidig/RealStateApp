@@ -1,0 +1,32 @@
+A Real State Application Schema
+
+Schemas: 
+    - User Schema  
+        -> Name
+        -> Email
+        -> Password
+        -> Profile
+        -> Roles
+        -> Authentication - Salt, PasswordHash, SessionToken
+    - Property Schema
+        -> Name
+        -> Description
+        -> Address(Country, city, location)
+        -> Price
+        -> Type
+        -> Beds
+        -> Baths
+        -> Images
+        -> Furnished
+        -> Parking
+        -> Area
+        -> Status
+        -> UserRef(Owner)
+
+Features
+    - Admin
+        -> Can add users
+        -> Can add properties
+    - User
+        -> Can view properties
+        -> Can add properties
