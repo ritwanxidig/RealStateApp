@@ -14,7 +14,7 @@ export const logOut = (
   next: express.NextFunction
 ) => {
   res.clearCookie("session-token");
-  return res.sendStatus(200).json("Logged out successfully");
+  return res.status(200).json("Logged out successfully");
 };
 
 export const login = async (

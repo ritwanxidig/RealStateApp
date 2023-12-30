@@ -81,7 +81,7 @@ const Profile = () => {
             await logout().then(res => {
                 window.location.reload();
                 dispatch(authActions.logout({}));
-                dispatch(alertActions.setAlert({ type: "success", message: res.message }));
+                dispatch(alertActions.setAlert({ type: "success", message: "logged out" }));
                 navigate("/");
             }).catch(err => {
                 console.log(err);
