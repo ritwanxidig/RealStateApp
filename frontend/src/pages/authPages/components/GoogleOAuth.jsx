@@ -29,7 +29,7 @@ const GoogleOAuth = () => {
                 profilePic: result.user.photoURL
             }).unwrap().then((res => {
                 dispatch(authActions.login(res));
-                navigate("/app");
+                navigate("/");
             })).catch((er => {
                 dispatch(alertActions.setAlert({
                     type: "error",

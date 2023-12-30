@@ -39,7 +39,7 @@ const Login = () => {
       try {
         await login(values).unwrap().then((res) => {
           dispatch(authActions.login(res));
-          navigate("/app");
+          navigate("/");
           resetForm();
 
         }).catch((err) => {
