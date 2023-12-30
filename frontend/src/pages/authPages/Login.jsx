@@ -2,14 +2,15 @@ import React from "react"
 import AuthPage from "./AuthPage"
 import { Box, Button, Checkbox, FormControlLabel, FormGroup, Stack, Typography } from "@mui/material"
 import CustomInput from "../../components/form/CustomInput"
-import { Link } from "react-router-dom"
-import { useSelector } from "react-redux"
+import { Link, useNavigate } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
 import { useTheme } from "@emotion/react"
 import CustomField from "../../components/form/CustomField"
 import { useFormik } from "formik";
 import { useLoginMutation } from "../../app/services/api";
 import { errorActions } from "../../app/slices/errorSlice";
 import { authActions } from "../../app/slices/authSlice";
+import { alertActions } from "../../app/slices/alertSlice";
 import * as yup from "yup";
 
 const validationSchema = yup.object({
@@ -24,7 +25,9 @@ const validationSchema = yup.object({
 });
 
 const Login = () => {
-  const [login, { isLoading, isError, error }] = useLoginMutation()
+  const [login, { isLoading, isError, error }] = useLoginMutation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -34,12 +37,17 @@ const Login = () => {
     validationSchema: validationSchema,
     onSubmit: async (values, { resetForm }) => {
       try {
-        const response = await login(values).unwrap().then((res) => {
-          authActions.login(res.data)
+        await login(values).unwrap().then((res) => {
+          dispatch(authActions.login(res));
+          navigate("/app");
           resetForm();
 
         }).catch((err) => {
           console.log(err);
+          dispatch(alertActions.setAlert({
+            type: "error",
+            message: err?.data?.message || "Something went wrong"
+          }))
           if (err?.data?.message === 'User not found') {
             setFieldError("email", "User not found")
           }
@@ -49,7 +57,10 @@ const Login = () => {
         })
       } catch (error) {
         console.log(error);
-        errorActions.setError({ isError: isError, error: { title: error?.data?.status || "Server Error", message: error.data.message || "Something went wrong" } })
+        dispatch(errorActions.setError({
+          title: error?.data?.status || "Server Error",
+          message: error?.data?.message || "Something went wrong"
+        }))
       } finally {
       }
     },

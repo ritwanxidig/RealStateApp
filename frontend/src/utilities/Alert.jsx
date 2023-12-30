@@ -33,16 +33,13 @@ const CustomAlert = () => {
             autoHideDuration={7000}
             onClose={handleClose}
             TransitionComponent={SlideTransition}
-            message={message}
             children={
                 <Alert variant='filled'
-
-
                     onClose={handleClose}
                     severity={type}
                     sx={{ width: '100%', borderRadius: '10px' }}
                     action={action()}>
-                    adsf
+                    {message}
                 </Alert>
             }
         />
