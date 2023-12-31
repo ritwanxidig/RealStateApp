@@ -1,6 +1,12 @@
 import { uniqueId } from "lodash";
 
-import { IconDashboard, IconHome, IconReceipt, IconUsers } from "@tabler/icons-react";
+import {
+  IconAddressBook,
+  IconDashboard,
+  IconHome,
+  IconReceipt,
+  IconUsers,
+} from "@tabler/icons-react";
 
 const MenuItems = [
   {
@@ -28,6 +34,12 @@ const MenuItems = [
     title: "Properties",
     icon: IconHome,
     href: "/app/properties",
+  },
+  {
+    id: uniqueId(),
+    title: "Addresses",
+    icon: IconAddressBook,
+    href: "/app/addresses",
   },
   {
     id: uniqueId(),
