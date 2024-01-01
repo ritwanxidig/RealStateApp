@@ -45,16 +45,14 @@ const AddUser = ({ onOpen, setOnOpen }) => {
     validationSchema: validationSchemas,
     onSubmit: async (values) => {
       try {
-        await addUser(values).unwrap().then(() => {
-          toast.success("User added successfully");
-          setOnOpen(false);
-        }).catch((err) => {
-          console.log(err);
-          toast.error(err?.data?.message || "Something went wrong");
-        })
+        await toast.promise(addUser(values).unwrap().then(rs => { setOnOpen(false) }), {
+          loading: 'Adding user...',
+          success: 'User added successfully',
+          error: 'Error adding new user',
+        });
       } catch (err) {
         console.log(err);
-        toast.error(err?.data?.message || "Something went wrong");FF
+        // toast.error(err?.data?.message || "Something went wrong"); 
       }
     }
   });

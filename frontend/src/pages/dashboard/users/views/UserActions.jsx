@@ -44,16 +44,17 @@ const UserActions = ({ data, setOnOpen }) => {
         onSubmit: async (values) => {
             const param = data?._id
             try {
-                await updateUser({ param, ...values }).unwrap().then(() => {
-                    toast.success("User updated successfully");
+                await toast.promise(updateUser({ param, values }).unwrap().then(() => {
+                    // toast.success("User updated successfully");
                     setOnOpen(false);
-                }).catch((err) => {
-                    console.log(err);
-                    toast.error(err?.data?.message || "Error something went wrong.")
-                })
+                }), {
+                    loading: 'Updating user...',
+                    success: 'User updated successfully',
+                    error: 'Error updating user',
+                });
             } catch (err) {
                 console.log(err);
-                toast.error(err?.data?.message || "Error something went wrong.")
+                // toast.error(err?.data?.message || "Error something went wrong.")
             }
         }
     });
@@ -62,16 +63,17 @@ const UserActions = ({ data, setOnOpen }) => {
     const handleDelete = async () => {
         const param = data?._id
         try {
-            await deleteUser(param).unwrap().then(() => {
-                toast.success("User deleted successfully");
+            await toast.promise(deleteUser(param).unwrap().then(() => {
+                // toast.success("User deleted successfully");
                 setOnOpen(false);
-            }).catch((err) => {
-                console.log(err);
-                toast.error(err?.data?.message || "Error something went wrong.")
-            })
+            }), {
+                loading: 'Deleting user...',
+                success: 'User deleted successfully',
+                error: 'Error deleting user',
+            });
         } catch (err) {
             console.log(err);
-            toast.error(err?.data?.message || "Error something went wrong.")
+            // toast.error(err?.data?.message || "Error something went wrong.")
         }
     }
 

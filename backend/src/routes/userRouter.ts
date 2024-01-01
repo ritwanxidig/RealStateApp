@@ -17,23 +17,22 @@ export default (router: express.Router) => {
     getAllUsers
   );
   router.get("/users/:id", IsAuthenticated, getUserById);
-  // disable authorization for testing purpose
   router.post(
     "/users",
     IsAuthenticated,
-    // IsAuthorized([Roles.Admin]),
+    IsAuthorized([Roles.Admin]),
     createUser
   );
   router.put(
     "/users/:id",
     IsAuthenticated,
-    // IsAuthorized([Roles.Admin]),
+    IsAuthorized([Roles.Admin]),
     updateUser
   );
   router.delete(
     "/users/:id",
     IsAuthenticated,
-    // IsAuthorized([Roles.Admin]),
+    IsAuthorized([Roles.Admin]),
     deleteUser
   );
 };
