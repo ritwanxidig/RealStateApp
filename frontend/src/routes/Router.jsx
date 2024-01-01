@@ -9,6 +9,7 @@ import Contact from '../pages/Landing/Contact';
 import Error400 from '../views/authentication/Error400';
 import { useSelector } from 'react-redux';
 import ErrorModal from '../views/utilities/ErrorModal';
+import AccessDenied from '../pages/authPages/AccessDenied'
 import PrivateRoute from './PrivateRoute'
 import { Toaster } from 'react-hot-toast'
 
@@ -42,14 +43,18 @@ const Router = () => {
                     <Route path='/contact' element={<Contact />} />
                 </Route>
 
-                {/* protected routes */}
-                <Route path='/app' element={<PrivateRoute />}>
+                {/* protected routes for admin */}
+                <Route path='/app' element={<PrivateRoute allowedRoles={['admin', 'user']} />}>
                     <Route path='/app' element={<MainLayout />} >
                         <Route path='/app/' element={<Navigate to="/app/home" />} />
                         <Route path='/app/home' element={<Home />} />
-                        <Route path='/app/users' element={<Users_List />} />
-                        <Route path='/app/properties' element={<Properties_List />} />
-                        <Route path='/app/addresses' element={<Address_List />} />
+
+                        {/* only for admin */}
+                        <Route path='/app/' element={<PrivateRoute allowedRoles={['admin']} />}>
+                            <Route path='/app/users' element={<Users_List />} />
+                            <Route path='/app/properties' element={<Properties_List />} />
+                            <Route path='/app/addresses' element={<Address_List />} />
+                        </Route>
                     </Route>
                 </Route>
 
@@ -60,6 +65,8 @@ const Router = () => {
 
                     {/* Errors routes */}
                     <Route path="/auth/404" element={<Error400 />} />
+                    <Route path="/auth/404" element={<Error400 />} />
+                    <Route path='/auth/403' element={<AccessDenied />} />
                 </Route>
                 {/* unknown routes */}
                 <Route path="*" element={<Navigate to="/auth/404" />} />
