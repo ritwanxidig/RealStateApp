@@ -12,6 +12,7 @@ import CustomField from '../../../../components/form/CustomField'
 import { useDeleteUserMutation, useUpdateUserMutation } from '../../../../app/services/api'
 import { alertActions } from '../../../../app/slices/alertSlice'
 import { useDispatch } from 'react-redux'
+import toast from 'react-hot-toast'
 
 
 
@@ -44,15 +45,15 @@ const UserActions = ({ data, setOnOpen }) => {
             const param = data?._id
             try {
                 await updateUser({ param, ...values }).unwrap().then(() => {
-                    dispatch(alertActions.setAlert({ type: 'success', message: 'User updated successfully' }));
+                    toast.success("User updated successfully");
                     setOnOpen(false);
                 }).catch((err) => {
                     console.log(err);
-                    dispatch(alertActions.setAlert({ message: err?.data?.message, type: 'error' }));
+                    toast.error(err?.data?.message || "Error something went wrong.")
                 })
             } catch (err) {
                 console.log(err);
-                dispatch(alertActions.setAlert({ message: err?.data?.message, type: 'error' }));
+                toast.error(err?.data?.message || "Error something went wrong.")
             }
         }
     });
@@ -62,15 +63,15 @@ const UserActions = ({ data, setOnOpen }) => {
         const param = data?._id
         try {
             await deleteUser(param).unwrap().then(() => {
-                dispatch(alertActions.setAlert({ type: 'success', message: 'User deleted successfully' }));
+                toast.success("User deleted successfully");
                 setOnOpen(false);
             }).catch((err) => {
                 console.log(err);
-                dispatch(alertActions.setAlert({ message: err?.data?.message, type: 'error' }));
+                toast.error(err?.data?.message || "Error something went wrong.")
             })
         } catch (err) {
             console.log(err);
-            dispatch(alertActions.setAlert({ message: err?.data?.message, type: 'error' }));
+            toast.error(err?.data?.message || "Error something went wrong.")
         }
     }
 
