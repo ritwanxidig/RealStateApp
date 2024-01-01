@@ -10,6 +10,7 @@ import CustomField from '../../../../components/form/CustomField'
 import StyledButton from '../../../../components/shared/StyledButton'
 import { useAddUserMutation } from '../../../../app/services/api'
 import { alertActions } from '../../../../app/slices/alertSlice'
+import toast from 'react-hot-toast'
 
 
 const validationSchemas = yup.object().shape({
@@ -45,15 +46,15 @@ const AddUser = ({ onOpen, setOnOpen }) => {
     onSubmit: async (values) => {
       try {
         await addUser(values).unwrap().then(() => {
-          dispatch(alertActions.setAlert({ type: 'success', message: 'User added successfully' }));
+          toast.success("User added successfully");
           setOnOpen(false);
         }).catch((err) => {
           console.log(err);
-          dispatch(alertActions.setAlert({ message: err?.data?.message, type: 'error' }));
+          toast.error(err?.data?.message || "Something went wrong");
         })
       } catch (err) {
         console.log(err);
-        dispatch(alertActions.setAlert({ message: err?.data?.message, type: 'error' }));
+        toast.error(err?.data?.message || "Something went wrong");FF
       }
     }
   });
