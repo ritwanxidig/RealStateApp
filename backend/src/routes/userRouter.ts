@@ -13,7 +13,7 @@ export default (router: express.Router) => {
   router.get(
     "/users",
     IsAuthenticated,
-    IsAuthorized([Roles.User]),
+    IsAuthorized([Roles.Admin]),
     getAllUsers
   );
   router.get("/users/:id", IsAuthenticated, getUserById);

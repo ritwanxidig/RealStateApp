@@ -8,7 +8,7 @@ import {
 import { IsAuthenticated } from "../middleware";
 
 export default (router: Router) => {
-  router.get("/properties", getAllProperties);
+  router.get("/properties", IsAuthenticated, getAllProperties);
   router.post("/properties", IsAuthenticated, addProperty);
   router.put("/properties/:id", IsAuthenticated, editProperty);
   router.delete("/properties/:id", IsAuthenticated, deleteProperty);

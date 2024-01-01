@@ -40,7 +40,7 @@ export const IsAuthenticated = async (
   next();
 };
 
-export const IsAuthorized =  (authorizedRoles: string[]) => {
+export const IsAuthorized = (authorizedRoles: string[]) => {
   return (req: Request, res: Response, next: NextFunction) => {
     const user = get(req, "identity") as Record<string, any>;
     if (!user) {
@@ -51,7 +51,7 @@ export const IsAuthorized =  (authorizedRoles: string[]) => {
       (role: string) => role && authorizedRoles.includes(role)
     );
     if (!isAuthorized) {
-      return next(errorHandler(401, "you are not authorized!"));
+      return next(errorHandler(403, "you are not authorized!"));
     }
 
     next();
