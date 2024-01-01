@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux'
 import { useSignInWithGoogleMutation } from '../../../app/services/api'
 import { alertActions } from '../../../app/slices/alertSlice.js'
 import { authActions } from '../../../app/slices/authSlice.js'
+import toast from 'react-hot-toast'
 
 const GoogleOAuth = () => {
     const [signInWithGoogle, { isLoading }] = useSignInWithGoogleMutation();
@@ -31,10 +32,8 @@ const GoogleOAuth = () => {
                 dispatch(authActions.login(res));
                 navigate("/");
             })).catch((er => {
-                dispatch(alertActions.setAlert({
-                    type: "error",
-                    message: er?.data?.message || "Something went wrong"
-                }))
+                toast.error(er?.data?.message || "Something went wrong")
+                console.log(er);
             }));
         } catch (error) {
             console.log(error);
