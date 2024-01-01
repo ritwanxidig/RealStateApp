@@ -2,7 +2,7 @@ import { toast } from "react-hot-toast";
 
 export const Tags = ["Users", "Properties", "Lands"];
 
-export const onQueryStartedError = async (arg, { queryFulfilled }) => {
+const onQueryStartedError = async (arg, { queryFulfilled }) => {
   try {
     await queryFulfilled;
   } catch (error) {
@@ -28,6 +28,7 @@ export const QueryParamsEndpoint = (builder, query) => {
   return builder.query({
     query: (param) => `${query}/${param}`,
     providesTags: Tags,
+    onQueryStarted: onQueryStartedError,
   });
 };
 
@@ -38,6 +39,7 @@ export const DeleteEndpoint = (builder, query) => {
       method: "DELETE",
     }),
     invalidatesTags: Tags,
+    onQueryStarted: onQueryStartedError,
   });
 };
 
@@ -49,6 +51,7 @@ export const UpdateEndpoint = (builder, query) => {
       body: body,
     }),
     invalidatesTags: Tags,
+    onQueryStarted: onQueryStartedError,
   });
 };
 
@@ -60,5 +63,6 @@ export const PostEndpoint = (builder, query) => {
       body: body,
     }),
     invalidatesTags: Tags,
+    onQueryStarted: onQueryStartedError,
   });
 };
