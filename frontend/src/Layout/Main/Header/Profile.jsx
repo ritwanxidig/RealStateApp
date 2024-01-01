@@ -25,6 +25,7 @@ import { useLogoutMutation } from '../../../app/services/api';
 import { authActions } from '../../../app/slices/authSlice';
 import { errorActions } from '../../../app/slices/errorSlice';
 import { alertActions } from '../../../app/slices/alertSlice';
+import toast from 'react-hot-toast';
 
 const StyledAvatar = styled(Avatar)({
     width: 35,
@@ -81,14 +82,11 @@ const Profile = () => {
             await logout().then(res => {
                 window.location.reload();
                 dispatch(authActions.logout({}));
-                dispatch(alertActions.setAlert({ type: "success", message: "logged out" }));
+                toast.success("Logged out successfully");
                 navigate("/");
             }).catch(err => {
                 console.log(err);
-                dispatch(alertActions.setAlert({
-                    type: "error",
-                    message: err?.data?.message || "Something went wrong"
-                }));
+                toast.error(err?.data?.message || "Something went wrong")
             })
         } catch (error) {
             console.log(error);
