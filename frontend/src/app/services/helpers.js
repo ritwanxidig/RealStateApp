@@ -1,9 +1,26 @@
+import { toast } from "react-hot-toast";
+
 export const Tags = ["Users", "Properties", "Lands"];
+
+export const onQueryStartedError = async (arg, { queryFulfilled }) => {
+  try {
+    await queryFulfilled;
+  } catch (error) {
+    if (error.error.status === 401) {
+      localStorage.clear();
+      window.location.href = "/auth/login";
+      toast.error(error?.error?.data?.message || "Session Expired");
+    } else {
+      toast.error(error?.error?.data?.message || "Something went wrong");
+    }
+  }
+};
 
 export const QueryEndpoint = (builder, query) => {
   return builder.query({
     query: () => query,
     providesTags: Tags,
+    onQueryStarted: onQueryStartedError,
   });
 };
 
