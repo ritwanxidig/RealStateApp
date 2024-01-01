@@ -10,6 +10,7 @@ import { errorActions } from "../../app/slices/errorSlice";
 import { authActions } from "../../app/slices/authSlice";
 import { alertActions } from "../../app/slices/alertSlice";
 import * as yup from "yup";
+import toast from "react-hot-toast"
 
 const validationSchema = yup.object({
   email: yup
@@ -42,10 +43,7 @@ const Login = () => {
 
         }).catch((err) => {
           console.log(err);
-          dispatch(alertActions.setAlert({
-            type: "error",
-            message: err?.data?.message || "Something went wrong"
-          }))
+          toast.error(err?.data?.message || "Something went wrong")
           if (err?.data?.message === 'User not found') {
             setFieldError("email", "User not found")
           }
@@ -55,10 +53,7 @@ const Login = () => {
         })
       } catch (error) {
         console.log(error);
-        dispatch(errorActions.setError({
-          title: error?.data?.status || "Server Error",
-          message: error?.data?.message || "Something went wrong"
-        }))
+        toast.error(error?.data?.message || "Something went wrong")
       } finally {
       }
     },
