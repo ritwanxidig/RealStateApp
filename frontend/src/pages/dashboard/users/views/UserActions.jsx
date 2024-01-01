@@ -44,7 +44,7 @@ const UserActions = ({ data, setOnOpen }) => {
         onSubmit: async (values) => {
             const param = data?._id
             try {
-                await toast.promise(updateUser({ param, values }).unwrap().then(() => {
+                await toast.promise(updateUser({ param, ...values }).unwrap().then(() => {
                     // toast.success("User updated successfully");
                     setOnOpen(false);
                 }), {
