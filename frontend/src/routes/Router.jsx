@@ -9,8 +9,8 @@ import Contact from '../pages/Landing/Contact';
 import Error400 from '../views/authentication/Error400';
 import { useSelector } from 'react-redux';
 import ErrorModal from '../views/utilities/ErrorModal';
-import CustomAlert from '../views/utilities/Alert';
 import PrivateRoute from './PrivateRoute'
+import { Toaster } from 'react-hot-toast'
 
 const Router = () => {
     const Login = Loadable(lazy(() => import('../pages/authPages/Login')));
@@ -25,16 +25,15 @@ const Router = () => {
     // accessing error slice
     useSelector((state) => state.error);
 
-    // checking the session in the cookie if it exists or not
-
-    // React.useEffect
-
     return (
         <Fragment>
             {/* Global Error Handler */}
             <ErrorModal />
             {/* using global alert */}
-            <CustomAlert />
+            <Toaster
+                position="top-right"
+                reverseOrder={true}
+            />
             <Routes>
                 {/* public routes */}
                 <Route element={<Landing />}>
