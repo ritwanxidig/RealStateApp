@@ -9,6 +9,7 @@ import { alertActions } from '../../../../app/slices/alertSlice';
 import { authActions } from '../../../../app/slices/authSlice';
 import { Avatar, Box, IconButton, Menu, Typography } from '@mui/material';
 import { SampleProfile1 } from '../../../../assets';
+import toast from 'react-hot-toast';
 
 const NavbarAvatar = () => {
     const [anchorElement, setAnchorElement] = React.useState(null);
@@ -23,14 +24,11 @@ const NavbarAvatar = () => {
             await logout().then(res => {
                 window.location.reload();
                 dispatch(authActions.logout({}));
-                dispatch(alertActions.setAlert({ type: "success", message: "logged out" }));
+                toast.success("Logged out successfully");
                 navigate("/");
             }).catch(err => {
                 console.log(err);
-                dispatch(alertActions.setAlert({
-                    type: "error",
-                    message: err?.data?.message || "Something went wrong"
-                }));
+                toast.error(err?.data?.message || "Something went wrong")
             })
         } catch (error) {
             console.log(error);
