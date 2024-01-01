@@ -8,6 +8,7 @@ import { useRegisterMutation } from '../../app/services/api'
 import { alertActions } from '../../app/slices/alertSlice'
 import * as yup from 'yup';
 import { useDispatch } from 'react-redux'
+import toast from 'react-hot-toast'
 
 
 
@@ -53,10 +54,7 @@ const Register = () => {
       }
       try {
         await register(toSendValues).unwrap().then((res) => {
-          dispatch(alertActions.setAlert({
-            type: "success",
-            message: "Account created successfully"
-          }));
+          toast.success("Account created successfully")
           console.log(res);
           navigate("/auth/login");
         }).catch((err) => {
@@ -67,17 +65,11 @@ const Register = () => {
           if (err?.data?.message === 'Email already exists') {
             setFieldError("email", "Email already exists")
           }
-          dispatch(alertActions.setAlert({
-            type: "error",
-            message: err?.data?.message || "Something went wrong"
-          }))
+          toast.error(err?.data?.message || "Something went wrong")
         })
       } catch (error) {
         console.log(error);
-        dispatch(alertActions.setAlert({
-          type: "error",
-          message: error?.data?.message || "Something went wrong"
-        }))
+        toast.error(error?.data?.message || "Something went wrong")
       }
     },
   });
