@@ -72,6 +72,7 @@ const Sidebar = (props) => {
         sx: {
           width: sidebarWidth,
           boxShadow: (theme) => theme.shadows[8],
+           backgroundColor: `${darkMode ? 'primary.900' : ''}`,
         },
       }}
     >
