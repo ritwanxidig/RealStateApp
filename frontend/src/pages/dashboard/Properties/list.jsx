@@ -9,6 +9,7 @@ import { Avatar, Box, Checkbox, IconButton } from '@mui/material'
 import { IconDots, IconEye } from '@tabler/icons-react'
 import StyledDataGrid from '../../../components/StyledDataGrid'
 import { SampleProfile1 } from '../../../assets'
+import Loader from '../../../views/utilities/Loader'
 
 const Properties_List = () => {
     const { data: properties, isFetching } = useGetPropertiesQuery();
@@ -47,8 +48,7 @@ const Properties_List = () => {
     ]
 
     const rows = properties?.map(property => ({ ...property, id: property._id })) || [];
-
-
+    
     return (
         <PageContainer title='Properties' description=''>
             <PageCard
