@@ -35,6 +35,20 @@ export const getAllCountries = async (
   }
 };
 
+export const getSingleCountry = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { id } = req.params;
+  try {
+    const country = await getCountryById(id);
+    return res.status(200).json(country);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const createCountry = async (
   req: Request,
   res: Response,
@@ -108,6 +122,20 @@ export const getAllCities = async (
     }
     const cities = await getCities(countryName);
     return res.status(200).json(cities);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getSingleCity = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { id, country } = req.params;
+  try {
+    const city = (await getCityById(id, country)).cities[0];
+    return res.status(200).json(city);
   } catch (error) {
     next(error);
   }
@@ -235,8 +263,8 @@ export const GetAllLocations = async (
     if (!existCity) {
       return next(errorHandler(400, "this city dos not exists"));
     }
-    // const locations = await getLocations(countryName, cityName);
-    return res.status(200).json(existCity);
+    const locations = await getLocations(countryName, cityName);
+    return res.status(200).json(locations);
   } catch (error) {
     next(error);
   }
