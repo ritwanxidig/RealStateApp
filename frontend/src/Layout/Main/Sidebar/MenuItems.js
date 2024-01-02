@@ -8,6 +8,76 @@ import {
   IconUsers,
 } from "@tabler/icons-react";
 
+export const AdminMenuItems = [
+  {
+    navlabel: true,
+    subheader: "Home",
+  },
+  {
+    id: uniqueId(),
+    title: "Dashboard",
+    icon: IconDashboard,
+    href: "/app/home",
+  },
+  {
+    navlabel: true,
+    subheader: "System",
+  },
+  {
+    id: uniqueId(),
+    title: "Users",
+    icon: IconUsers,
+    href: "/app/users",
+  },
+  {
+    id: uniqueId(),
+    title: "Properties",
+    icon: IconHome,
+    href: "/app/properties",
+  },
+  {
+    id: uniqueId(),
+    title: "Addresses",
+    icon: IconAddressBook,
+    href: "/app/addresses",
+  },
+  {
+    id: uniqueId(),
+    title: "Reservations",
+    icon: IconReceipt,
+    href: "/app/reservations",
+  },
+];
+
+export const UserMenuItems = [
+  {
+    navlabel: true,
+    subheader: "Home",
+  },
+  {
+    id: uniqueId(),
+    title: "Dashboard",
+    icon: IconDashboard,
+    href: "/app/home",
+  },
+  {
+    navlabel: true,
+    subheader: "System",
+  },
+  {
+    id: uniqueId(),
+    title: "Properties",
+    icon: IconHome,
+    href: "/app/properties",
+  },
+  {
+    id: uniqueId(),
+    title: "Reservations",
+    icon: IconReceipt,
+    href: "/app/reservations",
+  },
+];
+
 const MenuItems = [
   {
     navlabel: true,
