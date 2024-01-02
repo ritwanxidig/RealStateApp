@@ -39,6 +39,13 @@ const api = createApi({
     addProperty: PostEndpoint(builder, "properties"),
     updateProperty: UpdateEndpoint(builder, "properties"),
     deleteProperty: DeleteEndpoint(builder, "properties"),
+
+    // countries endpoints
+    getCountries: QueryEndpoint(builder, "countries"),
+    getCountry: QueryParamsEndpoint(builder, "countries"),
+    addCountry: PostEndpoint(builder, "countries"),
+    updateCountry: UpdateEndpoint(builder, "countries"),
+    deleteCountry: DeleteEndpoint(builder, "countries"),
   }),
 });
 
@@ -61,6 +68,13 @@ export const {
   useAddPropertyMutation,
   useUpdatePropertyMutation,
   useDeletePropertyMutation,
+
+  // hooks for countries
+  useGetCountriesQuery,
+  useGetCountryQuery,
+  useAddCountryMutation,
+  useUpdateCountryMutation,
+  useDeleteCountryMutation,
 } = api;
 
 export default api;
