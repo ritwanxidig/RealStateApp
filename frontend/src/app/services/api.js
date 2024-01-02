@@ -3,6 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
   DeleteEndpoint,
   PostEndpoint,
+  PostWithParamsEndpoint,
   QueryEndpoint,
   QueryParamsEndpoint,
   Tags,
@@ -46,6 +47,20 @@ const api = createApi({
     addCountry: PostEndpoint(builder, "countries"),
     updateCountry: UpdateEndpoint(builder, "countries"),
     deleteCountry: DeleteEndpoint(builder, "countries"),
+
+    // cities endpoints
+    getCities: QueryParamsEndpoint(builder, "cities"),
+    getCity: QueryParamsEndpoint(builder, "cities"),
+    addCity: PostWithParamsEndpoint(builder, "cities"),
+    updateCity: UpdateEndpoint(builder, "cities"),
+    deleteCity: DeleteEndpoint(builder, "cities"),
+
+    // locations endpoints
+    getLocations: QueryParamsEndpoint(builder, "locations"),
+    getLocation: QueryParamsEndpoint(builder, "locations"),
+    addLocation: PostWithParamsEndpoint(builder, "locations"),
+    updateLocation: UpdateEndpoint(builder, "locations"),
+    deleteLocation: DeleteEndpoint(builder, "locations"),
   }),
 });
 
@@ -75,6 +90,20 @@ export const {
   useAddCountryMutation,
   useUpdateCountryMutation,
   useDeleteCountryMutation,
+
+  // hooks for cities
+  useGetCitiesQuery,
+  useGetCityQuery,
+  useAddCityMutation,
+  useUpdateCityMutation,
+  useDeleteCityMutation,
+
+  // hooks for locations
+  useGetLocationsQuery,
+  useGetLocationQuery,
+  useAddLocationMutation,
+  useUpdateLocationMutation,
+  useDeleteLocationMutation,
 } = api;
 
 export default api;
