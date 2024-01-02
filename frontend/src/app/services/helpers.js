@@ -43,6 +43,8 @@ export const DeleteEndpoint = (builder, query) => {
   });
 };
 
+
+
 export const UpdateEndpoint = (builder, query) => {
   return builder.mutation({
     query: ({ param, ...body }) => ({
@@ -59,6 +61,19 @@ export const PostEndpoint = (builder, query) => {
   return builder.mutation({
     query: (body) => ({
       url: query,
+      method: "POST",
+      body: body,
+    }),
+    invalidatesTags: Tags,
+    onQueryStarted: onQueryStartedError,
+  });
+};
+
+
+export const PostWithParamsEndpoint = (builder, query) => {
+  return builder.mutation({
+    query: ({ param, ...body }) => ({
+      url: `${query}/${param}`,
       method: "POST",
       body: body,
     }),
