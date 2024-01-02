@@ -49,7 +49,7 @@ const Users_List = () => {
       {addOpen && <AddUser onOpen={addOpen} setOnOpen={setAddOpen} />}
       {detailOpen && <UserDetail onOpen={detailOpen} data={selectedUser} setOnOpen={setDetailOpen} />}
       <PageCard headtitle='Users Management' title="Users List" headsubtitle="Page" action={<Actions />}>
-        <StyledDataGrid columns={columns} data={rows} />
+        <StyledDataGrid columns={columns} data={rows} loading={isFetching} />
       </PageCard>
     </PageContainer>
   )
