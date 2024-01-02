@@ -5,8 +5,9 @@ import { useState } from "react";
 import styled from "@emotion/styled";
 import { useSelector } from "react-redux";
 import { useTheme } from "@emotion/react";
+import Loader from "../views/utilities/Loader";
 
-const StyledDataGrid = ({ data, columns }) => {
+const StyledDataGrid = ({ data, columns, loading }) => {
   const [selectedRows, setSelectedRows] = useState([]);
   const { darkMode } = useSelector((state) => state.theme);
   const theme = useTheme();
@@ -68,6 +69,10 @@ const StyledDataGrid = ({ data, columns }) => {
     // when focus
 
   });
+
+  if (loading) {
+    return <Loader />;
+  }
 
   const CustomToolbar = () => (
     <>
