@@ -18,10 +18,10 @@ const AccessDenied = () => {
     >
       <Container maxWidth="md" sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: 2 }}>
         <img src={ErrorImg} alt="403" style={{ width: '100%', maxWidth: '500px' }} />
-        <Typography variant="h3" sx={{ fontWeight: 'bold', color: 'primary.main', fontFamily: 'Plus Jakarta Sans' }}>
+        <Typography variant="h3" sx={{ fontWeight: 'bold', fontFamily: 'Plus Jakarta Sans' }}>
           Oops!
         </Typography>
-        <Typography variant="h6" sx={{ color: 'grey.600', fontFamily: 'Plus Jakarta Sans' }}>
+        <Typography variant="h6" sx={{ fontFamily: 'Plus Jakarta Sans' }}>
           You don't have permission to access this page
         </Typography>
         <StyledButton
