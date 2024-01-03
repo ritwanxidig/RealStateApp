@@ -7,6 +7,7 @@ import {
   getCities,
   getCityByName,
   createCity,
+  getCountryById,
 } from "../../models/Address";
 import { errorHandler } from "../../utils";
 import mongoose from "mongoose";
@@ -17,15 +18,16 @@ export const getAllCities = async (
   next: NextFunction
 ) => {
   try {
-    const { countryName } = req.params;
-    if (!countryName)
-      return next(errorHandler(400, "Please provide country name"));
+    const { countryId } = req.params;
+    if (!mongoose.isValidObjectId(countryId))
+      return next(errorHandler(400, "Please provide valid country id"));
+    if (!countryId) return next(errorHandler(400, "Please provide country id"));
     // check if the country exists
-    const existCountry = await getByCountryName(countryName);
+    const existCountry = await getCountryById(countryId);
     if (!existCountry) {
       return next(errorHandler(400, "Country not found"));
     }
-    const cities = await getCities(countryName);
+    const cities = await getCities(countryId);
     return res.status(200).json(cities);
   } catch (error) {
     next(error);

@@ -13,7 +13,7 @@ const CitiesList = ({ country, loading }) => {
     const [detailOpen, setDetailOpen] = React.useState(false);
     const [selectedCity, setSelectedCity] = React.useState(null);
 
-    const { data, isFetching } = useGetCitiesQuery(country?.name);
+    const { data, isFetching } = useGetCitiesQuery(country?._id);
 
     const rows = data?.cities?.map((item, i) => ({ ...item, index: i + 1, id: item._id }));
 

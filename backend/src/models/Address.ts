@@ -23,10 +23,8 @@ export const deleteCountry = (countryId: string) =>
   countryModel.findByIdAndDelete(countryId);
 
 // 2. get all cities of a country
-export const getCities = (countryName: string) =>
-  countryModel
-    .findOne({ name: { $regex: new RegExp(countryName, "i") } })
-    .select("cities");
+export const getCities = (countryId: string) =>
+  countryModel.findOne({ _id: countryId }).select("cities");
 
 export const getCityByName = async (countryName: string, cityName: string) => {
   try {
