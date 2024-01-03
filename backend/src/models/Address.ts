@@ -205,7 +205,7 @@ export const deleteLocation = async (
         },
         { new: true }
       )
-      .select("cities.locations.$");
+      .select("cities.locations");
   } catch (error) {
     console.error("Error in deleteLocation:", error);
     throw error;
