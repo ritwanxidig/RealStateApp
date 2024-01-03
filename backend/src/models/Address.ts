@@ -26,11 +26,11 @@ export const deleteCountry = (countryId: string) =>
 export const getCities = (countryId: string) =>
   countryModel.findOne({ _id: countryId }).select("cities");
 
-export const getCityByName = async (countryName: string, cityName: string) => {
+export const getCityByName = async (countryId: string, cityName: string) => {
   try {
     const result = await countryModel
       .findOne({
-        name: { $regex: new RegExp(countryName, "i") },
+        _id: countryId,
         "cities.name": { $regex: new RegExp(cityName, "i") },
       })
       .select("cities");
@@ -43,11 +43,11 @@ export const getCityByName = async (countryName: string, cityName: string) => {
   }
 };
 // 3. get all locations of a specific city of a country
-export const getLocations = (country: string, city: string) =>
+export const getLocations = (countryId: string, cityId: string) =>
   countryModel
     .findOne({
-      name: { $regex: new RegExp(country, "i") },
-      "cities.name": { $regex: new RegExp(city, "i") },
+      _id: countryId,
+      "cities._id": cityId,
     })
     .select("cities.locations.$");
 
@@ -61,7 +61,7 @@ export const updateCountry = (id: string, country: Record<string, any>) =>
 // 5. add specific city to a country
 export const createCity = (country: Record<string, any>, name: string) =>
   countryModel.findOneAndUpdate(
-    { name: country.name },
+    { _id: country.id },
     { $push: { cities: { name } } },
     { new: true }
   );
@@ -79,9 +79,9 @@ export const updateCity = (
     )
     .select("cities");
 
-export const removeCity = (cityId: string, country: string) =>
+export const removeCity = (cityId: string, countryId: string) =>
   countryModel.findOneAndUpdate(
-    { name: { $regex: new RegExp(country, "i") } },
+    { _id: countryId },
     { $pull: { cities: { _id: cityId } } },
     { new: true }
   );
@@ -100,28 +100,28 @@ export const getCityById = (cityId: string, countryId: string) =>
 //     .select("cities.locations");
 
 export const getLocationByName = (
-  country: string,
-  city: string,
+  countryId: string,
+  cityId: string,
   location: string
 ) =>
   countryModel
     .findOne({
-      name: { $regex: new RegExp(country, "i") },
-      "cities.name": { $regex: new RegExp(city, "i") },
+      _id: countryId,
+      "cities._id": cityId,
       "cities.locations.name": { $regex: new RegExp(location, "i") },
     })
     .select("cities.locations.$");
 
 export const getLocationById = async (
-  country: string,
-  city: string,
+  countryId: string,
+  cityId: string,
   locationId: string
 ) => {
   try {
     return await countryModel
       .findOne({
-        name: { $regex: new RegExp(country, "i") },
-        "cities.name": { $regex: new RegExp(city, "i") },
+        _id: countryId,
+        "cities._id": cityId,
         "cities.locations._id": locationId,
       })
       .select("cities.locations.$");
@@ -132,16 +132,16 @@ export const getLocationById = async (
 };
 
 export const addLocation = async (
-  country: string,
-  city: string,
+  countryId: string,
+  cityId: string,
   locationName: string
 ) => {
   try {
     const result = await countryModel
       .findOneAndUpdate(
         {
-          name: { $regex: new RegExp(country, "i") },
-          "cities.name": { $regex: new RegExp(city, "i") },
+          _id: countryId,
+          "cities._id": cityId,
         },
         { $push: { "cities.$.locations": { name: locationName } } },
         { new: true }
@@ -158,24 +158,24 @@ export const addLocation = async (
 // create function to update specific location
 export const updateLocation = async (
   locationId: string,
-  country: string,
-  city: string,
+  countryId: string,
+  cityId: string,
   updatedName: string
 ) => {
   try {
     return await countryModel
       .findOneAndUpdate(
         {
-          name: { $regex: new RegExp(country, "i") },
-          "cities.name": { $regex: new RegExp(city, "i") },
+          _id: countryId,
+          "cities._id": cityId,
           "cities.locations._id": locationId,
         },
         {
-          $set: { "cities.$[outer].locations.$[inner].name": updatedName },
+          $set: { "cities.$[outer].locations.$[inner].name": updatedName },  /// Re-Read: what is the meaning of this line?
         },
         {
           arrayFilters: [
-            { "outer.name": { $regex: new RegExp(city, "i") } },
+            { "outer._id": cityId },
             { "inner._id": locationId },
           ],
           new: true,
@@ -190,22 +190,22 @@ export const updateLocation = async (
 
 export const deleteLocation = async (
   locationId: string,
-  country: string,
-  city: string
+  countryId: string,
+  cityId: string
 ) => {
   try {
     return await countryModel
       .findOneAndUpdate(
         {
-          name: { $regex: new RegExp(country, "i") },
-          "cities.name": { $regex: new RegExp(city, "i") },
+          _id: countryId,
+          "cities._id": cityId,
         },
         {
           $pull: { "cities.$.locations": { _id: locationId } },
         },
         { new: true }
       )
-      .select("cities.locations");
+      .select("cities.locations.$");
   } catch (error) {
     console.error("Error in deleteLocation:", error);
     throw error;
