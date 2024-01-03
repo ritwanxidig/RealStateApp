@@ -25,15 +25,15 @@ export default (router: express.Router) => {
 
   router.get("/cities/:countryId", getAllCities);
   router.get("/cities/:countryId/:id", getSingleCity);
-  router.post("/cities/:countryName", createNewCity);
+  router.post("/cities/:countryId", createNewCity);
   router.put("/cities/:countryId/:cityId", EditCity);
-  router.delete("/cities/:countryName/:cityId", DeleteCity);
+  router.delete("/cities/:countryId/:cityId", DeleteCity);
 
-  router.get("/locations/:countryName/:cityName", GetAllLocations);
-  router.post("/locations/:countryName/:cityName", addNewLocation);
-  router.put("/locations/:countryName/:cityName/:locationId", editLocation);
+  router.get("/locations/:countryId/:cityId", GetAllLocations);
+  router.post("/locations/:countryId/:cityId", addNewLocation);
+  router.put("/locations/:countryId/:cityId/:locationId", editLocation);
   router.delete(
-    "/locations/:countryName/:cityName/:locationId",
+    "/locations/:countryId/:cityId/:locationId",
     removeLocation
   );
 };
