@@ -66,7 +66,7 @@ export const UserMenuItems = [
   },
   {
     id: uniqueId(),
-    title: "Properties",
+    title: "My Properties",
     icon: IconHome,
     href: "/app/properties",
   },
