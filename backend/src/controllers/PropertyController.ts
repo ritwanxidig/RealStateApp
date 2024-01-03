@@ -56,7 +56,6 @@ export const getAllProperties = async (
           baths: property.baths,
           furnished: property.furnished,
           parking: property.parking,
-          offer: property.offer,
           area: property.area,
           address: {
             country: country.name,
@@ -124,7 +123,6 @@ export const addProperty = async (
       baths: property.baths,
       furnished: property.furnished,
       parking: property.parking,
-      offer: property.offer,
       area: property.area,
       address: {
         country: country.name,
