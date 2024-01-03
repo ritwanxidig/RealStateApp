@@ -23,7 +23,7 @@ const UpdateLocation = ({ onOpen, setOnOpen, country, city, data }) => {
         validationSchema: validationSchemas,
         onSubmit: async (values) => {
             try {
-                const param = `${country.name}/${city.name}/${data?._id}`;
+                const param = `${country._id}/${city._id}/${data?._id}`;
                 await toast.promise(updateLocation({ param, ...{ name: values.name } }).unwrap().then(rs => { setOnOpen(false) }), {
                     loading: 'Updating location...',
                     success: 'Location updated successfully',
