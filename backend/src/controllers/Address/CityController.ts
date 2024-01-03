@@ -57,33 +57,37 @@ export const createNewCity = async (
   res: Response,
   next: NextFunction
 ) => {
+  const { countryId } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(countryId)) {
+    return next(errorHandler(400, "Please provide a valid CountryId"));
+  }
   try {
     const { cityName } = req.body;
-    const { countryName } = req.params;
-    if (!countryName || !cityName) {
+
+    if (!cityName) {
       return next(
         errorHandler(400, "Please provide country name and city name")
       );
     }
 
     // get the country
-    const country = await getByCountryName(countryName);
+    const country = await getCountryById(countryId);
     // check if the country exists
     if (!country) {
-      return next(errorHandler(400, `${countryName} Country not found`));
+      return next(errorHandler(400, `${countryId} Country not found`));
     }
     // check if the city already exists
-    const existCity = await getCityByName(countryName, cityName);
+    const existCity = await getCityByName(countryId, cityName);
     if (existCity) {
       return next(
         errorHandler(
           400,
-          `${cityName} City already exists in the ${countryName} country`
+          `${cityName} City already exists in the ${country.name} country`
         )
       );
     }
 
-    const city = await createCity({ name: countryName }, cityName);
+    const city = await createCity({ id: countryId }, cityName);
     return res.status(200).json(city);
   } catch (error) {
     next(error);
@@ -134,26 +138,29 @@ export const DeleteCity = async (
   next: NextFunction
 ) => {
   try {
-    const { countryName, cityId } = req.params;
+    const { countryId, cityId } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(countryId)) {
+      return next(errorHandler(400, "Please provide a valid Country Id"));
+    }
 
-    // check the ID is
+    // check the cityID is
     if (!mongoose.Types.ObjectId.isValid(cityId)) {
-      return next(errorHandler(400, "Please provide a valid CityId"));
+      return next(errorHandler(400, "Please provide a valid City Id"));
     }
 
     // get the country
-    const country = await getByCountryName(countryName);
+    const country = await getCountryById(countryId);
     // check if the country exists
     if (!country) {
-      return next(errorHandler(400, `${countryName} Country not found`));
+      return next(errorHandler(400, `${countryId} Country not found`));
     }
     // check if the city already exists
-    const existCity = await getCityById(cityId, countryName);
+    const existCity = await getCityById(cityId, countryId);
     if (!existCity) {
       return next(errorHandler(400, "this city dos not exists"));
     }
 
-    const city = await removeCity(cityId, countryName);
+    const city = await removeCity(cityId, countryId);
     return res.status(200).json(city);
   } catch (error) {
     next(error);
