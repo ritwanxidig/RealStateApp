@@ -1,17 +1,19 @@
 import { Box, Container, IconButton, Tooltip, Typography, useMediaQuery } from '@mui/material'
 import React from 'react'
-import { IconDots, IconPlus } from "@tabler/icons-react";
+import { IconDots, IconPlus, IconTrash } from "@tabler/icons-react";
 
 // for project
 import { useGetCountriesQuery } from 'src/app/services/api';
 import StyledDataGrid from 'src/components/StyledDataGrid'
 import CountryDetails from './CountryDetails';
 import AddCountry from './AddCountry';
+import DeleteCountry from './DeleteCountry';
 
 const CountriesList = () => {
     const { data, isFetching } = useGetCountriesQuery();
     const [addOpen, setAddOpen] = React.useState(false);
     const [detailOpen, setDetailOpen] = React.useState(false);
+    const [deleteOpen, setDeleteOpen] = React.useState(false);
     const [selectedCountry, setSelectedCountry] = React.useState(null);
     const smUp = useMediaQuery((theme) => theme.breakpoints.up('sm'));
     const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
@@ -19,6 +21,11 @@ const CountriesList = () => {
 
     const handleDetailOpen = (params) => {
         setDetailOpen(true);
+        setSelectedCountry(params?.row);
+    }
+
+    const handleDeleteOpen = (params) => {
+        setDeleteOpen(true);
         setSelectedCountry(params?.row);
     }
 
@@ -38,13 +45,25 @@ const CountriesList = () => {
             headerName: 'Actions',
             width: 90,
             renderCell: (params) => (
-                <IconButton
-                    // onClick={() => handleDetailOpen(params)}
-                    sx={{ backgroundColor: 'primary.main', color: 'white', ":hover": { backgroundColor: 'primary.dark' } }}
-                    onClick={() => handleDetailOpen(params)}
-                >
-                    <IconDots />
-                </IconButton>
+                <Box sx={{ display: 'flex', gap: 1 }}>
+                    <Tooltip title="Country Details">
+                        <IconButton
+                            // onClick={() => handleDetailOpen(params)}
+                            sx={{ backgroundColor: 'primary.main', color: 'white', ":hover": { backgroundColor: 'primary.dark' } }}
+                            onClick={() => handleDetailOpen(params)}
+                        >
+                            <IconDots size={18} />
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Delete Country">
+                        <IconButton
+                            onClick={() => handleDeleteOpen(params)}
+                            sx={{ backgroundColor: 'error.main', color: 'white', ":hover": { backgroundColor: 'primary.dark' } }}
+                        >
+                            <IconTrash size={18} />
+                        </IconButton>
+                    </Tooltip>
+                </Box>
             ),
         }
     ];
@@ -54,6 +73,7 @@ const CountriesList = () => {
     return (
         <>
             {addOpen && <AddCountry onOpen={addOpen} setOnOpen={setAddOpen} />}
+            {deleteOpen && <DeleteCountry onOpen={deleteOpen} setOnOpen={setDeleteOpen} data={selectedCountry} />}
             {detailOpen && <CountryDetails onOpen={detailOpen} setOnOpen={setDetailOpen} data={selectedCountry} />}
             <Box sx={{
                 width: '100%',
