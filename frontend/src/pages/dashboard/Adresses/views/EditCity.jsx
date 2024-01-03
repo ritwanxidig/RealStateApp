@@ -23,7 +23,7 @@ const EditCity = ({ onOpen, setOnOpen, data, country }) => {
     validationSchema: validationSchemas,
     onSubmit: async (values) => {
       try {
-        const param = `${country?.name}/${data?._id}`;
+        const param = `${country?._id}/${data?._id}`;
         await toast.promise(updateCity({ param, ...{ name: values.name } })
           .unwrap()
           .then(rs => { setOnOpen(false) })

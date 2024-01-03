@@ -21,7 +21,7 @@ const StyledTab = styled(Tab)(({ theme }) => (
 const CityDetail = ({ onOpen, setOnOpen, data, country }) => {
     const [tabValue, setTabValue] = React.useState("1")
     const [editOpen, setEditOpen] = React.useState(false);
-    const { data: currentCity, isFetching: isFetchingCity } = useGetCityQuery(`${country?.name}/${data?._id}`);
+    const { data: currentCity, isFetching: isFetchingCity } = useGetCityQuery(`${country?._id}/${data?._id}`);
     return (
         <>
             {editOpen && <EditCity onOpen={editOpen} setOnOpen={setEditOpen} data={currentCity ? currentCity : data} country={country} />}
