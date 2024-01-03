@@ -21,6 +21,7 @@ const Router = () => {
     const Home = Loadable(lazy(() => import('../pages/dashboard/Home')));
     const Users_List = Loadable(lazy(() => import('../pages/dashboard/users/list')));
     const Properties_List = Loadable(lazy(() => import('../pages/dashboard/Properties/list')));
+    const NewPropertiesList = Loadable(lazy(() => import('../pages/dashboard/Properties/CreateProperty')));
     const Address_List = Loadable(lazy(() => import('../pages/dashboard/Adresses/list')));
 
     // accessing error slice
@@ -48,11 +49,12 @@ const Router = () => {
                     <Route path='/app' element={<MainLayout />} >
                         <Route path='/app/' element={<Navigate to="/app/home" />} />
                         <Route path='/app/home' element={<Home />} />
+                        <Route path='/app/properties' element={<Properties_List />} />
+                        <Route path='/app/properties/new' element={<NewPropertiesList />} />
 
                         {/* only for admin */}
                         <Route path='/app/' element={<PrivateRoute allowedRoles={['admin']} />}>
                             <Route path='/app/users' element={<Users_List />} />
-                            <Route path='/app/properties' element={<Properties_List />} />
                             <Route path='/app/addresses' element={<Address_List />} />
                         </Route>
                     </Route>
