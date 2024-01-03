@@ -1,16 +1,20 @@
 import React from 'react'
+import { Avatar, Box, IconButton } from '@mui/material'
 
 // for project
 import { useGetPropertiesQuery } from 'src/app/services/api'
 import { } from 'src/app/slices/alertSlice'
 import PageContainer from 'src/Layout/Main/Containers/PageContainer'
 import PageCard from 'src/Layout/Main/Containers/PageCard'
-import { Avatar, Box, IconButton } from '@mui/material'
-import { IconDots } from '@tabler/icons-react'
+import { IconDots, IconPlus } from '@tabler/icons-react'
 import StyledDataGrid from 'src/components/StyledDataGrid'
 import { SampleProfile1 } from 'src/assets'
+import { Link } from 'react-router-dom'
 
 const Properties_List = () => {
+    const [addOpen, setAddOpen] = React.useState(false);
+    // const [detailOpen, setDetailOpen] = React.useState(false);
+    const [selectedProperty, setSelectedProperty] = React.useState(null);
     const { data: properties, isFetching } = useGetPropertiesQuery();
 
 
@@ -48,7 +52,7 @@ const Properties_List = () => {
     ]
 
     const rows = properties?.map(property => ({ ...property, id: property._id })) || [];
-    
+
     return (
         <PageContainer title='Properties' description=''>
             <PageCard
@@ -56,7 +60,14 @@ const Properties_List = () => {
                 headtitle="Properties Management"
                 headsubtitle={"List of all properties"}
                 subtitle="List of all your properties"
-                actions={<></>}
+                action={<>
+                    <IconButton
+                        sx={{ backgroundColor: 'primary.main', color: 'white', ":hover": { backgroundColor: 'primary.dark' } }} >
+                        <Link to="new">
+                            <IconPlus />
+                        </Link>
+                    </IconButton>
+                </>}
             >
 
                 <StyledDataGrid
