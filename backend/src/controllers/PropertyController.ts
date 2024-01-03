@@ -31,12 +31,15 @@ export const getAllProperties = async (
         const country = await getCountryById(property.address.country);
         // city holds an object of one country with array of single city:
         //  like {_id: "5f8f6e0e1b7f9c0f1b7f9c0f", name: "kathmandu", cities: [{ _id: "5f8f6e0e1b7f9c0f1b7f9c0f", name: "kathmandu", locations: [{ _id: "5f8f6e0e1b7f9c0f1b7f9c0f", name: "kathmandu" }] }]}
-        const city = await getCityById(property.address.city, country.name);
+        const city = await getCityById(
+          property.address.city,
+          property.address.country
+        );
 
         // location is same as city.locations[0]
         const location = await getLocationById(
-          country.name,
-          city.name,
+          property.address.country,
+          property.address.city,
           property.address.location
         );
         const propertyDDO: IPropertyDDO = {
@@ -58,7 +61,7 @@ export const getAllProperties = async (
           address: {
             country: country.name,
             city: city.cities[0].name,
-            location: location.cities[0].locations[0].name,
+            location: location?.cities[0]?.locations[0]?.name,
           },
           user: {
             name: createdUser?.name,

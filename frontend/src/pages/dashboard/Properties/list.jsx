@@ -23,6 +23,7 @@ const Properties_List = () => {
                 </Box>
         },
         { field: 'address', headerName: 'Location', width: 200, renderCell: (params) => <div>{params?.row?.address?.city}, {params?.row?.address?.country}</div> },
+        { field: 'type', headerName: 'Type', width: 120 },
         { field: 'price', headerName: 'Price', width: 120 },
         {
             field: 'offer', headerName: 'Info', width: 420,
