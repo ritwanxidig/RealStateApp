@@ -3,12 +3,12 @@ import AuthPage from "./AuthPage"
 import { Box, Button, Checkbox, FormControlLabel, FormGroup, Stack, Typography } from "@mui/material"
 import { Link, useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
-import CustomField from "../../components/form/CustomField"
+import CustomField from "src/components/form/CustomField"
 import { useFormik } from "formik";
-import { useLoginMutation } from "../../app/services/api";
-import { errorActions } from "../../app/slices/errorSlice";
-import { authActions } from "../../app/slices/authSlice";
-import { alertActions } from "../../app/slices/alertSlice";
+import { useLoginMutation } from "src/app/services/api";
+import { errorActions } from "src/app/slices/errorSlice";
+import { authActions } from "src/app/slices/authSlice";
+import { alertActions } from "src/app/slices/alertSlice";
 import * as yup from "yup";
 import toast from "react-hot-toast"
 
