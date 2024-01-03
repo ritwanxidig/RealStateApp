@@ -1,5 +1,5 @@
 import React from 'react'
-import PageContainer from '../../Layout/Main/Containers/PageContainer'
+import PageContainer from 'src/Layout/Main/Containers/PageContainer'
 
 const Home = () => {
   return (

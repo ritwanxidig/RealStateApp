@@ -1,13 +1,13 @@
 import React from 'react';
-import CustomModal from '../../../../views/utilities/CustomModal';
+import CustomModal from 'src/views/utilities/CustomModal';
 import { Box, IconButton, Tab, Tooltip, Typography } from '@mui/material';
 import styled from '@emotion/styled';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import CitiesList from './CitiesList';
 import { IconEdit } from '@tabler/icons-react';
 import EditCountry from './EditCountry';
-import { useGetCityQuery, useGetCountryQuery } from '../../../../app/services/api';
-import Loader from '../../../../views/utilities/Loader';
+import { useGetCityQuery, useGetCountryQuery } from 'src/app/services/api';
+import Loader from 'src/views/utilities/Loader';
 
 
 

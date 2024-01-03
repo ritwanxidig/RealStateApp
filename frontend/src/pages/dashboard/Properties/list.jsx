@@ -1,15 +1,14 @@
 import React from 'react'
 
 // for project
-import { useGetPropertiesQuery } from '../../../app/services/api'
-import { } from '../../../app/slices/alertSlice'
-import PageContainer from '../../../Layout/Main/Containers/PageContainer'
-import PageCard from '../../../Layout/Main/Containers/PageCard'
-import { Avatar, Box, Checkbox, IconButton } from '@mui/material'
-import { IconDots, IconEye } from '@tabler/icons-react'
-import StyledDataGrid from '../../../components/StyledDataGrid'
-import { SampleProfile1 } from '../../../assets'
-import Loader from '../../../views/utilities/Loader'
+import { useGetPropertiesQuery } from 'src/app/services/api'
+import { } from 'src/app/slices/alertSlice'
+import PageContainer from 'src/Layout/Main/Containers/PageContainer'
+import PageCard from 'src/Layout/Main/Containers/PageCard'
+import { Avatar, Box, IconButton } from '@mui/material'
+import { IconDots } from '@tabler/icons-react'
+import StyledDataGrid from 'src/components/StyledDataGrid'
+import { SampleProfile1 } from 'src/assets'
 
 const Properties_List = () => {
     const { data: properties, isFetching } = useGetPropertiesQuery();
@@ -38,7 +37,7 @@ const Properties_List = () => {
         },
         {
             field: 'actions', headerName: 'Actions', width: 100,
-            renderCell: (params) =>
+            renderCell: () =>
                 <IconButton
                     // onClick={() => handleDetailOpen(params)}
                     sx={{ backgroundColor: 'primary.main', color: 'white', ":hover": { backgroundColor: 'primary.dark' } }} >

@@ -1,7 +1,7 @@
 import React from 'react'
 import Navbar from './components/Navbar'
 import { Box, Typography, useMediaQuery } from '@mui/material'
-import { AboutPageImage } from '../../assets'
+import { AboutPageImage } from 'src/assets'
 import { IconBallpen, IconTarget } from '@tabler/icons-react'
 
 const About = () => {

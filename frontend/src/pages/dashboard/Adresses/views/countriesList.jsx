@@ -3,8 +3,8 @@ import React from 'react'
 import { IconDots, IconPlus } from "@tabler/icons-react";
 
 // for project
-import { useGetCountriesQuery } from '../../../../app/services/api';
-import StyledDataGrid from '../../../../components/StyledDataGrid'
+import { useGetCountriesQuery } from 'src/app/services/api';
+import StyledDataGrid from 'src/components/StyledDataGrid'
 import CountryDetails from './CountryDetails';
 import AddCountry from './AddCountry';
 

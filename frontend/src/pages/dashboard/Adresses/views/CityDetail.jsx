@@ -1,13 +1,13 @@
 import { Box, IconButton, Tab, Tooltip, Typography } from '@mui/material'
 import React from 'react'
-import { useGetCityQuery } from '../../../../app/services/api'
+import { useGetCityQuery } from 'src/app/services/api'
 import EditCity from './EditCity'
 import { TabContext, TabList, TabPanel } from '@mui/lab'
 import styled from '@emotion/styled'
 import { IconEdit } from '@tabler/icons-react'
-import Loader from '../../../../views/utilities/Loader'
+import Loader from 'src/views/utilities/Loader'
 import LocationsList from './LocationsList'
-import CustomModal from '../../../../views/utilities/CustomModal'
+import CustomModal from 'src/views/utilities/CustomModal'
 
 
 

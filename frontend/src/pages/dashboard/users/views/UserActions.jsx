@@ -7,10 +7,10 @@ import { Box, CircularProgress, Typography } from '@mui/material'
 
 
 // for project
-import StyledButton from '../../../../components/shared/StyledButton'
-import CustomField from '../../../../components/form/CustomField'
-import { useDeleteUserMutation, useUpdateUserMutation } from '../../../../app/services/api'
-import { alertActions } from '../../../../app/slices/alertSlice'
+import StyledButton from 'src/components/shared/StyledButton'
+import CustomField from 'src/components/form/CustomField'
+import { useDeleteUserMutation, useUpdateUserMutation } from 'src/app/services/api'
+import { alertActions } from 'src/app/slices/alertSlice'
 import { useDispatch } from 'react-redux'
 import toast from 'react-hot-toast'
 

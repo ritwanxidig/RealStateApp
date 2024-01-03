@@ -5,11 +5,11 @@ import { useFormik } from 'formik'
 import * as yup from 'yup'
 
 // for project
-import CustomModal from '../../../../views/utilities/CustomModal'
-import CustomField from '../../../../components/form/CustomField'
-import StyledButton from '../../../../components/shared/StyledButton'
-import { useAddUserMutation } from '../../../../app/services/api'
-import { alertActions } from '../../../../app/slices/alertSlice'
+import CustomModal from 'src/views/utilities/CustomModal'
+import CustomField from 'src/components/form/CustomField'
+import StyledButton from 'src/components/shared/StyledButton'
+import { useAddUserMutation } from 'src/app/services/api'
+import { alertActions } from 'src/app/slices/alertSlice'
 import toast from 'react-hot-toast'
 
 

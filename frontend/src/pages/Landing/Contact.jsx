@@ -1,7 +1,7 @@
 import { Box, Button, Typography, useMediaQuery } from '@mui/material'
 import React from 'react'
-import CustomInput from '../../components/form/CustomInput'
-import CustomTextArea from '../../components/form/CustomTextArea'
+import CustomInput from 'src/components/form/CustomInput'
+import CustomTextArea from 'src/components/form/CustomTextArea'
 import { useSelector } from 'react-redux'
 
 const Contact = () => {

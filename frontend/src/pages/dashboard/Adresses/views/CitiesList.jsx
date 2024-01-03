@@ -1,11 +1,10 @@
 import { Box, IconButton, Tooltip, Typography } from '@mui/material'
+import { IconDots, IconPlus } from '@tabler/icons-react';
 import React from 'react'
 
 // for project
-import { useGetCitiesQuery } from '../../../../app/services/api';
-import StyledDataGrid from '../../../../components/StyledDataGrid'
-import { IconDots, IconPlus } from '@tabler/icons-react';
-import Loader from '../../../../views/utilities/Loader';
+import { useGetCitiesQuery } from 'src/app/services/api';
+import Loader from 'src/views/utilities/Loader';
 import AddCity from './AddCity';
 import CityDetail from './CityDetail';
 

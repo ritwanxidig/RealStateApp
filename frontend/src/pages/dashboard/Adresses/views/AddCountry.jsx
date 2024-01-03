@@ -1,13 +1,12 @@
 import React from 'react'
-import CustomModal from '../../../../views/utilities/CustomModal'
+import CustomModal from 'src/views/utilities/CustomModal'
 import { Box, CircularProgress } from '@mui/material'
-import StyledButton from '../../../../components/shared/StyledButton'
+import StyledButton from 'src/components/shared/StyledButton'
 import { useFormik } from 'formik'
-import { useAddCountryMutation } from '../../../../app/services/api'
-import { useDispatch } from 'react-redux'
+import { useAddCountryMutation } from 'src/app/services/api'
 import toast from 'react-hot-toast'
 import * as yup from 'yup'
-import CustomField from '../../../../components/form/CustomField'
+import CustomField from 'src/components/form/CustomField'
 
 
 const validationSchemas = yup.object().shape({

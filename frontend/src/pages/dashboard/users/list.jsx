@@ -1,11 +1,11 @@
 import React from 'react'
-import PageContainer from '../../../Layout/Main/Containers/PageContainer'
-import PageCard from '../../../Layout/Main/Containers/PageCard'
-import StyledDataGrid from '../../../components/StyledDataGrid'
+import PageContainer from 'src/Layout/Main/Containers/PageContainer'
+import PageCard from 'src/Layout/Main/Containers/PageCard'
+import StyledDataGrid from 'src/components/StyledDataGrid'
 import { IconButton, Tooltip } from '@mui/material'
 import { IconDots, IconPlus } from '@tabler/icons-react'
 import AddUser from './views/AddUser'
-import { useGetUsersQuery } from '../../../app/services/api'
+import { useGetUsersQuery } from 'src/app/services/api'
 import UserDetail from './views/UserDetail'
 
 const Users_List = () => {

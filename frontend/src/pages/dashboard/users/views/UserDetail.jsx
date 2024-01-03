@@ -1,5 +1,5 @@
 import React from 'react'
-import CustomModal from '../../../../views/utilities/CustomModal'
+import CustomModal from 'src/views/utilities/CustomModal'
 import { Box, Tab, Typography } from '@mui/material'
 import { TabPanel, TabList, TabContext } from "@mui/lab";
 import styled from '@emotion/styled';

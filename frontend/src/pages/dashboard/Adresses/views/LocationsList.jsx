@@ -1,12 +1,10 @@
 import { Box, IconButton, Tooltip, Typography } from '@mui/material'
+import { IconDots, IconPlus } from '@tabler/icons-react';
 import React from 'react'
 
 // for project
-import { useGetLocationsQuery } from '../../../../app/services/api';
-import StyledDataGrid from '../../../../components/StyledDataGrid'
-import { IconDots, IconPlus } from '@tabler/icons-react';
-import Loader from '../../../../views/utilities/Loader';
-import AddCity from './AddCity';
+import { useGetLocationsQuery } from 'src/app/services/api';
+import Loader from 'src/views/utilities/Loader';
 import EditLocation from './EditLocation';
 import AddLocation from './AddLocation';
 
@@ -16,7 +14,6 @@ const LocationsList = ({ country, loading, city }) => {
   const [selectedLocation, setSelectedLocation] = React.useState(null);
 
   const { data, isFetching } = useGetLocationsQuery(`${country?.name}/${city?.name}`);
-  console.log(data);
 
   const rows = data?.cities[0]?.locations?.map((item, i) => ({ ...item, index: i + 1, id: item._id }));
 
