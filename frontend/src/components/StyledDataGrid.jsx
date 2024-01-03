@@ -1,4 +1,4 @@
-import { Box, Button, IconButton, Typography } from "@mui/material";
+import { Box, Button, IconButton, Typography, useMediaQuery } from "@mui/material";
 import { DataGrid, GridFilterForm, GridToolbarContainer, GridToolbarFilterButton, GridToolbarQuickFilter } from "@mui/x-data-grid";
 import { IconTrash } from "@tabler/icons-react";
 import { useState } from "react";
@@ -12,6 +12,10 @@ const StyledDataGrid = ({ data, columns, loading }) => {
   const { darkMode } = useSelector((state) => state.theme);
   const theme = useTheme();
 
+  const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
+  const mdUp = useMediaQuery((theme) => theme.breakpoints.up('md'));
+  const smUp = useMediaQuery((theme) => theme.breakpoints.up('sm'));
+
   const handleSelectionChange = (selection) => {
     setSelectedRows(selection);
   };
@@ -19,7 +23,7 @@ const StyledDataGrid = ({ data, columns, loading }) => {
   const SelectedRowsContainer = styled(Box)({
     display: 'flex',
     width: '100%',
-    padding: '2rem 2rem',
+    padding: smUp ? '1rem' : '2rem',  // Adjust padding for smaller screens
     alignItems: 'center',
     justifyContent: 'space-between',
     borderRadius: 8,
@@ -27,9 +31,10 @@ const StyledDataGrid = ({ data, columns, loading }) => {
 
   const ToolBarContainer = styled(GridToolbarContainer)({
     display: 'flex',
-    alignItems: 'center',
+    flexDirection: 'row',  // Change direction for smaller screens
+    alignItems: 'start',
     justifyContent: 'space-between',
-    padding: '1rem',
+    padding: smUp ? '0.5rem' : '1rem',
     margin: '0 1rem',
     top: -20,
   });
@@ -37,8 +42,8 @@ const StyledDataGrid = ({ data, columns, loading }) => {
   const SearchContainer = styled(GridToolbarQuickFilter)({
     display: 'flex',
     justifyContent: 'center',
-    gap: '1rem',
-    padding: '.5rem 1rem',
+    gap: smUp ? '0.5rem' : '1rem',
+    padding: smUp ? '.5rem' : '1rem',
     backgroundColor: darkMode ? theme.palette.grey[700] : '#f5f5f5',
     borderRadius: 8,
     border: 'none',
@@ -47,16 +52,14 @@ const StyledDataGrid = ({ data, columns, loading }) => {
       border: '1px solid primary',
       borderColor: darkMode ? theme.palette.primary[600] : theme.palette.primary[300],
     }
-    // when focus
-
   });
 
   const FilterContainer = styled(GridToolbarFilterButton)({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    gap: '1rem',
-    padding: '.8rem 1rem',
+    gap: smUp ? '0.5rem' : '1rem',
+    padding: smUp ? '.8rem' : '1rem',
     backgroundColor: darkMode ? theme.palette.grey[700] : '#f5f5f5',
     borderRadius: 8,
     border: 'none',
@@ -64,10 +67,6 @@ const StyledDataGrid = ({ data, columns, loading }) => {
     '& .MuiSvgIcon-root': {
       display: 'none',
     },
-
-
-    // when focus
-
   });
 
   if (loading) {
@@ -106,7 +105,7 @@ const StyledDataGrid = ({ data, columns, loading }) => {
   return (
     <div>
       {data && data?.length > 0 ? (
-        <Box className="w-full" sx={{ height: '500px', width: '100%', borderRadius: '10px' }}>
+        <Box className="w-full" sx={{ display: 'flex', height: '500px', width: '100%', maxWidth: lgUp ? '1200px' : mdUp ? '1000px' : '616px', borderRadius: '10px' }}>
           <DataGrid
             rows={data}
             checkboxSelection

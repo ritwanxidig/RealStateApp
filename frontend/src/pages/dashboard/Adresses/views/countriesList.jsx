@@ -1,4 +1,4 @@
-import { Box, IconButton, Tooltip, Typography } from '@mui/material'
+import { Box, Container, IconButton, Tooltip, Typography, useMediaQuery } from '@mui/material'
 import React from 'react'
 import { IconDots, IconPlus } from "@tabler/icons-react";
 
@@ -13,6 +13,9 @@ const CountriesList = () => {
     const [addOpen, setAddOpen] = React.useState(false);
     const [detailOpen, setDetailOpen] = React.useState(false);
     const [selectedCountry, setSelectedCountry] = React.useState(null);
+    const smUp = useMediaQuery((theme) => theme.breakpoints.up('sm'));
+    const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
+
 
     const handleDetailOpen = (params) => {
         setDetailOpen(true);
@@ -28,7 +31,7 @@ const CountriesList = () => {
         {
             field: 'name',
             headerName: 'Name',
-            width: 800,
+            width: lgUp ? 800 : 200,
         },
         {
             field: 'actions',
@@ -53,12 +56,13 @@ const CountriesList = () => {
             {addOpen && <AddCountry onOpen={addOpen} setOnOpen={setAddOpen} />}
             {detailOpen && <CountryDetails onOpen={detailOpen} setOnOpen={setDetailOpen} data={selectedCountry} />}
             <Box sx={{
-                display: 'flex', flexDirection: 'column', gap: 4, p: 3, width: '100%',
+                width: '100%',
+                display: 'flex', flexDirection: 'column', gap: 4, width: '100%',
                 borderRadius: '20px',
                 boxShadow: 'rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px',
 
             }}>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', px: smUp ? 4 : 2 }}>
                     <Typography variant="h6" fontFamily="Plus Jakarta Sans">Countries</Typography>
                     <Tooltip title="New Country">
                         <IconButton onClick={() => setAddOpen(true)} sx={{ backgroundColor: 'primary.main', color: 'white', ":hover": { backgroundColor: 'primary.dark' } }} > <IconPlus /> </IconButton>
