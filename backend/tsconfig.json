@@ -3,6 +3,11 @@
         "module": "NodeNext",
         "moduleResolution": "NodeNext",
         "baseUrl": "src",
+        "paths": {
+            "/*": [
+                "src/*"
+            ]
+        },
         "outDir": "dist",
         "sourceMap": true,
         "noImplicitAny": true
