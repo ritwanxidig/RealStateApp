@@ -1,5 +1,5 @@
 import { Box, IconButton, Tooltip, Typography } from '@mui/material'
-import { IconDots, IconPlus } from '@tabler/icons-react';
+import { IconDots, IconEdit, IconPlus, IconTrash } from '@tabler/icons-react';
 import React from 'react'
 
 // for project
@@ -7,19 +7,25 @@ import { useGetLocationsQuery } from 'src/app/services/api';
 import Loader from 'src/views/utilities/Loader';
 import EditLocation from './EditLocation';
 import AddLocation from './AddLocation';
+import DeleteLocation from './DeleteLocation';
 
 const LocationsList = ({ country, loading, city }) => {
   const [addOpen, setAddOpen] = React.useState(false);
   const [editOpen, setEditOpen] = React.useState(false);
+  const [deleteOpen, setDeleteOpen] = React.useState(false);
   const [selectedLocation, setSelectedLocation] = React.useState(null);
 
   const { data, isFetching } = useGetLocationsQuery(`${country?._id}/${city?._id}`);
-  console.log(data);
 
   const rows = data?.cities[0]?.locations?.map((item, i) => ({ ...item, index: i + 1, id: item._id }));
 
   const handleEditOpen = (params) => {
     setEditOpen(true);
+    setSelectedLocation(params);
+  }
+
+  const handleDeleteOpen = (params) => {
+    setDeleteOpen(true);
     setSelectedLocation(params);
   }
 
@@ -30,6 +36,7 @@ const LocationsList = ({ country, loading, city }) => {
     <>
       {addOpen && <AddLocation onOpen={addOpen} setOnOpen={setAddOpen} country={country} city={city} />}
       {editOpen && <EditLocation onOpen={editOpen} setOnOpen={setEditOpen} city={city} data={selectedLocation} country={country} />}
+      {deleteOpen && <DeleteLocation onOpen={deleteOpen} setOnOpen={setDeleteOpen} data={selectedLocation} country={country} city={city} />}
       <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <Typography variant="body1" fontWeight="bold" fontFamily="Plus Jakarta Sans">Locations</Typography>
@@ -43,9 +50,18 @@ const LocationsList = ({ country, loading, city }) => {
               rows?.map((location) => (
                 <Box key={location._id} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: 'primary.800', p: 1, borderRadius: '10px', ":hover": { backgroundColor: 'primary.700' }, transition: 'all 0.3s ease-in-out' }}>
                   <Typography>{location.name}</Typography>
-                  <IconButton
-                    onClick={() => handleEditOpen(location)}
-                    sx={{ backgroundColor: 'primary.main', color: 'white', ":hover": { backgroundColor: 'primary.dark' } }} > <IconDots size={16} /> </IconButton>
+                  <Box sx={{ display: 'flex', gap: 1 }}>
+                    <Tooltip title="Edit Location">
+                      <IconButton
+                        onClick={() => handleEditOpen(location)}
+                        sx={{ backgroundColor: 'primary.main', color: 'white', ":hover": { backgroundColor: 'primary.dark' } }} > <IconEdit size={16} /> </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Delete Location">
+                      <IconButton
+                        onClick={() => handleDeleteOpen(location)}
+                        sx={{ backgroundColor: 'error.main', color: 'white', ":hover": { backgroundColor: 'red.900' } }} > <IconTrash size={16} /> </IconButton>
+                    </Tooltip>
+                  </Box>
                 </Box>
               )) :
               <Typography>No Data</Typography>
