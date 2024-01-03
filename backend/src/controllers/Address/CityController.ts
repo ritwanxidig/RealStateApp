@@ -39,9 +39,13 @@ export const getSingleCity = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { id, country } = req.params;
+  const { id, countryId } = req.params;
+  if (!mongoose.isValidObjectId(id))
+    return next(errorHandler(400, "Please provide valid city id"));
+  if (!mongoose.isValidObjectId(countryId))
+    return next(errorHandler(400, "Please provide valid country id"));
   try {
-    const city = (await getCityById(id, country))?.cities[0];
+    const city = (await getCityById(id, countryId))?.cities[0];
     return res.status(200).json(city);
   } catch (error) {
     next(error);
@@ -92,9 +96,13 @@ export const EditCity = async (
   next: NextFunction
 ) => {
   try {
-    const { countryName, cityId } = req.params;
+    const { countryId, cityId } = req.params;
     if (!mongoose.Types.ObjectId.isValid(cityId)) {
       return next(errorHandler(400, "Please provide a valid CityId"));
+    }
+
+    if (!mongoose.Types.ObjectId.isValid(countryId)) {
+      return next(errorHandler(400, "Please provide a valid CountryId"));
     }
 
     const { name } = req.body;
@@ -102,18 +110,18 @@ export const EditCity = async (
       return next(errorHandler(400, "Please provide the name "));
     }
     // get the country
-    const country = await getByCountryName(countryName);
+    const country = await getCountryById(countryId);
     // check if the country exists
     if (!country) {
-      return next(errorHandler(400, `${countryName} Country not found`));
+      return next(errorHandler(400, `${countryId} Country not found`));
     }
     // check if the city already exists
-    const existCity = await getCityById(cityId, countryName);
+    const existCity = await getCityById(cityId, countryId);
     if (!existCity) {
       return next(errorHandler(400, "this city dos not exists"));
     }
 
-    const city = await updateCity(cityId, countryName, name);
+    const city = await updateCity(cityId, countryId, name);
     return res.status(200).json(city);
   } catch (error) {
     next(error);

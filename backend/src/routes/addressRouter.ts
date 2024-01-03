@@ -24,9 +24,9 @@ export default (router: express.Router) => {
   router.delete("/countries/:id", deleteCountry);
 
   router.get("/cities/:countryId", getAllCities);
-  router.get("/cities/:countryName/:id", getSingleCity);
+  router.get("/cities/:countryId/:id", getSingleCity);
   router.post("/cities/:countryName", createNewCity);
-  router.put("/cities/:countryName/:cityId", EditCity);
+  router.put("/cities/:countryId/:cityId", EditCity);
   router.delete("/cities/:countryName/:cityId", DeleteCity);
 
   router.get("/locations/:countryName/:cityName", GetAllLocations);

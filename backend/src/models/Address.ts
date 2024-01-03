@@ -68,12 +68,12 @@ export const createCity = (country: Record<string, any>, name: string) =>
 
 export const updateCity = (
   cityId: string,
-  country: string,
+  countryId: string,
   updatedName: string
 ) =>
   countryModel
     .findOneAndUpdate(
-      { name: { $regex: new RegExp(country, "i") }, "cities._id": cityId },
+      { _id: countryId, "cities._id": cityId },
       { $set: { "cities.$.name": updatedName } },
       { new: true }
     )
@@ -86,12 +86,9 @@ export const removeCity = (cityId: string, country: string) =>
     { new: true }
   );
 
-export const getCityById = (cityId: string, country: string) =>
+export const getCityById = (cityId: string, countryId: string) =>
   countryModel
-    .findOne({
-      name: { $regex: new RegExp(country, "i") },
-      "cities._id": cityId,
-    })
+    .findOne({ _id: countryId, "cities._id": cityId })
     .select("cities.$");
 
 // export const getAllLocations = (country: string, city: string) =>
