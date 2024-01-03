@@ -42,10 +42,6 @@ const propertySchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    offer: {
-      type: Boolean,
-      default: false,
-    },
     area: {
       type: String,
       required: true,
@@ -86,4 +82,5 @@ export const createProperty = (property: Record<string, any>) =>
 export const updatePropertyById = (id: string, property: Record<string, any>) =>
   PropertyModel.findByIdAndUpdate(id, property, { new: true });
 
-export const removePropertyById = (id: string) => PropertyModel.findByIdAndDelete(id);
+export const removePropertyById = (id: string) =>
+  PropertyModel.findByIdAndDelete(id);

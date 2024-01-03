@@ -8,6 +8,7 @@ Schemas:
         -> Profile
         -> Roles
         -> Authentication - Salt, PasswordHash, SessionToken
+        
     - Property Schema
         -> Name
         -> Description
