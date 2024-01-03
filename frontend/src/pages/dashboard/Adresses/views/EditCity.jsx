@@ -19,7 +19,7 @@ const EditCity = ({ onOpen, setOnOpen, data, country }) => {
 
   const formik = useFormik({
     initialValues: {
-      name: '',
+      name: data?.name || '',
     },
     validationSchema: validationSchemas,
     onSubmit: async (values) => {
