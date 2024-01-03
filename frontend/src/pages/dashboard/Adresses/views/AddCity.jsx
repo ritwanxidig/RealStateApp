@@ -23,7 +23,7 @@ const AddCity = ({ onOpen, setOnOpen, country }) => {
         validationSchema: validationSchemas,
         onSubmit: async (values) => {
             try {
-                const param = country.name;
+                const param = country._id;
                 await toast.promise(addCity({ param, ...{ cityName: values.name } }).unwrap().then(rs => { setOnOpen(false) }), {
                     loading: 'Adding city...',
                     success: 'City added successfully',
