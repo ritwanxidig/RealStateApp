@@ -14,7 +14,6 @@ export interface IPropertyDDO {
   baths: Number;
   furnished: boolean;
   parking: boolean;
-  offer: boolean;
   area: String;
   address: { country: String; city: String; location: String };
   user: {
