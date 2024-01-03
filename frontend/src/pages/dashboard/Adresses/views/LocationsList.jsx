@@ -13,7 +13,8 @@ const LocationsList = ({ country, loading, city }) => {
   const [editOpen, setEditOpen] = React.useState(false);
   const [selectedLocation, setSelectedLocation] = React.useState(null);
 
-  const { data, isFetching } = useGetLocationsQuery(`${country?.name}/${city?.name}`);
+  const { data, isFetching } = useGetLocationsQuery(`${country?._id}/${city?._id}`);
+  console.log(data);
 
   const rows = data?.cities[0]?.locations?.map((item, i) => ({ ...item, index: i + 1, id: item._id }));
 
