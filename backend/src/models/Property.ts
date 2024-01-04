@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { ObjectId } from "mongoose";
 
 const propertySchema = new mongoose.Schema(
   {
@@ -74,6 +74,9 @@ export const PropertyModel = mongoose.model("Property", propertySchema);
 export const getAll = () => PropertyModel.find();
 
 export const getByPropertyId = (id: string) => PropertyModel.findById(id);
+
+export const getUserProperties = (id: ObjectId) =>
+  PropertyModel.find({ userRef: id });
 
 export const createProperty = (property: Record<string, any>) =>
   new PropertyModel(property).save();
