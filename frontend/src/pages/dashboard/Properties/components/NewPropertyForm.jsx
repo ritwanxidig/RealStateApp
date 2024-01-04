@@ -37,16 +37,29 @@ import Loader from 'src/views/utilities/Loader'
 //   )
 // }
 
-const NewPropertyForm = ({ formik }) => {
+const NewPropertyForm = ({ formik, ...props }) => {
   const { values, touched, errors, handleSubmit, handleChange, handleBlur } = formik;
   const { data: countries, isFetching: isFetchingCountries } = useGetCountriesQuery();
-  const [cities, setCities] = React.useState(null);
-  const [locations, setLocations] = React.useState(null);
+  const [cities, setCities] = React.useState(props?.targetCountry?.cities || null);
+  const [locations, setLocations] = React.useState( props?.targetCity?.locations || null);
   const [selectedCountry, setSelectedCountry] = React.useState(null);
   const [selectedCity, setSelectedCity] = React.useState(null);
   const [selectedLocation, setSelectedLocation] = React.useState(null);
 
 
+
+  useEffect(() => {
+    if (values.Address?.country && countries) {
+      const country = countries?.countries?.find(country => country._id === values.Address?.country);
+      setCities(country?.cities);
+      setSelectedCountry(country);
+    }
+    if (values.Address?.city) {
+      const city = cities?.find(city => city._id === values.Address?.city);
+      setLocations(city?.locations);
+      setSelectedCity(city);
+    }
+  }, [formik, values])
 
   const handleCountryChange = (e) => {
     const country = countries?.countries?.find(country => country._id === e.target.value);
@@ -280,7 +293,7 @@ const NewPropertyForm = ({ formik }) => {
         <StyledButton variant="contained" color="red" type="button" >Cancel</StyledButton>
         <StyledButton variant="outlined"
           // disabled={isLoading}
-          onClick={handleSubmit} >  Add
+          onClick={handleSubmit} >  Submit
           {/* {isLoading && <CircularProgress size={20} />} */}
         </StyledButton>
       </Box>
