@@ -37,6 +37,7 @@ const api = createApi({
     // properties endpoints
     getProperties: QueryEndpoint(builder, "properties"),
     getProperty: QueryParamsEndpoint(builder, "properties"),
+    getMyProperties: QueryEndpoint(builder, "my-properties"),
     addProperty: PostEndpoint(builder, "properties"),
     updateProperty: UpdateEndpoint(builder, "properties"),
     deleteProperty: DeleteEndpoint(builder, "properties"),
@@ -80,6 +81,7 @@ export const {
   // hooks for properties
   useGetPropertiesQuery,
   useGetPropertyQuery,
+  useGetMyPropertiesQuery,
   useAddPropertyMutation,
   useUpdatePropertyMutation,
   useDeletePropertyMutation,
