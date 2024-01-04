@@ -9,6 +9,11 @@ import { Box, Typography } from '@mui/material'
 import { useSelector } from 'react-redux'
 import CustomField from 'src/components/form/CustomField'
 import StyledButton from 'src/components/shared/StyledButton'
+import NewPropertyForm from './components/NewPropertyForm'
+import { useAddPropertyMutation } from 'src/app/services/api'
+import Loader from 'src/views/utilities/Loader'
+import toast from 'react-hot-toast'
+import { useNavigate } from 'react-router'
 
 
 const validationSchema = yup.object().shape({
@@ -38,7 +43,9 @@ const validationSchema = yup.object().shape({
 
 
 const CreateProperty = () => {
-  const { darkMode } = useSelector(state => state.theme)
+  const { darkMode } = useSelector(state => state.theme);
+  const [addProperty, { isLoading }] = useAddPropertyMutation();
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -48,8 +55,31 @@ const CreateProperty = () => {
       sale: false, discount: 0, width: '', height: '', unit: '',
     },
     validationSchema,
-    onSubmit: (values) => {
-      console.log(values)
+    onSubmit: async (values, { resetForm }) => {
+      const toSendData = {
+        name: values.name,
+        description: values.Description,
+        address: {
+          country: values.Address.country,
+          city: values.Address.city,
+          location: values.Address.location
+        },
+        price: values.price,
+        discount: values.discount,
+        imageUrls: values.imageUrls,
+        type: values.type,
+        beds: values.beds,
+        baths: values.baths,
+        furnished: values.furnished,
+        parking: values.parking,
+        area: `${values.width}x${values.height} ${values.unit}`,
+      };
+      console.log(toSendData);
+      await toast.promise(addProperty(toSendData).unwrap().then(rs => { resetForm(); navigate('/app/properties') }), {
+        loading: 'Adding property...',
+        success: 'Property added successfully',
+        error: 'Error adding new property',
+      });
     }
   })
 
@@ -74,210 +104,7 @@ const CreateProperty = () => {
           }}
         >
           <legend><Typography variant='h6' fontFamily="Plus Jakarta Sans" fontWeight="bold" sx={{ px: 1 }}>Create Property</Typography> </legend>
-          <Box>
-
-            <CustomField
-              name="name"
-              label="Name"
-              value={values.name}
-              onChange={handleChange}
-              error={errors.name}
-              touched={touched.name}
-              onBlur={handleBlur}
-              input
-              optional
-            />
-
-            <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
-              <Typography variant='body2' fontFamily="Plus Jakarta Sans" fontWeight="bold" sx={{ px: 1 }}>Address:</Typography>
-              <CustomField
-                name="Address.country"
-                label="Country"
-                value={values.Address.country}
-                onChange={handleChange}
-                error={errors.Address?.country}
-                touched={touched.Address?.country}
-                onBlur={handleBlur}
-                input
-                optional
-              />
-              <CustomField
-                name="Address.city"
-                label="City"
-                value={values.Address.city}
-                onChange={handleChange}
-                error={errors.Address?.city}
-                touched={touched.Address?.city}
-                onBlur={handleBlur}
-                input
-                optional
-              />
-              <CustomField
-                name="Address.location"
-                label="Location"
-                value={values.Address.location}
-                onChange={handleChange}
-                error={errors.Address?.location}
-                touched={touched.Address?.location}
-                onBlur={handleBlur}
-                input
-                optional
-              />
-            </Box>
-
-            <CustomField
-              name="type"
-              label="Type"
-              value={values.type}
-              onChange={handleChange}
-              error={errors.type}
-              touched={touched.type}
-              onBlur={handleBlur}
-              select
-            >
-              <option value="rent">Rent</option>
-              <option value="sale">Sale</option>
-            </CustomField>
-
-            <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
-              <Typography variant='body2' fontFamily="Plus Jakarta Sans" fontWeight="bold" sx={{ px: 1 }}>Price:</Typography>
-              <CustomField
-                name="price"
-                label="Price"
-                value={values.price}
-                onChange={handleChange}
-                error={errors.price}
-                touched={touched.price}
-                onBlur={handleBlur}
-                input
-                type="number"
-                optional
-              />
-              <CustomField
-                name="discount"
-                label="Discount"
-                value={values.discount}
-                onChange={handleChange}
-                error={errors.discount}
-                touched={touched.discount}
-                onBlur={handleBlur}
-                input
-                type="number"
-                optional
-              />
-            </Box>
-
-            <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
-              <Typography variant='body2' fontFamily="Plus Jakarta Sans" fontWeight="bold" sx={{ px: 1 }}>Area: </Typography>
-              <CustomField
-                name="width"
-                label="Width"
-                value={values.width}
-                onChange={handleChange}
-                error={errors.width}
-                touched={touched.width}
-                onBlur={handleBlur}
-                input
-                type="number"
-              />
-
-              <CustomField
-                name="height"
-                label="Height"
-                value={values.height}
-                onChange={handleChange}
-                error={errors.height}
-                touched={touched.height}
-                onBlur={handleBlur}
-                input
-                type="number"
-              />
-              <CustomField
-                name="unit"
-                label="Unit"
-                value={values.unit}
-                onChange={handleChange}
-                error={errors.unit}
-                touched={touched.unit}
-                onBlur={handleBlur}
-                input
-              />
-            </Box>
-
-
-            <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
-              <Typography variant='body2' fontFamily="Plus Jakarta Sans" fontWeight="bold" sx={{ px: 1 }}>Details:</Typography>
-              <CustomField
-                name="beds"
-                label="Beds"
-                value={values.beds}
-                onChange={handleChange}
-                error={errors.beds}
-                touched={touched.beds}
-                onBlur={handleBlur}
-                input
-                type="number"
-              />
-              <CustomField
-                name="baths"
-                label="Baths"
-                value={values.baths}
-                onChange={handleChange}
-                error={errors.baths}
-                touched={touched.baths}
-                onBlur={handleBlur}
-                input
-                type="number"
-              />
-              <CustomField
-                name="furnished"
-                label="Furnished"
-                value={values.furnished}
-                onChange={handleChange}
-                error={errors.furnished}
-                touched={touched.furnished}
-                onBlur={handleBlur}
-                select
-              >
-                <option value={false}>No</option>
-                <option value={true}>Yes</option>
-              </CustomField>
-              <CustomField
-                name="parking"
-                label="Parking"
-                value={values.parking}
-                onChange={handleChange}
-                error={errors.parking}
-                touched={touched.parking}
-                onBlur={handleBlur}
-                select
-              >
-                <option value={false}>No</option>
-                <option value={true}>Yes</option>
-              </CustomField>
-
-            </Box>
-            <CustomField
-              name="Description"
-              label="Description"
-              value={values.Description}
-              onChange={handleChange}
-              error={errors.Description}
-              touched={touched.Description}
-              onBlur={handleBlur}
-              textarea
-              optional
-            />
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
-              <StyledButton variant="contained" color="red" type="button" >Cancel</StyledButton>
-              <StyledButton variant="outlined"
-                // disabled={isLoading}
-                onClick={handleSubmit} >  Add
-                {/* {isLoading && <CircularProgress size={20} />} */}
-              </StyledButton>
-            </Box>
-
-          </Box>
+          {isLoading ? <Loader /> : <NewPropertyForm formik={formik} />}
         </Box>
       </PageCard>
     </PageContainer>
