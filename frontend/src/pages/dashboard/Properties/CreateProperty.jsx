@@ -72,7 +72,7 @@ const CreateProperty = () => {
         baths: values.baths,
         furnished: values.furnished,
         parking: values.parking,
-        area: `${values.width}x${values.height} ${values.unit}`,
+        area: `${values.width}x${values.height} ${values.unit.trim()}`,
       };
       console.log(toSendData);
       await toast.promise(addProperty(toSendData).unwrap().then(rs => { resetForm(); navigate('/app/properties') }), {
