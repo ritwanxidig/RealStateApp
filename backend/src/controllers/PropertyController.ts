@@ -85,12 +85,12 @@ export const addProperty = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { name, price, imageUrls, type, beds, baths, address } = req.body;
-  if (!name || !price || !imageUrls || !type || !beds || !baths || !address)
+  const { price, imageUrls, type, beds, baths, address } = req.body;
+  if (!price || !imageUrls || !type || !beds || !baths || !address)
     return next(
       errorHandler(
         400,
-        "please provide all essentail fields: name, price, imageUrls, type, beds, baths, address "
+        "please provide all essentail fields:  price, imageUrls, type, beds, baths, address "
       )
     );
   try {
@@ -137,7 +137,7 @@ export const addProperty = async (
       },
     };
 
-    return res.status(200).json(property);
+    return res.status(200).json(propertyDDO);
   } catch (error) {
     next(error);
   }
