@@ -21,6 +21,7 @@ const Router = () => {
     const Home = Loadable(lazy(() => import('../pages/dashboard/Home')));
     const Users_List = Loadable(lazy(() => import('../pages/dashboard/users/list')));
     const Properties_List = Loadable(lazy(() => import('../pages/dashboard/Properties/list')));
+    const MyProperties_List = Loadable(lazy(() => import('../pages/dashboard/Properties/MyProperties')));
     const NewPropertiesList = Loadable(lazy(() => import('../pages/dashboard/Properties/CreateProperty')));
     const EditProperty = Loadable(lazy(() => import('../pages/dashboard/Properties/EditProperty')));
     const Address_List = Loadable(lazy(() => import('../pages/dashboard/Adresses/list')));
@@ -50,14 +51,19 @@ const Router = () => {
                     <Route path='/app' element={<MainLayout />} >
                         <Route path='/app/' element={<Navigate to="/app/home" />} />
                         <Route path='/app/home' element={<Home />} />
-                        <Route path='/app/properties' element={<Properties_List />} />
                         <Route path='/app/properties/new' element={<NewPropertiesList />} />
                         <Route path='/app/properties/edit/:id' element={<EditProperty />} />
+
+                        {/* only for user */}
+                        <Route path='/app/' element={<PrivateRoute allowedRoles={['user']} />}>
+                            <Route path='/app/my-properties' element={<MyProperties_List />} />
+                        </Route>
 
                         {/* only for admin */}
                         <Route path='/app/' element={<PrivateRoute allowedRoles={['admin']} />}>
                             <Route path='/app/users' element={<Users_List />} />
                             <Route path='/app/addresses' element={<Address_List />} />
+                            <Route path='/app/properties' element={<Properties_List />} />
                         </Route>
                     </Route>
                 </Route>
