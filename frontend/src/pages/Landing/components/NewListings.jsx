@@ -5,8 +5,10 @@ import { Product1, Product2, Product3, Product4 } from '../../../assets'
 import { IconBed, IconCurrencyDollar, IconDiscount, IconHomeCog, IconLocation, IconMap, IconMapPin, IconParking, IconParkingCircle, IconSquare, IconToiletPaper } from '@tabler/icons-react'
 import { Link } from 'react-router-dom'
 import ListingCard from './ListingCard'
+import { useGetPropertiesQuery } from 'src/app/services/api'
 
 const NewListings = () => {
+    const { data: properties, isFetching: loading } = useGetPropertiesQuery();
     return (
         <section className='my-12'>
             <Box>
@@ -27,107 +29,41 @@ const NewListings = () => {
                         mx: 2
                     }}
                 >
-                    <ListingCard card={{
-                        name: 'Card 1',
-                        location: 'Hargeisa, Somaliland',
-                        price: 12,
-                        discount: 2,
-                        beds: 8,
-                        baths: 4,
-                        area: '12x24',
-                        parking: true,
-                        furnished: true,
-                        image: Product1,
-                        description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Distinctio quos expedita esse libero molestias quisquam, tempora voluptatum sapiente doloremque excepturi voluptatem suscipit earum facere voluptatibus quas tenetur sunt alias. Alias aliquam molestias quam porro, ea sapiente ipsum cupiditate odit adipisci! Quidem, error inventore! Inventore facere deleniti ipsam placeat. Similique, hic?"
-                    }} />
-                    <ListingCard card={{
-                        name: 'Card 1',
-                        location: 'Borama, Somaliland',
-                        price: 12,
-                        beds: 8,
-                        baths: 4,
-                        area: '12x24',
-                        parking: true,
-                        furnished: true,
-                        image: Product2,
-                        description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Distinctio quos expedita esse libero molestias quisquam, tempora voluptatum sapiente doloremque excepturi voluptatem suscipit earum facere voluptatibus quas tenetur sunt alias. Alias aliquam molestias quam porro, ea sapiente ipsum cupiditate odit adipisci! Quidem, error inventore! Inventore facere deleniti ipsam placeat. Similique, hic?"
-                    }} />
-                    <ListingCard card={{
-                        name: 'Card 1',
-                        location: 'Buroa, Somaliland',
-                        price: 12,
-                        discount: 8,
-                        beds: 8,
-                        baths: 4,
-                        area: '12x24',
-                        parking: true,
-                        furnished: true,
-                        image: Product3,
-                        description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Distinctio quos expedita esse libero molestias quisquam, tempora voluptatum sapiente doloremque excepturi voluptatem suscipit earum facere voluptatibus quas tenetur sunt alias. Alias aliquam molestias quam porro, ea sapiente ipsum cupiditate odit adipisci! Quidem, error inventore! Inventore facere deleniti ipsam placeat. Similique, hic?"
-                    }} />
-                    <ListingCard card={{
-                        name: 'Card 1',
-                        location: 'Ceerigaabo, Somaliland',
-                        price: 12,
-                        discount: 2,
-                        beds: 8,
-                        baths: 4,
-                        area: '12x24',
-                        parking: true,
-                        furnished: true,
-                        image: Product4,
-                        description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Distinctio quos expedita esse libero molestias quisquam, tempora voluptatum sapiente doloremque excepturi voluptatem suscipit earum facere voluptatibus quas tenetur sunt alias. Alias aliquam molestias quam porro, ea sapiente ipsum cupiditate odit adipisci! Quidem, error inventore! Inventore facere deleniti ipsam placeat. Similique, hic?"
-                    }} />
-                    <ListingCard card={{
-                        name: 'Card 1',
-                        location: 'Berbera, Somaliland',
-                        price: 12,
-                        beds: 8,
-                        baths: 4,
-                        area: '12x24',
-                        parking: true,
-                        furnished: true,
-                        image: Product1,
-                        description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Distinctio quos expedita esse libero molestias quisquam, tempora voluptatum sapiente doloremque excepturi voluptatem suscipit earum facere voluptatibus quas tenetur sunt alias. Alias aliquam molestias quam porro, ea sapiente ipsum cupiditate odit adipisci! Quidem, error inventore! Inventore facere deleniti ipsam placeat. Similique, hic?"
-                    }} />
-                    <ListingCard card={{
-                        name: 'Card 1',
-                        location: 'Hargeisa, Somaliland',
-                        price: 12,
-                        discount: 2,
-                        beds: 8,
-                        baths: 4,
-                        area: '12x24',
-                        parking: true,
-                        furnished: true,
-                        image: Product1,
-                        description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Distinctio quos expedita esse libero molestias quisquam, tempora voluptatum sapiente doloremque excepturi voluptatem suscipit earum facere voluptatibus quas tenetur sunt alias. Alias aliquam molestias quam porro, ea sapiente ipsum cupiditate odit adipisci! Quidem, error inventore! Inventore facere deleniti ipsam placeat. Similique, hic?"
-                    }} />
-                    <ListingCard card={{
-                        name: 'Card 1',
-                        location: 'Borama, Somaliland',
-                        price: 12,
-                        beds: 8,
-                        baths: 4,
-                        area: '12x24',
-                        parking: true,
-                        furnished: true,
-                        image: Product2,
-                        description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Distinctio quos expedita esse libero molestias quisquam, tempora voluptatum sapiente doloremque excepturi voluptatem suscipit earum facere voluptatibus quas tenetur sunt alias. Alias aliquam molestias quam porro, ea sapiente ipsum cupiditate odit adipisci! Quidem, error inventore! Inventore facere deleniti ipsam placeat. Similique, hic?"
-                    }} />
-                    <ListingCard card={{
-                        name: 'Card 1',
-                        location: 'Buroa, Somaliland',
-                        price: 12,
-                        discount: 8,
-                        beds: 8,
-                        baths: 4,
-                        area: '12x24',
-                        parking: true,
-                        furnished: true,
-                        image: Product3,
-                        description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Distinctio quos expedita esse libero molestias quisquam, tempora voluptatum sapiente doloremque excepturi voluptatem suscipit earum facere voluptatibus quas tenetur sunt alias. Alias aliquam molestias quam porro, ea sapiente ipsum cupiditate odit adipisci! Quidem, error inventore! Inventore facere deleniti ipsam placeat. Similique, hic?"
-                    }} />
+                    {/* sorting from the latest to the oldest */}
+
+                    {properties && !loading && properties?.length > 0 ?
+                        properties?.slice(0, 4)
+                            .map(p => (
+                                <ListingCard key={p?._id} card={{
+                                    name: p?.name,
+                                    location: p?.address.country,
+                                    price: p?.price,
+                                    discount: p?.discount,
+                                    beds: p?.beds,
+                                    baths: p?.baths,
+                                    area: p?.area,
+                                    parking: p?.parking,
+                                    furnished: p?.furnished,
+                                    image: p?.imageUrls[0] || Product1,
+                                    description: p?.description
+                                }} />
+                            )) :
+                        // static rendering
+                        Array(4).fill(0).map((_, i) => (
+                            <ListingCard key={i + Math.random()} card={{
+                                name: `Property ${i + 1}`,
+                                location: 'USA',
+                                price: 1200,
+                                discount: 50,
+                                beds: 2,
+                                baths: 2,
+                                area: '1200 sqft',
+                                parking: true,
+                                furnished: true,
+                                image: Product1
+                            }} />
+                        ))
+                    }
 
                 </Box>
 
