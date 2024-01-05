@@ -18,7 +18,7 @@ const Properties_List = () => {
     const { authenticatedUser } = useSelector(state => state.auth)
     // const [detailOpen, setDetailOpen] = React.useState(false);
     const [selectedProperty, setSelectedProperty] = React.useState(null);
-    const { data: properties, isFetching } = authenticatedUser && authenticatedUser.role === "admin" ? useGetPropertiesQuery() : useGetMyPropertiesQuery();
+    const { data: properties, isFetching } = useGetPropertiesQuery();
 
 
     const columns = [
