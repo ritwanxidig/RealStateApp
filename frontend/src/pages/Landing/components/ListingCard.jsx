@@ -50,7 +50,7 @@ const ListingCard = ({ card }) => {
                 <AmenitiesCard Icon={IconSquare} title={card.area} />
                 <AmenitiesCard Icon={IconMapPin} title={card.location.substring(0, 10)} />
                 <AmenitiesCard Icon={IconCurrencyDollar} title={card.price} />
-                {card.discount && <AmenitiesCard Icon={IconDiscount} title={card.discount} textDecoration='line-through' />}
+                {card.discount && card.discount > 1 ? <AmenitiesCard Icon={IconDiscount} title={card.discount} textDecoration='line-through' /> : null}
                 {card.parking && <AmenitiesCard Icon={IconParkingCircle} title="Parking" />}
                 {card.furnished && <AmenitiesCard Icon={IconHomeCog} title="Furnished" />}
             </Box>
