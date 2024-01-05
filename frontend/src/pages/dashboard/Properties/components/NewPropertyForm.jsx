@@ -41,7 +41,7 @@ const NewPropertyForm = ({ formik, ...props }) => {
   const { values, touched, errors, handleSubmit, handleChange, handleBlur } = formik;
   const { data: countries, isFetching: isFetchingCountries } = useGetCountriesQuery();
   const [cities, setCities] = React.useState(props?.targetCountry?.cities || null);
-  const [locations, setLocations] = React.useState( props?.targetCity?.locations || null);
+  const [locations, setLocations] = React.useState(props?.targetCity?.locations || null);
   const [selectedCountry, setSelectedCountry] = React.useState(null);
   const [selectedCity, setSelectedCity] = React.useState(null);
   const [selectedLocation, setSelectedLocation] = React.useState(null);
@@ -289,6 +289,21 @@ const NewPropertyForm = ({ formik, ...props }) => {
         textarea
         optional
       />
+      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 1, p: 4, borderRadius: 2, border: '1px solid #e0e0e0' }}>
+        <Typography variant='body2' fontFamily="Plus Jakarta Sans" fontWeight="bold" sx={{ px: 1 }}>Upload Images:</Typography>
+        <CustomField
+          name="images"
+          label="Images"
+          value={values.images}
+          onChange={handleChange}
+          error={errors.images}
+          touched={touched.images}
+          onBlur={handleBlur}
+          input
+          type="file"
+          optional
+        />
+      </Box>
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
         <StyledButton variant="contained" color="red" type="button" >Cancel</StyledButton>
         <StyledButton variant="outlined"
