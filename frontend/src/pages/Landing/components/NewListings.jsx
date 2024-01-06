@@ -40,6 +40,7 @@ const NewListings = () => {
                                     price: p?.price,
                                     discount: p?.discount,
                                     beds: p?.beds,
+                                    type: p?.type,
                                     baths: p?.baths,
                                     area: p?.area,
                                     parking: p?.parking,
