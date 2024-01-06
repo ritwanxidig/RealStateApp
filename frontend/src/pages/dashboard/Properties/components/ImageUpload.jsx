@@ -1,4 +1,4 @@
-import { Box, IconButton, ImageList, ImageListItem, Typography } from '@mui/material'
+import { Box, IconButton, ImageList, ImageListItem, Typography, useMediaQuery } from '@mui/material'
 import React from 'react'
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
 import StyledButton from 'src/components/shared/StyledButton';
@@ -11,7 +11,10 @@ const ImageUpload = ({ formik }) => {
     const imageUploadRef = React.useRef(null);
     const [uploading, setUploading] = React.useState(false);
     const [progress, setProgress] = React.useState(0);
-    console.log(formik?.values?.imageUrls);
+    const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
+    const mdUp = useMediaQuery((theme) => theme.breakpoints.up('md'));
+    const smUp = useMediaQuery((theme) => theme.breakpoints.up('sm'));
+    const xsUp = useMediaQuery((theme) => theme.breakpoints.up('xs'));
 
     const handleImageUpload = (e) => {
         setSelectedImages(e.target.files);
@@ -66,33 +69,35 @@ const ImageUpload = ({ formik }) => {
 
     return (
         <Box >
-            {uploading ? <Loader /> : <Box sx={{ display: 'flex', my: 2, flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 1, p: 4, borderRadius: 2, border: '1px dashed #e0e0e0' }}>
-                <Typography variant='body2' fontFamily="Plus Jakarta Sans" fontWeight="bold" sx={{ px: 1, mb: -1 }}>Upload Images:</Typography>
-                <Typography variant='body2' fontSize="14px" fontFamily="Plus Jakarta Sans" sx={{ px: 1 }}>Upload at least 1 image and maximum of 6</Typography>
-                <input
-                    ref={imageUploadRef}
-                    type="file"
-                    hidden
-                    accept="image/*"
-                    multiple
-                    onChange={handleImageUpload}
-                // onChange={handleImageUpload}
-                />
-                <StyledButton
-                    variant="contained"
-                    onClick={() => imageUploadRef.current.click()}
-                >
-                    Upload
-                    {/* <Upload /> */}
-                </StyledButton>
+            <Box sx={{ display: 'flex', my: 2, flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 1, p: 4, borderRadius: 2, border: '1px dashed #e0e0e0' }}>
+                {uploading ? <Loader /> : <>
+                    <Typography variant='body2' fontFamily="Plus Jakarta Sans" fontWeight="bold" sx={{ px: 1, mb: -1 }}>Upload Images:</Typography>
+                    <Typography variant='body2' fontSize="14px" fontFamily="Plus Jakarta Sans" sx={{ px: 1 }}>Upload at least 1 image and maximum of 6</Typography>
+                    <input
+                        ref={imageUploadRef}
+                        type="file"
+                        hidden
+                        accept="image/*"
+                        multiple
+                        onChange={handleImageUpload}
+                    // onChange={handleImageUpload}
+                    />
+                    <StyledButton
+                        variant="contained"
+                        onClick={() => imageUploadRef.current.click()}
+                    >
+                        Upload
+                        {/* <Upload /> */}
+                    </StyledButton>
+                </>}
 
-            </Box>}
+            </Box>
             <div className='text-red-500 -mt-4 text-sm'>{formik.errors.imageUrls}</div>
             {uploading && <Typography variant='body2' fontFamily="Plus Jakarta Sans" fontWeight="bold" sx={{ px: 1 }}>Uploading {progress}%</Typography>}
             <Box sx={{ py: 2 }}>
                 <ImageList
                     sx={{}}
-                    cols={6}
+                    cols={lgUp ? 6 : mdUp ? 4 : smUp ? 3 : xsUp ? 2 : 1}
                     rowHeight={164}
                 >
                     {formik?.values?.imageUrls?.length > 0 ?
