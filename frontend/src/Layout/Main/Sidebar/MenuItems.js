@@ -33,7 +33,7 @@ export const AdminMenuItems = [
     id: uniqueId(),
     title: "Properties",
     icon: IconHome,
-    href: "/app/properties",
+    href: "/app/all-properties",
   },
   {
     id: uniqueId(),
