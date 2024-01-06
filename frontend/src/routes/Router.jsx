@@ -14,6 +14,9 @@ import PrivateRoute from './PrivateRoute'
 import { Toaster } from 'react-hot-toast'
 
 const Router = () => {
+
+    const Properties = Loadable(lazy(() => import('../pages/Landing/Properties')));
+
     const Login = Loadable(lazy(() => import('../pages/authPages/Login')));
     const Register = Loadable(lazy(() => import('../pages/authPages/Register')));
 
@@ -44,6 +47,8 @@ const Router = () => {
                     <Route path='/' element={<HomePage />} />
                     <Route path='/about' element={<About />} />
                     <Route path='/contact' element={<Contact />} />
+                    <Route path='/properties' element={<Properties />} />
+
                 </Route>
 
                 {/* protected routes for admin */}
@@ -63,7 +68,7 @@ const Router = () => {
                         <Route path='/app/' element={<PrivateRoute allowedRoles={['admin']} />}>
                             <Route path='/app/users' element={<Users_List />} />
                             <Route path='/app/addresses' element={<Address_List />} />
-                            <Route path='/app/properties' element={<Properties_List />} />
+                            <Route path='/app/all-properties' element={<Properties_List />} />
                         </Route>
                     </Route>
                 </Route>
