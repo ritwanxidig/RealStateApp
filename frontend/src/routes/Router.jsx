@@ -15,19 +15,20 @@ import { Toaster } from 'react-hot-toast'
 
 const Router = () => {
 
-    const Properties = Loadable(lazy(() => import('../pages/Landing/Properties')));
+    const Properties = Loadable(lazy(() => import('src/pages/Landing/Properties')));
+    const SearchPropery = Loadable(lazy(() => import('src/pages/Landing/SearchProperty')));
 
-    const Login = Loadable(lazy(() => import('../pages/authPages/Login')));
-    const Register = Loadable(lazy(() => import('../pages/authPages/Register')));
+    const Login = Loadable(lazy(() => import('src/pages/authPages/Login')));
+    const Register = Loadable(lazy(() => import('src/pages/authPages/Register')));
 
     // protected routes
-    const Home = Loadable(lazy(() => import('../pages/dashboard/Home')));
-    const Users_List = Loadable(lazy(() => import('../pages/dashboard/users/list')));
-    const Properties_List = Loadable(lazy(() => import('../pages/dashboard/Properties/list')));
-    const MyProperties_List = Loadable(lazy(() => import('../pages/dashboard/Properties/MyProperties')));
-    const NewPropertiesList = Loadable(lazy(() => import('../pages/dashboard/Properties/CreateProperty')));
-    const EditProperty = Loadable(lazy(() => import('../pages/dashboard/Properties/EditProperty')));
-    const Address_List = Loadable(lazy(() => import('../pages/dashboard/Adresses/list')));
+    const Home = Loadable(lazy(() => import('src/pages/dashboard/Home')));
+    const Users_List = Loadable(lazy(() => import('src/pages/dashboard/users/list')));
+    const Properties_List = Loadable(lazy(() => import('src/pages/dashboard/Properties/list')));
+    const MyProperties_List = Loadable(lazy(() => import('src/pages/dashboard/Properties/MyProperties')));
+    const NewPropertiesList = Loadable(lazy(() => import('src/pages/dashboard/Properties/CreateProperty')));
+    const EditProperty = Loadable(lazy(() => import('src/pages/dashboard/Properties/EditProperty')));
+    const Address_List = Loadable(lazy(() => import('src/pages/dashboard/Adresses/list')));
 
     // accessing error slice
     useSelector((state) => state.error);
@@ -48,6 +49,7 @@ const Router = () => {
                     <Route path='/about' element={<About />} />
                     <Route path='/contact' element={<Contact />} />
                     <Route path='/properties' element={<Properties />} />
+                    <Route path='/properties/search' element={<SearchPropery />} />
 
                 </Route>
 
