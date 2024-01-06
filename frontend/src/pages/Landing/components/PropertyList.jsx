@@ -12,7 +12,7 @@ const PropertyList = ({loading, properties}) => {
 
             <SectionTitle title='Properties' />
             <Box sx={{ my: 1, display: 'flex', justifyContent: 'end', mx: 4, alignItems: 'center' }}>
-                <Link variant="body2" style={{ fontFamily: 'Plus Jakarta Sans' }}>All Filters</Link>
+                <Link to='/properties/search' style={{ fontFamily: 'Plus Jakarta Sans' }}>All Filters</Link>
             </Box>
 
             {/* properties */}
