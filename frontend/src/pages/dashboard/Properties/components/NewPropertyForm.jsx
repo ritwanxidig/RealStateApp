@@ -4,6 +4,7 @@ import { useGetCitiesQuery, useGetCountriesQuery, useGetLocationsQuery } from 's
 import CustomField from 'src/components/form/CustomField'
 import StyledButton from 'src/components/shared/StyledButton'
 import Loader from 'src/views/utilities/Loader'
+import ImageUpload from './ImageUpload'
 
 
 // const CitiesComponent = ({ formik, selectedCountry, handleChange }) => {
@@ -44,7 +45,9 @@ const NewPropertyForm = ({ formik, ...props }) => {
   const [locations, setLocations] = React.useState(props?.targetCity?.locations || null);
   const [selectedCountry, setSelectedCountry] = React.useState(null);
   const [selectedCity, setSelectedCity] = React.useState(null);
-  const [selectedLocation, setSelectedLocation] = React.useState(null);
+  const imageUploadRef = React.useRef(null);
+  const [selectedImages, setSelectedImages] = React.useState([]);
+
 
 
 
@@ -289,21 +292,8 @@ const NewPropertyForm = ({ formik, ...props }) => {
         textarea
         optional
       />
-      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 1, p: 4, borderRadius: 2, border: '1px solid #e0e0e0' }}>
-        <Typography variant='body2' fontFamily="Plus Jakarta Sans" fontWeight="bold" sx={{ px: 1 }}>Upload Images:</Typography>
-        <CustomField
-          name="images"
-          label="Images"
-          value={values.images}
-          onChange={handleChange}
-          error={errors.images}
-          touched={touched.images}
-          onBlur={handleBlur}
-          input
-          type="file"
-          optional
-        />
-      </Box>
+      {/* Image upload */}
+      <ImageUpload formik={formik} />
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
         <StyledButton variant="contained" color="red" type="button" >Cancel</StyledButton>
         <StyledButton variant="outlined"
