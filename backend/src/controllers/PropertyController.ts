@@ -294,8 +294,11 @@ export const deleteProperty = async (
     if (!targetOne)
       return next(errorHandler(400, "this property does not exist"));
 
-    // check if the requested is the owner of this document
-    if (requestedUser._id.toString() !== targetOne.userRef.toString())
+    // check if the requested is the owner of this document or admin
+    if (
+      requestedUser._id.toString() !== targetOne.userRef.toString() &&
+      !requestedUser.roles.includes("admin")
+    )
       return next(
         errorHandler(403, "you can't delete this, b/c you are not the owner")
       );
