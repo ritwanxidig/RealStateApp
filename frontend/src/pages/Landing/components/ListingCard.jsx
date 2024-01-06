@@ -8,6 +8,7 @@ import { IconCurrencyDollar } from '@tabler/icons-react'
 import { IconParkingCircle } from '@tabler/icons-react'
 import { FaBath } from "react-icons/fa";
 import { useSelector } from 'react-redux'
+import StyledButton from 'src/components/shared/StyledButton'
 
 const ListingCard = ({ card }) => {
     const { darkMode } = useSelector(state => state.theme)
@@ -18,23 +19,33 @@ const ListingCard = ({ card }) => {
                 backgroundColor: darkMode ? 'primary.800' : 'primary.100',
                 borderRadius: '20px',
                 color: 'white',
+                display: 'flex',
+                flexDirection: 'column',
             }}
         >
             <Box
                 sx={{
                     backgroundColor: 'primary.main',
-                    width: '3rem',
+                    width: '5rem',
                     textAlign: 'center',
                     display: 'inline-block',
                     position: 'absolute',
                     borderRadius: '5px',
                     color: 'white',
                     fontWeight: '600',
+                    textTransform: 'capitalize',
+                    fontSize: '14px',
                 }}
             >
-                Sale
+                {card.type ? `For ${card.type}` : 'For Sale'}
             </Box>
-            <img src={card.image} width='20%' style={{ width: '100%', borderRadius: '20px' }} alt={card.name} />
+            <Box sx={{ width: '100%', height: '190px', display: 'flex', flexDirection: 'column' }}>
+                <img
+                    src={card.image}
+                    style={{ height: '100%', width: '100%', objectFit: 'cover', borderRadius: '20px' }}
+                    alt={card.name}
+                />
+            </Box>
             {/* <Link className='hover:opacity-70'>
                 <Typography variant="h6" fontSize="18px" color="primary.main" sx={{ fontWeight: '500', textAlign: 'center', my: 1 }}>
                     {card.name}
@@ -55,8 +66,8 @@ const ListingCard = ({ card }) => {
                 {card.furnished && <AmenitiesCard Icon={IconHomeCog} title="Furnished" />}
             </Box>
             {/* <Divider sx={{ mt: 2, borderColor: 'primary.main' }} /> */}
-            <Button LinkComponent={Link} to={`/listing/${card.name}`} variant='outlined'
-                sx={{ width: '100%', mt: 2, textTransform: 'none', boxShadow: 'none', fontFamily: 'Plus Jakarta Sans', '&:hover': { boxShadow: 'none' }, }}>Email Agent</Button>
+            <StyledButton LinkComponent={Link} to={`/listing/${card.name}`} variant='outlined'
+                sx={{ width: '100%', mt: 2, textTransform: 'none', boxShadow: 'none', fontFamily: 'Plus Jakarta Sans', '&:hover': { boxShadow: 'none' }, }}>Email Agent</StyledButton>
         </Box>
     )
 }
