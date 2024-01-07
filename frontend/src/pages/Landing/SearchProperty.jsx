@@ -3,9 +3,10 @@ import { Box, Drawer, Typography } from '@mui/material'
 import { useFormik } from 'formik';
 import React, { useEffect } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router';
-import { useGetCountriesQuery } from 'src/app/services/api';
+import { useGetCountriesQuery, useSearchPropertyQuery } from 'src/app/services/api';
 import CustomField from 'src/components/form/CustomField';
 import StyledButton from 'src/components/shared/StyledButton';
+import PropertyList from './components/PropertyList';
 
 const DrawerContainer = styled(Drawer)({
     width: '300px',
@@ -14,15 +15,16 @@ const DrawerContainer = styled(Drawer)({
 const SearchProperty = () => {
     const location = useLocation();
     const urlSearchParams = new URLSearchParams(location.search);
-    const country = urlSearchParams.get('country');
-    const city = urlSearchParams.get('city');
+    const country = urlSearchParams.get('countryId');
+    const city = urlSearchParams.get('cityId');
     const type = urlSearchParams.get('type');
     const [drawerOpen, setDrawerOpen] = React.useState(true);
     const [selectedCountry, setSelectedCountry] = React.useState(null);
-    const [urlParams, setUrlParams] = React.useState("");
-
+    const [urlParams, setUrlParams] = React.useState(location.search);
+    console.log(urlParams);
 
     const { data: countries, isFetching: loading } = useGetCountriesQuery();
+    const { data, isFetching } = useSearchPropertyQuery(`search?${urlParams}`);
 
 
     const navigate = useNavigate();
@@ -30,12 +32,13 @@ const SearchProperty = () => {
     const handleCountryChange = (e) => {
         const country = countries?.countries?.find(country => country._id === e.target.value);
         setSelectedCountry(country);
+        formik.setFieldValue('City', "");
         handleChange(e);
     };
 
 
     useEffect(() => {
-        if(country){
+        if (country) {
             const toUpdatecountry = countries?.countries?.find(ctry => ctry._id === country);
             setSelectedCountry(toUpdatecountry);
         }
@@ -51,8 +54,8 @@ const SearchProperty = () => {
         },
         onSubmit: (values) => {
             const searchParams = new URLSearchParams();
-            searchParams.set('country', values.Country);
-            searchParams.set('city', values.City);
+            searchParams.set('countryId', values.Country);
+            searchParams.set('cityId', values.City);
             searchParams.set('type', values.type);
             setUrlParams(searchParams.toString());
 
@@ -71,6 +74,9 @@ const SearchProperty = () => {
 
             }}
         >
+            <PropertyList loading={isFetching} properties={data} filterComponent={<Box sx={{ display: 'flex', justifyContent: 'end', mx: 4, alignItems: 'center' }}>
+                <StyledButton variant="contained" color="primary" type="button" onClick={() => setDrawerOpen(true)}>Filter</StyledButton>
+            </Box>} />
             <DrawerContainer
                 anchor='left'
                 open={drawerOpen}
