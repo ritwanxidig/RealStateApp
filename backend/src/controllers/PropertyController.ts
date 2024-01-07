@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import {
+  PropertyModel,
   createProperty,
   getAll,
   getByPropertyId,
@@ -105,6 +106,31 @@ export const getProperty = async (
     );
 
     return res.status(200).json(property);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const searchProperty = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    let country = req.query.country || "";
+    let city = req.query.city || "";
+    let type = req.query.type;
+    if (type === undefined || type === "all") {
+      type = { $in: ["rent", "sale"] };
+    }
+    const properties = await PropertyModel.find({
+      address: {
+        country: { $regex: country, $options: "i" },
+        city: { $regex: city, $options: "i" },
+      },
+      type: type,
+    });
+    return res.status(200).json(properties);
   } catch (error) {
     next(error);
   }
