@@ -123,13 +123,56 @@ export const searchProperty = async (
     if (type === undefined || type === "all") {
       type = { $in: ["rent", "sale"] };
     }
-    const properties = await PropertyModel.find({
+    const data = await PropertyModel.find({
       address: {
         country: { $regex: country, $options: "i" },
         city: { $regex: city, $options: "i" },
       },
       type: type,
     });
+    const properties = await Promise.all(
+      data.map(async (property) => {
+        const createdUser = await getById(property.userRef.toString());
+        const country = await getCountryById(property.address.country);
+        const city = await getCityById(
+          property.address.city,
+          property.address.country
+        );
+        const location = await getLocationById(
+          property.address.country,
+          property.address.city,
+          property.address.location
+        );
+        const propertyDDO: IPropertyDDO = {
+          _id: property._id.toString(),
+          _createdAt: property.createdAt,
+          _updatedAt: property.updatedAt,
+          name: property?.name,
+          description: property.description,
+          price: property.price,
+          discount: property.discount,
+          imageUrls: property.imageUrls,
+          type: property.type,
+          beds: property.beds,
+          baths: property.baths,
+          furnished: property.furnished,
+          parking: property.parking,
+          area: property.area,
+          address: {
+            country: country.name,
+            city: city.cities[0].name,
+            location: location?.cities[0]?.locations[0]?.name,
+          },
+          user: {
+            name: createdUser?.name,
+            username: createdUser?.username,
+            email: createdUser?.email,
+            roles: createdUser?.roles,
+          },
+        };
+        return propertyDDO;
+      })
+    );
     return res.status(200).json(properties);
   } catch (error) {
     next(error);
