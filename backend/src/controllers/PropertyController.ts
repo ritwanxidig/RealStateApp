@@ -117,17 +117,27 @@ export const searchProperty = async (
   next: NextFunction
 ) => {
   try {
-    let country = req.query.country || "";
-    let city = req.query.city || "";
+    let countryId = req.query.countryId || ""; // assuming countryId is sent as country
+    let cityId = req.query.cityId || "";
     let type = req.query.type;
+
+    console.log("countryId: ", countryId);
+    console.log("cityId: ", cityId);
+    console.log("type: ", type);
+
+    // Handle empty countryId and cityId
+    const countryCondition = countryId
+      ? { $in: [countryId] }
+      : { $exists: true };
+    const cityCondition = cityId ? { $eq: cityId } : { $exists: true };
+
     if (type === undefined || type === "all") {
       type = { $in: ["rent", "sale"] };
     }
+
     const data = await PropertyModel.find({
-      address: {
-        country: { $regex: country, $options: "i" },
-        city: { $regex: city, $options: "i" },
-      },
+      "address.country": countryCondition,
+      "address.city": cityCondition,
       type: type,
     });
     const properties = await Promise.all(
@@ -173,6 +183,9 @@ export const searchProperty = async (
         return propertyDDO;
       })
     );
+
+    console.log(data);
+
     return res.status(200).json(properties);
   } catch (error) {
     next(error);
@@ -323,7 +336,10 @@ export const editProperty = async (
 
     // check if the user is owner
     const requestedUser = get(req, "identity") as Record<string, any>;
-    if (requestedUser._id.toString() !== targetOne.userRef.toString())
+    if (
+      requestedUser._id.toString() !== targetOne.userRef.toString() &&
+      !requestedUser.roles.includes("admin")
+    )
       return next(
         errorHandler(403, "you can't edit this, b/c you are not the owner")
       );
