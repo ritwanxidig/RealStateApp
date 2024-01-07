@@ -36,7 +36,7 @@ const api = createApi({
 
     // properties endpoints
     getProperties: QueryEndpoint(builder, "properties"),
-    searchProperty: QueryEndpoint(builder, "/properties/search"),
+    searchProperty: QueryParamsEndpoint(builder, "/properties"),
     getProperty: QueryParamsEndpoint(builder, "properties"),
     getMyProperties: QueryEndpoint(builder, "my-properties"),
     addProperty: PostEndpoint(builder, "properties"),
