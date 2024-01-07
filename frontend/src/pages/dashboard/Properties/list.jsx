@@ -22,6 +22,7 @@ const Properties_List = () => {
 
 
     const columns = [
+        { field: 'index', headerName: '#', width: 30 },
         {
             field: 'user', headerName: 'Owner', width: 150, renderCell: (params) =>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -33,7 +34,7 @@ const Properties_List = () => {
         { field: 'type', headerName: 'Type', width: 120 },
         { field: 'price', headerName: 'Price', width: 120 },
         {
-            field: 'offer', headerName: 'Info', width: 400,
+            field: 'offer', headerName: 'Info', width: 350,
             renderCell: (params) => (
                 <Link to={`/app/properties/edit/${params?.row?._id}`}>
                     <Box>
@@ -56,7 +57,7 @@ const Properties_List = () => {
         },
     ]
 
-    const rows = properties?.map(property => ({ ...property, id: property._id })) || [];
+    const rows = properties?.map((property, i) => ({ ...property, id: property._id, index: i + 1 })) || [];
 
     const handleDeleteOpen = (params) => {
 
