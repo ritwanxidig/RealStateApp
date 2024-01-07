@@ -6,11 +6,13 @@ import {
   getAllProperties,
   getMyProperty,
   getProperty,
+  searchProperty,
 } from "../controllers/PropertyController";
 import { IsAuthenticated } from "../middleware";
 
 export default (router: Router) => {
   router.get("/properties", getAllProperties);
+  router.get("/properties/search", IsAuthenticated, searchProperty);
   router.get("/properties/:id", IsAuthenticated, getProperty);
   router.get("/my-properties", IsAuthenticated, getMyProperty);
   router.post("/properties", IsAuthenticated, addProperty);
