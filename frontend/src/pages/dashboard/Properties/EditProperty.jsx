@@ -12,7 +12,8 @@ import toast from 'react-hot-toast';
 
 const EditProperty = () => {
     const { id: propertyId } = useParams();
-    const { data: property, isFetching: isPropertyFetching } = useGetPropertyQuery(propertyId);
+    const { data, isFetching: isPropertyFetching } = useGetPropertyQuery(propertyId);
+    const property = data?.row;
     const [updateProperty, { isLoading: updating }] = useUpdatePropertyMutation();
     const navigate = useNavigate();
     // countries data
