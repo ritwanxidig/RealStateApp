@@ -91,21 +91,54 @@ export const getProperty = async (
   try {
     if (!isValidObjectId(id))
       return next(errorHandler(400, "please insert valid objectId"));
-    const property = await getByPropertyId(id);
+    const property = (await getByPropertyId(id)) as Record<string, any>;
     if (!property) return next(errorHandler(400, "property not found"));
-    const owner = await getById(property.userRef.toString());
-    const country = await getCountryById(property.address.country);
+
+    const country = await getCountryById(property?.address.country);
     const city = await getCityById(
-      property.address.city,
-      property.address.country
+      property?.address.city,
+      property?.address.country
     );
     const location = await getLocationById(
-      property.address.country,
-      property.address.city,
-      property.address.location
+      property?.address.country,
+      property?.address.city,
+      property?.address.location
     );
 
-    return res.status(200).json(property);
+    const owner = await getById(property?.useRef);
+
+    const propertyDDO: IPropertyDDO = {
+      _id: property._id.toString(),
+      _createdAt: property.createdAt,
+      _updatedAt: property.updatedAt,
+      name: property.name,
+      description: property.description,
+      price: property.price,
+      discount: property.discount,
+      imageUrls: property.imageUrls,
+      type: property.type,
+      beds: property.beds,
+      baths: property.baths,
+      furnished: property.furnished,
+      parking: property.parking,
+      area: property.area,
+      address: {
+        country: country.name,
+        city: city.cities[0].name,
+        location: location.cities[0].locations[0].name,
+      },
+      user: {
+        name: owner?.name,
+        username: owner?.username,
+        email: owner?.email,
+        roles: owner?.roles,
+      },
+    };
+
+    return res.status(200).json({
+      row: property,
+      structured: propertyDDO,
+    });
   } catch (error) {
     next(error);
   }
