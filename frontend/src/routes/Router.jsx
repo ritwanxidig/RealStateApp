@@ -17,6 +17,7 @@ const Router = () => {
 
     const Properties = Loadable(lazy(() => import('src/pages/Landing/Properties')));
     const SearchPropery = Loadable(lazy(() => import('src/pages/Landing/SearchProperty')));
+    const SpecifictProperty = Loadable(lazy(() => import('src/pages/Landing/PropertyPage')))
 
     const Login = Loadable(lazy(() => import('src/pages/authPages/Login')));
     const Register = Loadable(lazy(() => import('src/pages/authPages/Register')));
@@ -50,6 +51,7 @@ const Router = () => {
                     <Route path='/contact' element={<Contact />} />
                     <Route path='/properties' element={<Properties />} />
                     <Route path='/properties/search' element={<SearchPropery />} />
+                    <Route path='/properties/:id' element={<SpecifictProperty />} />
 
                 </Route>
 
