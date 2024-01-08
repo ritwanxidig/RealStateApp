@@ -121,10 +121,6 @@ export const searchProperty = async (
     let cityId = req.query.cityId || "";
     let type = req.query.type;
 
-    console.log("countryId: ", countryId);
-    console.log("cityId: ", cityId);
-    console.log("type: ", type);
-
     // Handle empty countryId and cityId
     const countryCondition = countryId
       ? { $in: [countryId] }
@@ -183,8 +179,6 @@ export const searchProperty = async (
         return propertyDDO;
       })
     );
-
-    console.log(data);
 
     return res.status(200).json(properties);
   } catch (error) {
