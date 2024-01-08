@@ -57,7 +57,8 @@ const PropertyList = ({ loading, properties, filterComponent }) => {
                             parking: p?.parking,
                             furnished: p?.furnished,
                             image: p?.imageUrls[0] || Product1,
-                            description: p?.description
+                            description: p?.description,
+                            ...p
                         }} />
                     )) :
                     // static rendering
