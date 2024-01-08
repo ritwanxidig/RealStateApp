@@ -40,11 +40,14 @@ const ListingCard = ({ card }) => {
                 {card.type ? `For ${card.type}` : 'For Sale'}
             </Box>
             <Box sx={{ width: '100%', height: '190px', display: 'flex', flexDirection: 'column' }}>
-                <img
-                    src={card.image}
-                    style={{ height: '100%', width: '100%', objectFit: 'cover', borderRadius: '20px' }}
-                    alt={card.name}
-                />
+                <Link to={`/properties/${card._id}`} style={{ height: '100%', width: '100%', objectFit: 'cover', borderRadius: '20px', }}>
+                    <img
+                        className='hover:transform hover:scale-105 transition-all'
+                        src={card.image}
+                        style={{ height: '100%', width: '100%', objectFit: 'cover', borderRadius: '20px', }}
+                        alt={card.name}
+                    />
+                </Link>
             </Box>
             {/* <Link className='hover:opacity-70'>
                 <Typography variant="h6" fontSize="18px" color="primary.main" sx={{ fontWeight: '500', textAlign: 'center', my: 1 }}>
