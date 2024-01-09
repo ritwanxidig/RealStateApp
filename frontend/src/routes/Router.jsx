@@ -24,6 +24,7 @@ const Router = () => {
 
     // protected routes
     const Home = Loadable(lazy(() => import('src/pages/dashboard/Home')));
+    const ProfilePage = Loadable(lazy(() => import('src/pages/dashboard/Profile')));
     const Users_List = Loadable(lazy(() => import('src/pages/dashboard/users/list')));
     const Properties_List = Loadable(lazy(() => import('src/pages/dashboard/Properties/list')));
     const MyProperties_List = Loadable(lazy(() => import('src/pages/dashboard/Properties/MyProperties')));
@@ -55,11 +56,12 @@ const Router = () => {
 
                 </Route>
 
-                {/* protected routes for admin */}
+                {/* protected routes for admin and user*/}
                 <Route path='/app' element={<PrivateRoute allowedRoles={['admin', 'user']} />}>
                     <Route path='/app' element={<MainLayout />} >
                         <Route path='/app/' element={<Navigate to="/app/home" />} />
                         <Route path='/app/home' element={<Home />} />
+                        <Route path='/app/profile' element={<ProfilePage />} />
                         <Route path='/app/properties/new' element={<NewPropertiesList />} />
                         <Route path='/app/properties/edit/:id' element={<EditProperty />} />
 
