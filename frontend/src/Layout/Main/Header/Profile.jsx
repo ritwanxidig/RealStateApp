@@ -80,10 +80,10 @@ const Profile = () => {
     const handleLogout = async () => {
         try {
             await logout().then(res => {
-                window.location.reload();
+                // window.location.reload();
+                window.location.href = "/auth/login";
                 dispatch(authActions.logout({}));
                 toast.success("Logged out successfully");
-                navigate("/");
             }).catch(err => {
                 console.log(err);
                 toast.error(err?.data?.message || "Something went wrong")
