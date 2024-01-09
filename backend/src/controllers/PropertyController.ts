@@ -105,7 +105,7 @@ export const getProperty = async (
       property?.address.location
     );
 
-    const owner = await getById(property?.useRef);
+    const owner = await getById(property?.userRef?.toString());
 
     const propertyDDO: IPropertyDDO = {
       _id: property._id.toString(),
