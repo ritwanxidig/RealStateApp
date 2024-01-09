@@ -78,7 +78,7 @@ const Properties_List = () => {
                     action={<>
                         <IconButton
                             sx={{ backgroundColor: 'primary.main', color: 'white', ":hover": { backgroundColor: 'primary.dark' } }} >
-                            <Link to="new">
+                            <Link to="/app/properties/new">
                                 <IconPlus />
                             </Link>
                         </IconButton>
