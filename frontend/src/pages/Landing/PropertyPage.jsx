@@ -12,14 +12,17 @@ import { IconHomeCog } from '@tabler/icons-react';
 import StyledButton from 'src/components/shared/StyledButton';
 import { IconRectangleFilled } from '@tabler/icons-react';
 import { IconCoinOff } from '@tabler/icons-react';
+import ContactAgentForm from './components/ContactAgentForm';
 
 const PropertyPage = () => {
     const { id: propertyId } = useParams();
+    const [contactFormOpen, setContactFormOpen] = React.useState(false);
     const { data, isFetching: loading } = useGetPropertyQuery(propertyId);
     const property = data?.structured;
     console.log(property);
     return (
         <>
+            {contactFormOpen && <ContactAgentForm onOpen={contactFormOpen} setOnOpen={setContactFormOpen} data={property} />}
             <ImageSlider imageUrls={property?.imageUrls || []} />
             <Box sx={{
                 display: 'flex', flexDirection: 'column', width: '100%', height: '100%',
@@ -50,7 +53,7 @@ const PropertyPage = () => {
                         </Box>
 
                         <Box>
-                            <Box sx={{ px: 2, py: .5, color: 'white', width: '4rem', fontFamily: 'Plus Jakarta Sans', fontWeight: '600', textTransform: 'capitalize', backgroundColor: 'secondary.main', borderRadius: '3px' }}>
+                            <Box sx={{ px: 2, py: .5, color: 'black', width: '4rem', fontFamily: 'Plus Jakarta Sans', fontWeight: '600', textTransform: 'capitalize', backgroundColor: 'secondary.main', borderRadius: '3px' }}>
                                 {property?.type}
                             </Box>
                         </Box>
@@ -70,35 +73,35 @@ const PropertyPage = () => {
                             gap: 0,
                             mt: 2,
                         }}>
-                            <Typography fontSize="14px" fontWeight="bold" sx={{ display: 'flex', alignItems: 'center', gap: .5 }}>
+                            <Typography fontSize="14px" variant='h2' fontWeight="bold" sx={{ display: 'flex', alignItems: 'center', gap: .5 }}>
                                 <p>{property?.beds} Bed Rooms</p>
                             </Typography>
 
-                            <Typography fontSize="14px" fontWeight="bold" sx={{ display: 'flex', alignItems: 'center', gap: .5 }}>
+                            <Typography fontSize="14px" variant='h2' fontWeight="bold" sx={{ display: 'flex', alignItems: 'center', gap: .5 }}>
                                 <p>{property?.beds} Bath Rooms</p>
                             </Typography>
 
                             {property?.discount ?
-                                <Typography fontSize="14px" fontWeight="bold" sx={{ display: 'flex', alignItems: 'center', width: '100%', gap: .5 }}>
+                                <Typography fontSize="14px" variant='h2' fontWeight="bold" sx={{ display: 'flex', alignItems: 'center', width: '100%', gap: .5 }}>
                                     <IconCoinOff />   <p> {property?.discount}</p>
                                 </Typography>
                                 : null}
                             {property?.parking ?
-                                <Typography fontSize="14px" fontWeight="bold" sx={{ display: 'flex', alignItems: 'center', width: '100%', gap: .5 }}>
-                                  <IconParkingCircle />  <p> Parking </p>
+                                <Typography fontSize="14px" variant='h2' fontWeight="bold" sx={{ display: 'flex', alignItems: 'center', width: '100%', gap: .5 }}>
+                                    <IconParkingCircle />  <p> Parking </p>
                                 </Typography>
                                 : null}
 
                             {property?.furnished ?
-                                <Typography fontSize="14px" fontWeight="bold" sx={{ display: 'flex', alignItems: 'center', width: '100%', gap: .5 }}>
-                                  <IconHomeCog />  <p> Furnished </p>
+                                <Typography fontSize="14px" variant='h2' fontWeight="bold" sx={{ display: 'flex', alignItems: 'center', width: '100%', gap: .5 }}>
+                                    <IconHomeCog />  <p> Furnished </p>
                                 </Typography>
                                 : null}
                         </Box>
 
                         <Typography fontFamily="Plus Jakarta Sans" fontSize="14px">{property?.description}</Typography>
                         <Box>
-                            <StyledButton variant="contained" sx={{ mt: 1 }} color="primary">Contact Agent</StyledButton>
+                            <StyledButton onClick={() => setContactFormOpen(true)} variant="contained" sx={{ mt: 1 }} color="primary">Contact Agent</StyledButton>
                         </Box>
                     </Box>
                 </Box>
