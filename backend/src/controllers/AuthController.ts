@@ -55,9 +55,18 @@ export const login = async (
       httpOnly: true,
     });
 
-    const { username, name, email: Email, roles, _id: userId } = user;
+    const {
+      username,
+      name,
+      email: Email,
+      roles,
+      _id: userId,
+      profilePic,
+    } = user;
 
-    return res.status(200).json({ name, username, Email, roles, userId });
+    return res
+      .status(200)
+      .json({ name, username, Email, roles, userId, profilePic });
   } catch (error) {
     next(error);
   }
@@ -148,42 +157,44 @@ export const signInWithGoogle = async (
     }
 
     // if user is new to the application
-    const generatedUsername =
-      ProvidedName.split(" ").join("_").toLowerCase() +
-      "_" +
-      Math.round(Math.random() * 1000);
-    const generatedPassword = random();
-    const salt = random();
-    const hashedPassword = authenticate(salt, generatedPassword);
+    else {
+      const generatedUsername =
+        ProvidedName.split(" ").join("_").toLowerCase() +
+        "_" +
+        Math.round(Math.random() * 1000);
+      const generatedPassword = random();
+      const salt = random();
+      const hashedPassword = authenticate(salt, generatedPassword);
 
-    const newUser = await create({
-      name: ProvidedName,
-      username: generatedUsername,
-      email,
-      authentication: { salt, password: hashedPassword },
-    });
+      const newUser = await create({
+        name: ProvidedName,
+        username: generatedUsername,
+        email,
+        authentication: { salt, password: hashedPassword },
+      });
 
-    const sessionToken = authenticate(
-      newUser.authentication.salt,
-      newUser._id.toString()
-    );
+      const sessionToken = authenticate(
+        newUser.authentication.salt,
+        newUser._id.toString()
+      );
 
-    newUser.authentication.sessionToken = sessionToken;
+      newUser.authentication.sessionToken = sessionToken;
 
-    await newUser.save();
+      await newUser.save();
 
-    res.cookie("session-token", newUser.authentication.sessionToken, {
-      path: "/",
-      domain: "localhost",
-      expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 0.5),
-      httpOnly: true,
-    });
+      res.cookie("session-token", newUser.authentication.sessionToken, {
+        path: "/",
+        domain: "localhost",
+        expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 0.5),
+        httpOnly: true,
+      });
 
-    const { username, name, email: Email, roles, _id: userId } = newUser;
+      const { username, name, email: Email, roles, _id: userId } = newUser;
 
-    return res
-      .status(200)
-      .json({ name, username, Email, roles, userId, profilePic });
+      return res
+        .status(200)
+        .json({ name, username, Email, roles, userId, profilePic });
+    }
   } catch (error) {
     next(error);
   }
