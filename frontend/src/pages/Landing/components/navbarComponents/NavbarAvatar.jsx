@@ -49,7 +49,7 @@ const NavbarAvatar = () => {
     return (
         <Box>
             <IconButton onClick={handleClick}>
-                <Avatar src={SampleProfile1} />
+                <Avatar src={authenticatedUser?.profilePic || SampleProfile1} />
             </IconButton>
 
             <Menu
@@ -72,7 +72,7 @@ const NavbarAvatar = () => {
                 }}>
 
                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px', }}>
-                    <Avatar src={SampleProfile1} />
+                    <Avatar src={authenticatedUser?.profilePic || SampleProfile1} />
                     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', ml: 1 }}>
                         <Typography variant='body1' fontSize='12px' fontWeight={600} >{authenticatedUser?.name}</Typography>
                         <Typography variant='body2' fontSize='12px'>{authenticatedUser?.roles.join(" | ")}</Typography>
