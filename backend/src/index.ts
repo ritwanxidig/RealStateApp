@@ -7,6 +7,9 @@ import http from "http";
 import cookieParser from "cookie-parser";
 import { ExceptionHandlerMiddleware } from "./middleware/index";
 import routes from "./routes";
+import path from "path";
+
+const _dirname = path.resolve();
 
 const app = express();
 dotenv.config();
@@ -36,4 +39,10 @@ mongoose.connection.on("error", (err: Error) => {
 });
 
 app.use("/", routes());
+
+app.use(express.static(path.join(_dirname, "/frontend/dist")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(_dirname, "frontend", "dist", "index.html"));
+});
+
 app.use(ExceptionHandlerMiddleware);
