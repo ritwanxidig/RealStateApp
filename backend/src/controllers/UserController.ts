@@ -10,6 +10,7 @@ import {
   remove,
 } from "../models/User";
 import { authenticate, errorHandler, random } from "../utils";
+import { get } from "lodash";
 
 export const getAllUsers = async (
   req: Request,
@@ -78,6 +79,47 @@ export const createUser = async (
     return res.status(201).json({ newName, newEmail, newUsername, roles });
   } catch (error) {
     return next(error);
+  }
+};
+
+export const updateMe = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+
+    // checking if the user is owner
+    const requestedUser = get(req, "identity") as Record<string, any>;
+    if (requestedUser._id.toString() !== id) {
+      return next(
+        errorHandler(403, "you can't edit this, b/c you are not the owner")
+      );
+    }
+    const updatedUser = await update(id, {
+      $set: {
+        name: req.body.name,
+        username: req.body.username,
+        profilePic: req.body.profilePic,
+      },
+    });
+    if (!updatedUser) {
+      return next(errorHandler(404, "User not found!"));
+    }
+    const {
+      username,
+      name,
+      email: Email,
+      roles,
+      _id: userId,
+      profilePic,
+    } = updatedUser;
+    return res
+      .status(200)
+      .json({ name, username, Email, roles, userId, profilePic });
+  } catch (error) {
+    next(error);
   }
 };
 
