@@ -115,7 +115,7 @@ const Profile = () => {
                 }}
                 onClick={handleClick2}
             >
-                <StyledAvatar src={ProfileImg} />
+                <StyledAvatar src={authenticatedUser?.profilePic || ProfileImg} />
                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', ml: 1 }}>
                     <span className='text-[12px] font-bold flex w-full items-center gap-2'>
                         <Typography variant='body' fontSize='12px' fontWeight={600} >
@@ -173,7 +173,7 @@ const Profile = () => {
                 </Box>
                 <Box sx={{ display: 'flex', width: '100%', alignItems: 'center', gap: 2, marginTop: 2 }}>
                     <Box>
-                        <Avatar src={ProfileImg} sx={{ width: 100, height: 100, mx: 'auto', my: 2 }} />
+                        <Avatar src={authenticatedUser?.profilePic || ProfileImg} sx={{ width: 100, height: 100, mx: 'auto', my: 2 }} />
                     </Box>
                     <Box sx={{ marginTop: -2 }}>
                         <Typography variant='body' fontSize='14px' fontWeight={700} >
