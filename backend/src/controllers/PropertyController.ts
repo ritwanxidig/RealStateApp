@@ -69,6 +69,7 @@ export const getAllProperties = async (
             username: createdUser?.username,
             email: createdUser?.email,
             roles: createdUser?.roles,
+            profilePic: createdUser?.profilePic,
           },
         };
         return propertyDDO;
@@ -132,6 +133,7 @@ export const getProperty = async (
         username: owner?.username,
         email: owner?.email,
         roles: owner?.roles,
+        profilePic: owner?.profilePic,
       },
     };
 
@@ -207,6 +209,7 @@ export const searchProperty = async (
             username: createdUser?.username,
             email: createdUser?.email,
             roles: createdUser?.roles,
+            profilePic: createdUser?.profilePic,
           },
         };
         return propertyDDO;
@@ -271,6 +274,7 @@ export const getMyProperty = async (
             username: createdUser?.username,
             email: createdUser?.email,
             roles: createdUser?.roles,
+            profilePic: createdUser?.profilePic,
           },
         };
         return propertyDDO;
@@ -337,6 +341,7 @@ export const addProperty = async (
         username: loggedInUser.username,
         email: loggedInUser.email,
         roles: loggedInUser.roles,
+        profilePic: loggedInUser.profilePic,
       },
     };
 
