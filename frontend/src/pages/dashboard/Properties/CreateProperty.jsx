@@ -75,7 +75,7 @@ const CreateProperty = () => {
         area: `${values.width}x${values.height} ${values.unit.trim()}`,
       };
       console.log(toSendData);
-      await toast.promise(addProperty(toSendData).unwrap().then(rs => { resetForm(); navigate('/app/properties') }), {
+      await toast.promise(addProperty(toSendData).unwrap().then(rs => { resetForm(); }), {
         loading: 'Adding property...',
         success: 'Property added successfully',
         error: 'Error adding new property',
