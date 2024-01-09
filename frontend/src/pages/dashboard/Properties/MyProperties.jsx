@@ -25,7 +25,7 @@ const MyProperties_List = () => {
         {
             field: 'user', headerName: 'Owner', width: 150, renderCell: (params) =>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    <Avatar src={params?.row?.user?.avatar || SampleProfile1} sx={{ width: 24, height: 24 }} />
+                    <Avatar src={params?.row?.user?.profilePic || SampleProfile1} sx={{ width: 24, height: 24 }} />
                     {params?.row?.user?.name?.substring(0, 10) || "Owner Name"}
                 </Box>
         },
@@ -77,7 +77,7 @@ const MyProperties_List = () => {
                     action={<>
                         <IconButton
                             sx={{ backgroundColor: 'primary.main', color: 'white', ":hover": { backgroundColor: 'primary.dark' } }} >
-                            <Link to="new">
+                            <Link to="/app/properties/new">
                                 <IconPlus />
                             </Link>
                         </IconButton>
