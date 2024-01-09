@@ -5,6 +5,7 @@ import {
   getAllUsers,
   getUserById,
   deleteUser,
+  updateMe,
 } from "../controllers/UserController";
 import express from "express";
 import { Roles } from "../constants";
@@ -29,6 +30,9 @@ export default (router: express.Router) => {
     IsAuthorized([Roles.Admin]),
     updateUser
   );
+
+  router.put("/users/updateMe/:id", IsAuthenticated, updateMe);
+
   router.delete(
     "/users/:id",
     IsAuthenticated,
