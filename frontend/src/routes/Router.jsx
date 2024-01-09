@@ -86,7 +86,6 @@ const Router = () => {
 
                     {/* Errors routes */}
                     <Route path="/auth/404" element={<Error400 />} />
-                    <Route path="/auth/404" element={<Error400 />} />
                     <Route path='/auth/403' element={<AccessDenied />} />
                 </Route>
                 {/* unknown routes */}
