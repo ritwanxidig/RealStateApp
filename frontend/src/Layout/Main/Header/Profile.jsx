@@ -38,14 +38,14 @@ const StyledAvatar = styled(Avatar)({
     },
 });
 
-const ProfileComponentList = ({ title, Icon, subtitle, darkMode }) => (
+const ProfileComponentList = ({ title, Icon, subtitle, darkMode, onClick }) => (
     <Box sx={{ display: 'flex', width: '100%', alignItems: 'center', gap: 2 }}>
         {/* Icon Container and Text Container */}
         <Box
             sx={{ width: '40px', height: '40px', backgroundColor: 'primary.main', color: 'white', borderRadius: '20%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <Icon size={21} />
         </Box>
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', ':hover': { cursor: 'pointer', color: 'primary.main' } }}>
+        <Box onClick={onClick} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', ':hover': { cursor: 'pointer', color: 'primary.main' } }}>
             <Typography variant='body' fontSize='14px' fontWeight={600} >{title}</Typography>
             <Typography variant='body' fontSize='10px' fontWeight={400} color={darkMode ? 'white' : 'grey.700'} >{subtitle}</Typography>
         </Box>
@@ -190,9 +190,9 @@ const Profile = () => {
                 <Divider />
                 <Box sx={{ display: 'flex', my: 4, flexDirection: 'column', width: '100%', alignItems: 'center', gap: 2, marginTop: 2 }}>
                     {/* User Profile */}
-                    <ProfileComponentList title="User Profile" subtitle="Personal Information" Icon={IconUser} darkMode={darkMode} />
+                    <ProfileComponentList title="User Profile" onClick={() => navigate('/app/profile')} subtitle="Personal Information" Icon={IconUser} darkMode={darkMode} />
                     {/* My Tasks */}
-                    <ProfileComponentList title="My Tasks" subtitle="To-do and Daily Tasks" Icon={IconListCheck} darkMode={darkMode} />
+                    <ProfileComponentList title="My Tasks" onClick={() => { }} subtitle="To-do and Daily Tasks" Icon={IconListCheck} darkMode={darkMode} />
 
                 </Box>
                 <Divider />
