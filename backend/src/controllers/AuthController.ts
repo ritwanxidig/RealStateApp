@@ -120,9 +120,13 @@ export const signInWithGoogle = async (
   next: express.NextFunction
 ) => {
   try {
-    const { name: ProvidedName, email, profilePic } = req.body;
+    const {
+      name: ProvidedName,
+      email,
+      profilePic: ProvidedProfilePic,
+    } = req.body;
 
-    if (!ProvidedName || !email || !profilePic) {
+    if (!ProvidedName || !email || !ProvidedProfilePic) {
       return next(
         errorHandler(400, "Please provide name, email and profilePic")
       );
@@ -149,7 +153,14 @@ export const signInWithGoogle = async (
         httpOnly: true,
       });
 
-      const { username, name, email: Email, roles, _id: userId } = user;
+      const {
+        username,
+        name,
+        email: Email,
+        roles,
+        _id: userId,
+        profilePic,
+      } = user;
 
       return res
         .status(200)
@@ -170,6 +181,7 @@ export const signInWithGoogle = async (
         name: ProvidedName,
         username: generatedUsername,
         email,
+        profilePic: ProvidedProfilePic,
         authentication: { salt, password: hashedPassword },
       });
 
@@ -189,7 +201,14 @@ export const signInWithGoogle = async (
         httpOnly: true,
       });
 
-      const { username, name, email: Email, roles, _id: userId } = newUser;
+      const {
+        username,
+        name,
+        email: Email,
+        roles,
+        _id: userId,
+        profilePic,
+      } = newUser;
 
       return res
         .status(200)
