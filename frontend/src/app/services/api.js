@@ -32,6 +32,7 @@ const api = createApi({
     getUser: QueryParamsEndpoint(builder, "users"),
     addUser: PostEndpoint(builder, "users"),
     updateUser: UpdateEndpoint(builder, "users"),
+    updateMe: UpdateEndpoint(builder, "users/updateMe"),
     deleteUser: DeleteEndpoint(builder, "users"),
 
     // properties endpoints
@@ -78,6 +79,7 @@ export const {
   useAddUserMutation,
   useUpdateUserMutation,
   useDeleteUserMutation,
+  useUpdateMeMutation,
 
   // hooks for properties
   useGetPropertiesQuery,
