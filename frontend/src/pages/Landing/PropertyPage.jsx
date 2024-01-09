@@ -38,23 +38,23 @@ const PropertyPage = () => {
                         p: 2
                     }}>
                         <Typography variant='h4' sx={{ fontWeight: '600', fontFamily: 'Plus Jakarta Sans', display: 'flex' }}>
-                            <p className='capitalize'>{property?.name || `Property for ${property?.type}`}</p> - ${property?.price}{property?.type === 'rent' && '/month'}
+                            <p className='capitalize'>{property?.name || `Property for ${property?.type || ""}`}</p> - ${property?.price || 0}{property?.type === 'rent' && '/month'}
                         </Typography>
 
                         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, fontFamily: 'Plus Jakarta Sans', fontSize: '14px' }}>
                                 <IconMapPin />
-                                <p>{`${property?.address?.location}, ${property?.address?.city} ${property?.address.country}`}</p>
+                                <p>{`${property?.address?.location || ""}, ${property?.address?.city || ""} ${property?.address.country || ""}`}</p>
                             </Box>
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, fontFamily: 'Plus Jakarta Sans', fontSize: '14px' }}>
                                 <IconRectangleFilled />
-                                <p>{property?.area}</p>
+                                <p>{property?.area || ""}</p>
                             </Box>
                         </Box>
 
                         <Box>
                             <Box sx={{ px: 2, py: .5, color: 'black', width: '4rem', fontFamily: 'Plus Jakarta Sans', fontWeight: '600', textTransform: 'capitalize', backgroundColor: 'secondary.main', borderRadius: '3px' }}>
-                                {property?.type}
+                                {property?.type || ""}
                             </Box>
                         </Box>
 
@@ -74,11 +74,11 @@ const PropertyPage = () => {
                             mt: 2,
                         }}>
                             <Typography fontSize="14px" variant='h2' fontWeight="bold" sx={{ display: 'flex', alignItems: 'center', gap: .5 }}>
-                                <p>{property?.beds} Bed Rooms</p>
+                                <p>{property?.beds || 0} Bed Rooms</p>
                             </Typography>
 
                             <Typography fontSize="14px" variant='h2' fontWeight="bold" sx={{ display: 'flex', alignItems: 'center', gap: .5 }}>
-                                <p>{property?.beds} Bath Rooms</p>
+                                <p>{property?.beds || 0} Bath Rooms</p>
                             </Typography>
 
                             {property?.discount ?
