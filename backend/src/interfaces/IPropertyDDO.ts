@@ -21,5 +21,6 @@ export interface IPropertyDDO {
     username: String;
     email: String;
     roles: string[];
+    profilePic: string;
   };
 }
