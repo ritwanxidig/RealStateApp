@@ -41,12 +41,6 @@ export const AdminMenuItems = [
     icon: IconAddressBook,
     href: "/app/addresses",
   },
-  {
-    id: uniqueId(),
-    title: "Reservations",
-    icon: IconReceipt,
-    href: "/app/reservations",
-  },
 ];
 
 export const UserMenuItems = [
@@ -69,12 +63,6 @@ export const UserMenuItems = [
     title: "My Properties",
     icon: IconHome,
     href: "/app/my-properties",
-  },
-  {
-    id: uniqueId(),
-    title: "Reservations",
-    icon: IconReceipt,
-    href: "/app/reservations",
   },
 ];
 
