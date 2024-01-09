@@ -40,9 +40,9 @@ mongoose.connection.on("error", (err: Error) => {
 
 app.use("/", routes());
 
-app.use(express.static(path.join(_dirname, "/frontend/dist")));
+app.use(express.static(path.join(_dirname, "../../frontend/dist")));
 app.get("*", (req, res) => {
-  res.sendFile(path.join(_dirname, "/frontend", "dist", "index.html"));
+  res.sendFile(path.join(_dirname, "../../frontend", "dist", "index.html"));
 });
 
 app.use(ExceptionHandlerMiddleware);
