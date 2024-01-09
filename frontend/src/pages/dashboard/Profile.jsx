@@ -24,6 +24,7 @@ const validations = yup.object().shape({
 
 const Profile = () => {
     const { authenticatedUser } = useSelector(state => state.auth);
+    const { darkMode } = useSelector(state => state.theme);
     const imageUploadRef = React.useRef(null);
     const [selectedImage, setSelectedImage] = React.useState(null);
     const [uploading, setUploading] = React.useState(false);
@@ -92,7 +93,8 @@ const Profile = () => {
                 mt: 5,
                 py: 6,
                 width: '100%',
-                backgroundColor: 'white',
+                backgroundColor: darkMode ? 'primary.900' : 'white',
+                borderRadius: '12px',
                 gap: 1
             }}
         >
