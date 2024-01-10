@@ -12,7 +12,7 @@ import {
 
 const api = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3010",
+    baseUrl: "https://real-state-app.onrender.com/api",
     credentials: "include",
     prepareHeaders: (headers) => {
       headers.set("Content-Type", "application/json");

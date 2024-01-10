@@ -38,7 +38,7 @@ mongoose.connection.on("error", (err: Error) => {
   console.error(`DB-Error: ${err}`);
 });
 
-app.use("/", routes());
+app.use("/api/", routes());
 
 app.use(express.static(path.join(_dirname, "/frontend/dist")));
 app.get("*", (req, res) => {
