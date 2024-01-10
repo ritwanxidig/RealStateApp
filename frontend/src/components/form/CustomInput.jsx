@@ -30,7 +30,7 @@ const CustomInput = (props) => {
         ${darkMode ? 'border-gray-50' : 'text-gray-800'}
         placeholder-gray-500
         focus:placeholder-gray-300
-        disabled:bg-gray-100
+        ${darkMode ? 'disabled:bg-gray-800' : 'disabled:bg-gray-200'}
         disabled:cursor-not-allowed
        ${otherClasses}`}
       {...props}
