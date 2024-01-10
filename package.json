@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "dev": "cd backend && npm start",
-    "start": "cd backend && npm start",
+    "dev": "nodemon backend/src/index.ts",
+    "start": "ts-node backend/src/index.ts",
     "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
   },
   "repository": {
