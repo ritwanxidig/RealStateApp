@@ -1,4 +1,4 @@
-import { Box, Button, Dialog, IconButton, Modal, Typography } from '@mui/material'
+import { Box, Button, Dialog, IconButton, Modal, Typography, useMediaQuery } from '@mui/material'
 import { IconX } from '@tabler/icons-react'
 import React from 'react'
 import StyledButton from '../../components/shared/StyledButton'
@@ -6,14 +6,16 @@ import { useSelector } from 'react-redux'
 import styled from '@emotion/styled'
 
 const CustomModal = (props) => {
-  const { darkMode } = useSelector(state => state.theme)
+  const { darkMode } = useSelector(state => state.theme);
+  const smUp = useMediaQuery((theme) => theme.breakpoints.up('sm'));
+  const xsUp = useMediaQuery((theme) => theme.breakpoints.up('xs'));
 
   const modalContentStyle = {
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: props.width || 500,
+    width: smUp || xsUp ? 400 : props.width || 500,
     bgcolor: 'background.paper',
     borderRadius: '10px',
     boxShadow: 24,

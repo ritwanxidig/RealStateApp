@@ -31,50 +31,29 @@ const CityDetail = ({ onOpen, setOnOpen, data, country }) => {
                 onOpen={onOpen}
                 setOnOpen={setOnOpen}
             >
-                <TabContext value={tabValue} >
-                    <TabList
-                        sx={{
-                            mt: 1,
-                            "& .MuiTabs-indicator": {
-                                display: "none"
-                            }
-                        }}
-                        variant="scrollable"
-                        scrollButtons
-                        allowScrollButtonsMobile
-                        onChange={(event, newValue) => setTabValue(newValue)}
-                    >
-                        <StyledTab label="Locations" value="1" />
-                        <StyledTab label="Actions" value="2" />
-                    </TabList>
-                    <TabPanel value="1">
-                        <Box>
-                            <Box
-                                sx={{
-                                    display: 'flex',
-                                    justifyContent: '',
-                                    gap: 2,
-                                    alignItems: 'center',
-                                    mb: 1
-                                }}>
-                                <Typography variant="body1" fontWeight="bold" fontFamily="Plus Jakarta Sans">{currentCity ? currentCity?.name : data?.name}</Typography>
-                                <Tooltip title="Edit Name">
-                                    <IconButton
-                                        onClick={() => setEditOpen(true)}
-                                        sx={{ backgroundColor: 'primary.main', color: 'white', ":hover": { backgroundColor: 'primary.dark' } }}
-                                    >
-                                        <IconEdit size={12} />
-                                    </IconButton>
-                                </Tooltip>
-                            </Box>
-                            {isFetchingCity ? <Loader /> : <LocationsList city={currentCity ? currentCity : data} country={country} loading={isFetchingCity} />}
-                        </Box>
-                    </TabPanel>
-                    <TabPanel value="2">
-                        <Box>Tab2</Box>
-                    </TabPanel>
 
-                </TabContext>
+                <Box>
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            justifyContent: '',
+                            gap: 2,
+                            alignItems: 'center',
+                            mb: 1, mt: 3
+                        }}>
+                        <Typography variant="body1" sx={{}} fontWeight="bold" fontFamily="Plus Jakarta Sans">{currentCity ? currentCity?.name : data?.name}</Typography>
+                        <Tooltip title="Edit Name">
+                            <IconButton
+                                onClick={() => setEditOpen(true)}
+                                sx={{ backgroundColor: 'primary.main', color: 'white', ":hover": { backgroundColor: 'primary.dark' } }}
+                            >
+                                <IconEdit size={12} />
+                            </IconButton>
+                        </Tooltip>
+                    </Box>
+                    {isFetchingCity ? <Loader /> : <LocationsList city={currentCity ? currentCity : data} country={country} loading={isFetchingCity} />}
+                </Box>
+
             </CustomModal>
 
         </>)

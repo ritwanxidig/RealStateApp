@@ -8,12 +8,15 @@ import Loader from 'src/views/utilities/Loader';
 import EditLocation from './EditLocation';
 import AddLocation from './AddLocation';
 import DeleteLocation from './DeleteLocation';
+import { useSelector } from 'react-redux';
 
 const LocationsList = ({ country, loading, city }) => {
   const [addOpen, setAddOpen] = React.useState(false);
   const [editOpen, setEditOpen] = React.useState(false);
   const [deleteOpen, setDeleteOpen] = React.useState(false);
   const [selectedLocation, setSelectedLocation] = React.useState(null);
+
+  const { darkMode } = useSelector(state => state.theme);
 
   const { data, isFetching } = useGetLocationsQuery(`${country?._id}/${city?._id}`);
 
@@ -48,7 +51,7 @@ const LocationsList = ({ country, loading, city }) => {
           {isFetching ? <Loader /> :
             rows && rows.length > 0 ?
               rows?.map((location) => (
-                <Box key={location._id} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: 'primary.800', p: 1, borderRadius: '10px', ":hover": { backgroundColor: 'primary.700' }, transition: 'all 0.3s ease-in-out' }}>
+                <Box key={location._id} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: darkMode ? 'primary.800' : 'grey.100', p: 1, borderRadius: '10px', ":hover": { backgroundColor: darkMode ? 'primary.700' : 'grey.200' }, transition: 'all 0.3s ease-in-out' }}>
                   <Typography>{location.name}</Typography>
                   <Box sx={{ display: 'flex', gap: 1 }}>
                     <Tooltip title="Edit Location">
@@ -56,11 +59,11 @@ const LocationsList = ({ country, loading, city }) => {
                         onClick={() => handleEditOpen(location)}
                         sx={{ backgroundColor: 'primary.main', color: 'white', ":hover": { backgroundColor: 'primary.dark' } }} > <IconEdit size={16} /> </IconButton>
                     </Tooltip>
-                    <Tooltip title="Delete Location">
+                    {/* <Tooltip title="Delete Location">
                       <IconButton
                         onClick={() => handleDeleteOpen(location)}
                         sx={{ backgroundColor: 'error.main', color: 'white', ":hover": { backgroundColor: 'red.900' } }} > <IconTrash size={16} /> </IconButton>
-                    </Tooltip>
+                    </Tooltip> */}
                   </Box>
                 </Box>
               )) :

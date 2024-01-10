@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardContent, Typography, Box, CardHeader, useMediaQuery } from '@mui/material';
+import { Card, CardContent, Typography, Box, CardHeader, useMediaQuery, Container } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { BannerBackground } from '../../../assets';
@@ -14,11 +14,14 @@ const PageCard = ({
     const { darkMode } = useSelector((state) => state.theme);
     const path = window.location.pathname.split('/').map(path => path + '/');
 
+    const xlUp = useMediaQuery((theme) => theme.breakpoints.up('xl'));
     const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
     const mdUp = useMediaQuery((theme) => theme.breakpoints.up('md'));
+    const smUp = useMediaQuery((theme) => theme.breakpoints.up('sm'));
+    const xsUp = useMediaQuery((theme) => theme.breakpoints.up('xs'));
 
     return (
-        <Box sx={{ maxWidth: '100%', mx: 'auto' }}>
+        <Container maxWidth={xlUp ? 'xl' : lgUp ? 'lg' : mdUp ? 'md' : smUp ? 'sm' : xsUp ? 'xs' : ''} >
             {/* BreadCrumbs Card */}
             <Card
                 sx={{
@@ -31,7 +34,6 @@ const PageCard = ({
                     backgroundRepeat: 'no-repeat',
                     backgroundPosition: lgUp || mdUp ? 'right' : '',
                     objectFit: 'cover',
-                    mx: 'auto',
                     backgroundSize: lgUp || mdUp ? '100px' : '',
                     color: 'white',
                 }}
@@ -52,9 +54,7 @@ const PageCard = ({
                     boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.0)',
                     backgroundColor: `${darkMode ? 'primary.900' : ''}`,
                     // Mobile styles
-                    '@media (max-width: 600px)': {
-                        padding: '10px',
-                    },
+
                 }}
             >
                 <CardHeader
@@ -73,7 +73,7 @@ const PageCard = ({
                     {children}
                 </CardContent>
             </Card>
-        </Box>
+        </Container>
     );
 };
 

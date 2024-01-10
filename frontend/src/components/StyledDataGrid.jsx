@@ -43,7 +43,7 @@ const StyledDataGrid = ({ data, columns, loading }) => {
     display: 'flex',
     justifyContent: 'center',
     gap: smUp ? '0.5rem' : '1rem',
-    padding: smUp ? '.5rem' : '1rem',
+    padding: smUp ? '.5rem' : '.7rem',
     backgroundColor: darkMode ? theme.palette.grey[700] : '#f5f5f5',
     borderRadius: 8,
     border: 'none',
@@ -59,14 +59,12 @@ const StyledDataGrid = ({ data, columns, loading }) => {
     justifyContent: 'center',
     alignItems: 'center',
     gap: smUp ? '0.5rem' : '1rem',
-    padding: smUp ? '.8rem' : '1rem',
+    padding: smUp ? '.8rem' : '.7rem',
     backgroundColor: darkMode ? theme.palette.grey[700] : '#f5f5f5',
     borderRadius: 8,
     border: 'none',
     outline: 'none',
-    '& .MuiSvgIcon-root': {
-      display: 'none',
-    },
+    
   });
 
   if (loading) {
