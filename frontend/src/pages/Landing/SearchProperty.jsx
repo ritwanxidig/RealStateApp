@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { Box, Drawer, Typography } from '@mui/material'
+import { Box, Container, Drawer, Typography, useMediaQuery } from '@mui/material'
 import { useFormik } from 'formik';
 import React, { useEffect } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router';
@@ -21,7 +21,11 @@ const SearchProperty = () => {
     const [drawerOpen, setDrawerOpen] = React.useState(true);
     const [selectedCountry, setSelectedCountry] = React.useState(null);
     const [urlParams, setUrlParams] = React.useState(location.search);
-    console.log(urlParams);
+
+    const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
+    const xlUp = useMediaQuery((theme) => theme.breakpoints.up('xl'));
+    const smUp = useMediaQuery((theme) => theme.breakpoints.up('sm'));
+    const xsUp = useMediaQuery((theme) => theme.breakpoints.up('xs'));
 
     const { data: countries, isFetching: loading } = useGetCountriesQuery();
     const { data, isFetching } = useSearchPropertyQuery(`search?${urlParams}`);
@@ -69,12 +73,8 @@ const SearchProperty = () => {
 
     return (
 
-        <Box
-            sx={{
-
-            }}
-        >
-            <PropertyList loading={isFetching} properties={data} filterComponent={<Box sx={{ display: 'flex', justifyContent: 'end', mx: 4, alignItems: 'center' }}>
+        <Container maxWidth={xlUp ? 'xl' : lgUp ? 'lg' : smUp ? 'sm' : xsUp ? 'xs' : 'md'} >
+            <PropertyList loading={isFetching} properties={data} filterComponent={<Box sx={{ display: 'flex', width: '100%', justifyContent: 'end', mx: 4, alignItems: 'center' }}>
                 <StyledButton variant="contained" color="primary" type="button" onClick={() => setDrawerOpen(true)}>Filter</StyledButton>
             </Box>} />
             <DrawerContainer
@@ -168,7 +168,7 @@ const SearchProperty = () => {
                     </Box>
                 </Box>
             </DrawerContainer>
-        </Box>
+        </Container>
     )
 }
 

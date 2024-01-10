@@ -9,13 +9,15 @@ const CustomModal = (props) => {
   const { darkMode } = useSelector(state => state.theme);
   const smUp = useMediaQuery((theme) => theme.breakpoints.up('sm'));
   const xsUp = useMediaQuery((theme) => theme.breakpoints.up('xs'));
+  const mdUp = useMediaQuery((theme) => theme.breakpoints.up('md'));
+  const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
 
   const modalContentStyle = {
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: smUp || xsUp ? 400 : props.width || 500,
+    width: lgUp || mdUp ? props.width || 500 : smUp || xsUp ? 400 : 0,
     bgcolor: 'background.paper',
     borderRadius: '10px',
     boxShadow: 24,

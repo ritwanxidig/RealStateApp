@@ -8,7 +8,7 @@ import { Product1 } from 'src/assets'
 
 const PropertyList = ({ loading, properties, filterComponent }) => {
     return (
-        <>
+        <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }} mx="auto">
 
             <SectionTitle title='Properties' />
             {filterComponent}
@@ -25,7 +25,8 @@ const PropertyList = ({ loading, properties, filterComponent }) => {
                     },
                     gap: 3,
                     my: 3,
-                    mx: 2
+                    justifyContent: 'center',
+                    alignItems: 'center',
                 }}
             >
                 {loading && Array(4).fill(0).map((_, i) => (
@@ -67,7 +68,7 @@ const PropertyList = ({ loading, properties, filterComponent }) => {
 
             </Box>
 
-        </>
+        </Box>
     )
 }
 
