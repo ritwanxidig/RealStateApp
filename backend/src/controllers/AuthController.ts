@@ -50,7 +50,7 @@ export const login = async (
 
     res.cookie("session-token", user.authentication.sessionToken, {
       path: "/",
-      domain: "localhost",
+      domain: process.env.DOMAIN,
       expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 0.5),
       httpOnly: true,
     });
@@ -148,7 +148,7 @@ export const signInWithGoogle = async (
 
       res.cookie("session-token", user.authentication.sessionToken, {
         path: "/",
-        domain: "localhost",
+        domain: process.env.DOMAIN,
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 0.5),
         httpOnly: true,
       });
@@ -196,7 +196,7 @@ export const signInWithGoogle = async (
 
       res.cookie("session-token", newUser.authentication.sessionToken, {
         path: "/",
-        domain: "localhost",
+        domain: process.env.DOMAIN,
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 0.5),
         httpOnly: true,
       });
