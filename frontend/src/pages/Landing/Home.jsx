@@ -4,15 +4,21 @@ import Hero from './components/Hero'
 import NewListings from './components/NewListings'
 import Services from './components/Services'
 import NewsLetter from './components/NewsLetter'
+import { Container, useMediaQuery } from '@mui/material'
 
 const HomePage = () => {
+
+  const smUp = useMediaQuery((theme) => theme.breakpoints.up('sm'));
+  const xsUp = useMediaQuery((theme) => theme.breakpoints.up('xs'));
+  const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
+  const xlUp = useMediaQuery((theme) => theme.breakpoints.up('xl'));
   return (
-    <div className='container mx-auto'>
+    <Container maxWidth={xlUp ? 'xl' : lgUp ? 'lg' : smUp ? 'sm' : xsUp ? 'xs' : 'md'} >
       <Hero />
       <Services />
       <NewListings />
       <NewsLetter />
-    </div>
+    </Container>
   )
 }
 
