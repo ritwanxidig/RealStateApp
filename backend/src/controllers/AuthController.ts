@@ -6,6 +6,8 @@ import {
   errorHandler,
   random,
 } from "../utils";
+import dotenv from "dotenv";
+dotenv.config();
 
 export const logOut = (
   req: express.Request,
@@ -53,6 +55,7 @@ export const login = async (
       domain: process.env.DOMAIN,
       expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 0.5),
       httpOnly: true,
+      secure: true,
     });
 
     const {
@@ -151,6 +154,8 @@ export const signInWithGoogle = async (
         domain: process.env.DOMAIN,
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 0.5),
         httpOnly: true,
+
+        secure: true,
       });
 
       const {
@@ -199,6 +204,7 @@ export const signInWithGoogle = async (
         domain: process.env.DOMAIN,
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 0.5),
         httpOnly: true,
+        secure: true,
       });
 
       const {
