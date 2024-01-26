@@ -2,6 +2,9 @@ import { AppError } from "../interfaces";
 import { UserModel } from "models/User";
 import crypto from "crypto";
 
+export * from "./land.utils";
+export * from "./property.utils";
+
 export const errorHandler = (statusCode: number, message: string) => {
   const error = new AppError(message, statusCode);
   return error;
