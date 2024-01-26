@@ -1,5 +1,3 @@
-import { ObjectId } from "mongoose";
-
 export interface IPropertyDDO {
   _id: string;
   _createdAt: Date;
