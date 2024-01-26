@@ -12,7 +12,7 @@ import {
 
 const api = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://real-state-app.onrender.com/api",
+    baseUrl: import.meta.env.VITE_API_URL,
     credentials: "include",
     prepareHeaders: (headers) => {
       headers.set("Content-Type", "application/json");
