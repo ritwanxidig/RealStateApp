@@ -26,10 +26,15 @@ const Router = () => {
     const Home = Loadable(lazy(() => import('src/pages/dashboard/Home')));
     const ProfilePage = Loadable(lazy(() => import('src/pages/dashboard/Profile')));
     const Users_List = Loadable(lazy(() => import('src/pages/dashboard/users/list')));
+    // properties
     const Properties_List = Loadable(lazy(() => import('src/pages/dashboard/Properties/list')));
     const MyProperties_List = Loadable(lazy(() => import('src/pages/dashboard/Properties/MyProperties')));
     const NewPropertiesList = Loadable(lazy(() => import('src/pages/dashboard/Properties/CreateProperty')));
     const EditProperty = Loadable(lazy(() => import('src/pages/dashboard/Properties/EditProperty')));
+    // lands
+    const LandsList = Loadable(lazy(() => import('src/pages/dashboard/Lands/index')));
+    const NewLand = Loadable(lazy(() => import('src/pages/dashboard/Lands/CreateLand')));
+    // addresses
     const Address_List = Loadable(lazy(() => import('src/pages/dashboard/Adresses/list')));
 
     // accessing error slice
@@ -63,6 +68,7 @@ const Router = () => {
                         <Route path='/app/home' element={<Home />} />
                         <Route path='/app/profile' element={<ProfilePage />} />
                         <Route path='/app/properties/new' element={<NewPropertiesList />} />
+                        <Route path='/app/lands/new' element={<NewLand />} />
                         <Route path='/app/properties/edit/:id' element={<EditProperty />} />
 
                         {/* only for user */}
@@ -75,6 +81,7 @@ const Router = () => {
                             <Route path='/app/users' element={<Users_List />} />
                             <Route path='/app/addresses' element={<Address_List />} />
                             <Route path='/app/all-properties' element={<Properties_List />} />
+                            <Route path='/app/all-lands' element={<LandsList />} />
                         </Route>
                     </Route>
                 </Route>
