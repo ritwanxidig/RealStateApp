@@ -4,6 +4,7 @@ import {
   IconAddressBook,
   IconDashboard,
   IconHome,
+  IconPaperclip,
   IconReceipt,
   IconUsers,
 } from "@tabler/icons-react";
@@ -34,6 +35,12 @@ export const AdminMenuItems = [
     title: "Properties",
     icon: IconHome,
     href: "/app/all-properties",
+  },
+  {
+    id: uniqueId(),
+    title: "Lands",
+    icon: IconPaperclip,
+    href: "/app/all-lands",
   },
   {
     id: uniqueId(),
