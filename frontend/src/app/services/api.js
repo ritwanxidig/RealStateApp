@@ -44,6 +44,15 @@ const api = createApi({
     updateProperty: UpdateEndpoint(builder, "properties"),
     deleteProperty: DeleteEndpoint(builder, "properties"),
 
+    // lands endpoints
+    getLands: QueryEndpoint(builder, "lands"),
+    // searchLand: QueryParamsEndpoint(builder, "lands"),
+    getLand: QueryParamsEndpoint(builder, "lands"),
+    getMyLands: QueryEndpoint(builder, "lands/my-lands"),
+    addLand: PostEndpoint(builder, "lands"),
+    updateLand: UpdateEndpoint(builder, "lands"),
+    deleteLand: DeleteEndpoint(builder, "lands"),
+
     // countries endpoints
     getCountries: QueryEndpoint(builder, "countries"),
     getCountry: QueryParamsEndpoint(builder, "countries"),
@@ -89,6 +98,14 @@ export const {
   useAddPropertyMutation,
   useUpdatePropertyMutation,
   useDeletePropertyMutation,
+
+  // hooks for lands
+  useGetLandsQuery,
+  useGetLandQuery,
+  useGetMyLandsQuery,
+  useAddLandMutation,
+  useUpdateLandMutation,
+  useDeleteLandMutation,
 
   // hooks for countries
   useGetCountriesQuery,
