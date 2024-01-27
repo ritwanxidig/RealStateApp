@@ -7,12 +7,15 @@ import PageContainer from 'src/Layout/Main/Containers/PageContainer'
 import CustomField from 'src/components/form/CustomField'
 import * as yup from 'yup'
 import LandForm from './views/LandForm'
+import { useAddLandMutation } from 'src/app/services/api'
+import { toast } from 'react-hot-toast'
+import { useNavigate } from 'react-router'
 
 const validations = yup.object().shape({
     width: yup.number().required('Width is required').min(1, 'Width must be greater than 0'),
     height: yup.number().required('Height is required').min(1, 'Height must be greater than 0'),
     unit: yup.string().required('Unit is required'),
-    images: yup.array(),
+    images: yup.array().min(1, 'At least one image is required'),
     description: yup.string(),
     address: yup.object().shape({
         country: yup.string('Enter the country').required('Country is required'),
@@ -24,6 +27,8 @@ const validations = yup.object().shape({
 
 const CreateLand = () => {
     const { darkMode } = useSelector(state => state.theme);
+    const [createLand, { isLoading }] = useAddLandMutation();
+    const navigate = useNavigate();
 
     const formik = useFormik({
         enableReinitialize: true,
@@ -38,7 +43,27 @@ const CreateLand = () => {
         },
         validationSchema: validations,
         onSubmit: async (values, { resetForm }) => {
-            console.log(values);
+            const toSendData = {
+                size: `${values.width}x${values.height} ${values.unit.trim()}`,
+                description: values.description,
+                images: values.images,
+                address: {
+                    country: values.address.country,
+                    city: values.address.city,
+                    location: values.address.location
+                },
+                price: values.price
+            }
+
+            try {
+                await toast.promise(createLand(toSendData).unwrap().then(rs => { navigate('/app/all-lands'); resetForm(); }), {
+                    loading: 'Creating Land...',
+                    success: 'Land created successfully',
+                    error: 'Failed to create Land'
+                });
+            } catch (error) {
+                console.log(error);
+            }
         }
     });
 
