@@ -17,7 +17,7 @@ const CountriesList = () => {
     const [selectedCountry, setSelectedCountry] = React.useState(null);
     const smUp = useMediaQuery((theme) => theme.breakpoints.up('sm'));
     const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
-    const xsUp  = useMediaQuery((theme) => theme.breakpoints.up('xs'));
+    const xsUp = useMediaQuery((theme) => theme.breakpoints.up('xs'));
 
 
     const handleDetailOpen = (params) => {
@@ -39,7 +39,7 @@ const CountriesList = () => {
         {
             field: 'name',
             headerName: 'Name',
-            width: lgUp ? 800: smUp || xsUp ? 150 : 200,
+            width: lgUp ? 800 : smUp || xsUp ? 150 : 200,
         },
         {
             field: 'actions',
@@ -56,14 +56,14 @@ const CountriesList = () => {
                             <IconDots size={18} />
                         </IconButton>
                     </Tooltip>
-                    <Tooltip title="Delete Country">
-                        {/* <IconButton
+                    {/* <Tooltip title="Delete Country">
+                        <IconButton
                             onClick={() => handleDeleteOpen(params)}
                             sx={{ backgroundColor: 'error.main', color: 'white', ":hover": { backgroundColor: 'primary.dark' } }}
                         >
                             <IconTrash size={18} />
-                        </IconButton> */}
-                    </Tooltip>
+                        </IconButton> 
+                    </Tooltip> */}
                 </Box>
             ),
         }
