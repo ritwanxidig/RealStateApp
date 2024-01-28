@@ -3,7 +3,7 @@ import React from 'react'
 import { useNavigate, useParams } from 'react-router';
 import { useGetCountriesQuery, useGetPropertyQuery, useUpdatePropertyMutation } from 'src/app/services/api';
 import Loader from 'src/views/utilities/Loader';
-import NewPropertyForm from './components/NewPropertyForm';
+import NewPropertyForm from './components/PropertyForm';
 import PageContainer from 'src/Layout/Main/Containers/PageContainer';
 import PageCard from 'src/Layout/Main/Containers/PageCard';
 import { Box, Typography } from '@mui/material';
