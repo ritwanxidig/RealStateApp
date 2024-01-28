@@ -6,7 +6,7 @@ import { useGetMyPropertiesQuery, useGetPropertiesQuery } from 'src/app/services
 import { } from 'src/app/slices/alertSlice'
 import PageContainer from 'src/Layout/Main/Containers/PageContainer'
 import PageCard from 'src/Layout/Main/Containers/PageCard'
-import { IconDots, IconPlus, IconTrash } from '@tabler/icons-react'
+import { IconDots, IconEye, IconPlus, IconTrash } from '@tabler/icons-react'
 import StyledDataGrid from 'src/components/StyledDataGrid'
 import { SampleProfile1 } from 'src/assets'
 import { Link } from 'react-router-dom'
@@ -14,7 +14,7 @@ import DeleteProperty from './components/DeleteProperty'
 import { useSelector } from 'react-redux'
 
 const Properties_List = ({ properties, setDeleteOpen, setSelectedProperty, isFetching }) => {
-   
+
 
 
     const columns = [
@@ -32,14 +32,15 @@ const Properties_List = ({ properties, setDeleteOpen, setSelectedProperty, isFet
         {
             field: 'offer', headerName: 'Info', width: 350,
             renderCell: (params) => (
-                <Link to={`/app/properties/edit/${params?.row?._id}`}>
-                    <Box>
-                        {params?.row?.beds && `${params?.row?.beds} beds, `}
-                        {params?.row?.baths && `${params?.row?.baths} baths, `}
-                        {params?.row?.parking && "Parking, "}
-                        {params?.row?.furnished && "Furnished, "}
-                    </Box>
-                </Link>
+                <Box>
+                    <IconButton LinkComponent={Link} to={`/app/properties/edit/${params?.row?._id}`} sx={{ mr: .7, p: 0, ":hover": { color: "primary.main" }, transition: "color 0.4s ease-in-out" }}>
+                        <IconEye size={18} />
+                    </IconButton>
+                    {params?.row?.beds && `${params?.row?.beds} beds, `}
+                    {params?.row?.baths && `${params?.row?.baths} baths, `}
+                    {params?.row?.parking && "Parking, "}
+                    {params?.row?.furnished && "Furnished, "}
+                </Box>
             )
         },
         {
