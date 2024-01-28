@@ -8,28 +8,30 @@ import PageContainer from 'src/Layout/Main/Containers/PageContainer';
 import PageCard from 'src/Layout/Main/Containers/PageCard';
 import { Box, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
-import toast from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 
 const EditProperty = () => {
+    // important declarations
     const { id: propertyId } = useParams();
     const { data, isFetching: isPropertyFetching } = useGetPropertyQuery(propertyId);
     const property = data?.row;
-    const [updateProperty, { isLoading: updating }] = useUpdatePropertyMutation();
+    const [updateProperty] = useUpdatePropertyMutation();
+    const { darkMode } = useSelector(state => state.theme);
     const navigate = useNavigate();
-    
+
     // countries data
-    const { data: countries, isFetching: isCountriesFetching } = useGetCountriesQuery();
+    const { data: countries } = useGetCountriesQuery();
     const targetCountry = countries?.countries?.find(country => country._id === property?.address?.country);
     const targetCity = targetCountry?.cities?.find(city => city._id === property?.address?.city);
     const targetLocation = targetCity?.locations?.find(location => location._id === property?.address?.location);
-
-    const { darkMode } = useSelector(state => state.theme);
 
     // destructuring area into width, height, unit
     const unit = property?.area?.split(' ')[1];
     const remain = property?.area?.split(' ')[0];
     const width = remain?.split('x')[0];
     const height = remain?.split('x')[1];
+
+
 
     const formik = useFormik({
         enableReinitialize: true,
@@ -60,7 +62,7 @@ const EditProperty = () => {
                 area: `${values.width}x${values.height} ${values.unit.trim()}`,
             }
             const param = propertyId;
-            await toast.promise(updateProperty({ param, ...toSendData }).unwrap().then(rs => { console.log(rs) }), {
+            await toast.promise(updateProperty({ param, ...toSendData }).unwrap().then(rs => { navigate('/app/all-properties') }), {
                 loading: 'Updating property...',
                 success: 'Property updated successfully',
                 error: 'Error updating property',
