@@ -45,7 +45,7 @@ const CreateLand = () => {
             }
 
             try {
-                await toast.promise(createLand(toSendData).unwrap().then(rs => { navigate('/app/all-lands'); resetForm(); }), {
+                await toast.promise(createLand(toSendData).unwrap().then(rs => { resetForm(); }), {
                     loading: 'Creating Land...',
                     success: 'Land created successfully',
                     error: 'Failed to create Land'
