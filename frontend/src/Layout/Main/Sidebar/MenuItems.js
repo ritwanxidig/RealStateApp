@@ -71,6 +71,12 @@ export const UserMenuItems = [
     icon: IconHome,
     href: "/app/my-properties",
   },
+  {
+    id: uniqueId(),
+    title: "My Lands",
+    icon: IconPaperclip,
+    href: "/app/my-lands",
+  },
 ];
 
 const MenuItems = [
