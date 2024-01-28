@@ -27,7 +27,7 @@ const Router = () => {
     const ProfilePage = Loadable(lazy(() => import('src/pages/dashboard/Profile')));
     const Users_List = Loadable(lazy(() => import('src/pages/dashboard/users/list')));
     // properties
-    const Properties_List = Loadable(lazy(() => import('src/pages/dashboard/Properties/list')));
+    const Properties_List = Loadable(lazy(() => import('src/pages/dashboard/Properties/AllProperties')));
     const MyProperties_List = Loadable(lazy(() => import('src/pages/dashboard/Properties/MyProperties')));
     const NewPropertiesList = Loadable(lazy(() => import('src/pages/dashboard/Properties/CreateProperty')));
     const EditProperty = Loadable(lazy(() => import('src/pages/dashboard/Properties/EditProperty')));
