@@ -62,7 +62,7 @@ const EditProperty = () => {
                 area: `${values.width}x${values.height} ${values.unit.trim()}`,
             }
             const param = propertyId;
-            await toast.promise(updateProperty({ param, ...toSendData }).unwrap().then(rs => { navigate('/app/all-properties') }), {
+            await toast.promise(updateProperty({ param, ...toSendData }).unwrap().then(rs => { }), {
                 loading: 'Updating property...',
                 success: 'Property updated successfully',
                 error: 'Error updating property',
