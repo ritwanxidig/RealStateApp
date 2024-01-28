@@ -1,4 +1,7 @@
+import { isValidObjectId } from "mongoose";
 import { Request, Response, NextFunction } from "express";
+
+// for project
 import {
   PropertyModel,
   createProperty,
@@ -8,7 +11,7 @@ import {
   removePropertyById,
   updatePropertyById,
 } from "../models/Property";
-import { errorHandler } from "../utils";
+import { changeToPropertyInterface, errorHandler } from "../utils";
 import { get } from "lodash";
 import { IPropertyDDO } from "../interfaces/IPropertyDDO";
 import {
@@ -17,7 +20,6 @@ import {
   getLocationById,
 } from "../models/Address";
 import { getById } from "../models/User";
-import { isValidObjectId } from "mongoose";
 
 export const getAllProperties = async (
   req: Request,
@@ -29,50 +31,7 @@ export const getAllProperties = async (
 
     const properties = await Promise.all(
       data.map(async (property) => {
-        const createdUser = await getById(property.userRef.toString());
-        const country = await getCountryById(property.address.country);
-        // city holds an object of one country with array of single city:
-        //  like {_id: "5f8f6e0e1b7f9c0f1b7f9c0f", name: "kathmandu", cities: [{ _id: "5f8f6e0e1b7f9c0f1b7f9c0f", name: "kathmandu", locations: [{ _id: "5f8f6e0e1b7f9c0f1b7f9c0f", name: "kathmandu" }] }]}
-        const city = await getCityById(
-          property.address.city,
-          property.address.country
-        );
-
-        // location is same as city.locations[0]
-        const location = await getLocationById(
-          property.address.country,
-          property.address.city,
-          property.address.location
-        );
-        const propertyDDO: IPropertyDDO = {
-          _id: property._id.toString(),
-          _createdAt: property.createdAt,
-          _updatedAt: property.updatedAt,
-          name: property?.name,
-          description: property.description,
-          price: property.price,
-          discount: property.discount,
-          imageUrls: property.imageUrls,
-          type: property.type,
-          beds: property.beds,
-          baths: property.baths,
-          furnished: property.furnished,
-          parking: property.parking,
-          area: property.area,
-          address: {
-            country: country.name,
-            city: city.cities[0].name,
-            location: location?.cities[0]?.locations[0]?.name,
-          },
-          user: {
-            name: createdUser?.name,
-            username: createdUser?.username,
-            email: createdUser?.email,
-            roles: createdUser?.roles,
-            profilePic: createdUser?.profilePic,
-          },
-        };
-        return propertyDDO;
+        return await changeToPropertyInterface(property);
       })
     );
     // const actualData = await properties;
@@ -95,47 +54,7 @@ export const getProperty = async (
     const property = (await getByPropertyId(id)) as Record<string, any>;
     if (!property) return next(errorHandler(400, "property not found"));
 
-    const country = await getCountryById(property?.address.country);
-    const city = await getCityById(
-      property?.address.city,
-      property?.address.country
-    );
-    const location = await getLocationById(
-      property?.address.country,
-      property?.address.city,
-      property?.address.location
-    );
-
-    const owner = await getById(property?.userRef?.toString());
-
-    const propertyDDO: IPropertyDDO = {
-      _id: property._id.toString(),
-      _createdAt: property.createdAt,
-      _updatedAt: property.updatedAt,
-      name: property.name,
-      description: property.description,
-      price: property.price,
-      discount: property.discount,
-      imageUrls: property.imageUrls,
-      type: property.type,
-      beds: property.beds,
-      baths: property.baths,
-      furnished: property.furnished,
-      parking: property.parking,
-      area: property.area,
-      address: {
-        country: country.name,
-        city: city.cities[0].name,
-        location: location.cities[0].locations[0].name,
-      },
-      user: {
-        name: owner?.name,
-        username: owner?.username,
-        email: owner?.email,
-        roles: owner?.roles,
-        profilePic: owner?.profilePic,
-      },
-    };
+    const propertyDDO = await changeToPropertyInterface(property);
 
     return res.status(200).json({
       row: property,
@@ -173,46 +92,7 @@ export const searchProperty = async (
     });
     const properties = await Promise.all(
       data.map(async (property) => {
-        const createdUser = await getById(property.userRef.toString());
-        const country = await getCountryById(property.address.country);
-        const city = await getCityById(
-          property.address.city,
-          property.address.country
-        );
-        const location = await getLocationById(
-          property.address.country,
-          property.address.city,
-          property.address.location
-        );
-        const propertyDDO: IPropertyDDO = {
-          _id: property._id.toString(),
-          _createdAt: property.createdAt,
-          _updatedAt: property.updatedAt,
-          name: property?.name,
-          description: property.description,
-          price: property.price,
-          discount: property.discount,
-          imageUrls: property.imageUrls,
-          type: property.type,
-          beds: property.beds,
-          baths: property.baths,
-          furnished: property.furnished,
-          parking: property.parking,
-          area: property.area,
-          address: {
-            country: country.name,
-            city: city.cities[0].name,
-            location: location?.cities[0]?.locations[0]?.name,
-          },
-          user: {
-            name: createdUser?.name,
-            username: createdUser?.username,
-            email: createdUser?.email,
-            roles: createdUser?.roles,
-            profilePic: createdUser?.profilePic,
-          },
-        };
-        return propertyDDO;
+        return await changeToPropertyInterface(property);
       })
     );
 
@@ -234,7 +114,7 @@ export const getMyProperty = async (
 
     const properties = await Promise.all(
       data.map(async (property) => {
-        
+        return await changeToPropertyInterface(property);
       })
     );
 
