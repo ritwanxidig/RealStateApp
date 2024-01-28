@@ -64,7 +64,6 @@ const EditLand = () => {
             }
             updateLand({ param, ...toSendData }).then(() => {
                 toast.success('Land updated successfully')
-                navigate('/app/all-lands')
             })
         }
     })
