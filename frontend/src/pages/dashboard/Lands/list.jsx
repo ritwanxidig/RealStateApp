@@ -34,7 +34,7 @@ const Lands_List = () => {
     { field: 'size', headerName: 'Size', width: 150 },
     { field: 'address', headerName: 'Address', width: 210, renderCell: (params) => <div> <IconButton sx={{ p: 0, ":hover": { color: "primary.main" }, transition: "color 0.4s ease-in-out" }} LinkComponent={Link} to={`/app/lands/edit/${params?.row?._id}`}> <IconEye size={18} /> </IconButton> {params?.row?.address?.city}, {params?.row?.address?.country}</div > },
     {
-      field: 'action', hideSortIcons: true, headerName: '', width: 100, renderCell: (params) =>
+      field: 'action', hideSortIcons: true, filterable: false, headerName: '', width: 100, renderCell: (params) =>
         <IconButton
           onClick={() => handleDeleteOpen(params)}
           sx={{ backgroundColor: 'error.main', color: 'white', ":hover": { backgroundColor: 'error.dark' }, transition: "color 0.6s ease-in-out" }} >
