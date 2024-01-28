@@ -16,6 +16,7 @@ const EditProperty = () => {
     const property = data?.row;
     const [updateProperty, { isLoading: updating }] = useUpdatePropertyMutation();
     const navigate = useNavigate();
+    
     // countries data
     const { data: countries, isFetching: isCountriesFetching } = useGetCountriesQuery();
     const targetCountry = countries?.countries?.find(country => country._id === property?.address?.country);
@@ -23,12 +24,13 @@ const EditProperty = () => {
     const targetLocation = targetCity?.locations?.find(location => location._id === property?.address?.location);
 
     const { darkMode } = useSelector(state => state.theme);
-    // destructuring area into width, height, unit
 
+    // destructuring area into width, height, unit
     const unit = property?.area?.split(' ')[1];
     const remain = property?.area?.split(' ')[0];
     const width = remain?.split('x')[0];
     const height = remain?.split('x')[1];
+
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: {
@@ -64,7 +66,8 @@ const EditProperty = () => {
                 error: 'Error updating property',
             })
         }
-    })
+    });
+
     return (
         <PageContainer title='Edit Property' description=''>
             <PageCard
