@@ -8,11 +8,12 @@ import { getDownloadURL, getStorage, ref, uploadBytesResumable, } from 'firebase
 import StyledButton from 'src/components/shared/StyledButton'
 import app from 'src/firebase'
 
-const ImageHolder = ({ image }) => {
+const ImageHolder = ({ image, formik }) => {
     const theme = useTheme();
     return (
         <Box sx={{ width: '12rem', height: '12rem', objectFit: 'cover', borderRadius: '20px' }}>
             <IconButton
+                onClick={() => formik.setFieldValue('images', formik?.values?.images?.filter(i => i !== image))}
                 sx={{
                     position: 'absolute', zIndex: 1000,
                     transform: 'translate(230%, 240%)', backgroundColor: 'error.main', color: 'white',
@@ -121,7 +122,7 @@ const ImageUpload = ({ formik }) => {
                 justifyContent: 'center', alignItems: 'center', justifyItems: 'center'
             }} >
                 {values.images?.map((image, index) => (
-                    <ImageHolder key={index} image={image} />
+                    <ImageHolder key={index} image={image} formik={formik} />
                 ))}
             </Box>
         </Box>
