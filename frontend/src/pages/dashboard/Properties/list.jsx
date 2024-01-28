@@ -13,12 +13,8 @@ import { Link } from 'react-router-dom'
 import DeleteProperty from './components/DeleteProperty'
 import { useSelector } from 'react-redux'
 
-const Properties_List = () => {
-    const [deleteOpen, setDeleteOpen] = React.useState(false);
-    const { authenticatedUser } = useSelector(state => state.auth)
-    // const [detailOpen, setDetailOpen] = React.useState(false);
-    const [selectedProperty, setSelectedProperty] = React.useState(null);
-    const { data: properties, isFetching } = useGetPropertiesQuery();
+const Properties_List = ({ properties, setDeleteOpen, setSelectedProperty, isFetching }) => {
+   
 
 
     const columns = [
@@ -66,34 +62,11 @@ const Properties_List = () => {
     }
 
     return (
-        <>
-            {deleteOpen && <DeleteProperty onOpen={deleteOpen} setOnOpen={setDeleteOpen} data={selectedProperty} />}
-            <PageContainer title='Properties' description=''>
-
-                <PageCard
-                    title="Properties List"
-                    headtitle="Properties Management"
-                    headsubtitle={"List of all properties"}
-                    subtitle="List of all your properties"
-                    action={<>
-                        <IconButton
-                            sx={{ backgroundColor: 'primary.main', color: 'white', ":hover": { backgroundColor: 'primary.dark' } }} >
-                            <Link to="/app/properties/new">
-                                <IconPlus />
-                            </Link>
-                        </IconButton>
-                    </>}
-                >
-
-                    <StyledDataGrid
-                        columns={columns}
-                        data={rows}
-                        loading={isFetching}
-                    />
-
-                </PageCard>
-            </PageContainer>
-        </>
+        <StyledDataGrid
+            columns={columns}
+            data={rows}
+            loading={isFetching}
+        />
     )
 }
 
