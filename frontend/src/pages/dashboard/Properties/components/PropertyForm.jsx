@@ -7,37 +7,6 @@ import Loader from 'src/views/utilities/Loader'
 import ImageUpload from './ImageUpload'
 
 
-// const CitiesComponent = ({ formik, selectedCountry, handleChange }) => {
-//   const { values, touched, errors, handleSubmit, handleBlur } = formik;
-
-//   const { data: cities, isFetching: isFetchingCities } = useGetCitiesQuery(selectedCountry);
-//   console.log(cities);
-
-//   return (
-//     <>
-//       <CustomField
-//         name="Address.city"
-//         label="City"
-//         value={values.Address.city}
-//         onChange={handleChange}
-//         error={errors.Address?.city}
-//         touched={touched.Address?.city}
-//         onBlur={handleBlur}
-//         select
-//       >
-//         <option value="">Select City</option>
-//         {cities && cities?.cities?.length > 0
-//           ? cities?.cities?.map((item, i) => (
-//             <option key={i} value={item._id}>
-//               {item.name}
-//             </option>
-//           ))
-//           : <option>there is no cities</option>}
-//       </CustomField>
-//     </>
-//   )
-// }
-
 const NewPropertyForm = ({ formik, ...props }) => {
   const { values, touched, errors, handleSubmit, handleChange, handleBlur } = formik;
   const { data: countries, isFetching: isFetchingCountries } = useGetCountriesQuery();
