@@ -34,6 +34,7 @@ const Router = () => {
     // lands
     const LandsList = Loadable(lazy(() => import('src/pages/dashboard/Lands/index')));
     const NewLand = Loadable(lazy(() => import('src/pages/dashboard/Lands/CreateLand')));
+    const EditLand = Loadable(lazy(() => import('src/pages/dashboard/Lands/EditLand')));
     // addresses
     const Address_List = Loadable(lazy(() => import('src/pages/dashboard/Adresses/list')));
 
@@ -70,6 +71,7 @@ const Router = () => {
                         <Route path='/app/properties/new' element={<NewPropertiesList />} />
                         <Route path='/app/lands/new' element={<NewLand />} />
                         <Route path='/app/properties/edit/:id' element={<EditProperty />} />
+                        <Route path='/app/lands/edit/:id' element={<EditLand />} />
 
                         {/* only for user */}
                         <Route path='/app/' element={<PrivateRoute allowedRoles={['user']} />}>
