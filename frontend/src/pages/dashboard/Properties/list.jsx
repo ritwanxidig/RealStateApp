@@ -20,7 +20,7 @@ const Properties_List = ({ properties, setDeleteOpen, setSelectedProperty, isFet
     const columns = [
         { field: 'index', headerName: '#', width: 30 },
         {
-            field: 'user', headerName: 'Owner', width: 150, renderCell: (params) =>
+            field: 'user.name', headerName: 'Owner', width: 150, renderCell: (params) =>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                     <Avatar src={params?.row?.user?.profilePic || SampleProfile1} sx={{ width: 24, height: 24 }} />
                     {params?.row?.user?.name?.substring(0, 10) || "Owner Name"}
@@ -44,7 +44,7 @@ const Properties_List = ({ properties, setDeleteOpen, setSelectedProperty, isFet
             )
         },
         {
-            field: 'actions', headerName: 'Actions', width: 100,
+            field: 'actions', hideSortIcons: true, filterable: false, headerName: 'Actions', width: 100,
             renderCell: (params) =>
                 <IconButton
                     onClick={() => handleDeleteOpen(params)}
