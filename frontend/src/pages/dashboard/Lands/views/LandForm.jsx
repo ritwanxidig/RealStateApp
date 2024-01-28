@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material'
-import React from 'react'
+import React, { useEffect } from 'react'
 import CustomField from 'src/components/form/CustomField'
 import StyledButton from 'src/components/shared/StyledButton'
 import ImageUpload from './ImageUpload'
@@ -10,6 +10,17 @@ const LandForm = ({ formik, ...props }) => {
     const [cities, setCities] = React.useState(props?.targetCountry?.cities || null);
     const [locations, setLocations] = React.useState(props?.targetCity?.locations || null);
     const { errors, touched, values, handleChange, handleBlur, handleSubmit } = formik;
+
+    useEffect(() => {
+        if (props?.targetCountry) {
+            setCities(props?.targetCountry?.cities);
+        }
+        if (values?.address?.city) {
+            const city = cities?.find(city => city._id === values?.address?.city);
+            setLocations(city?.locations);
+        }
+
+    }, [formik, values])
 
     const handleCountryChange = (e) => {
         const country = countries?.countries?.find(country => country._id === e.target.value);
