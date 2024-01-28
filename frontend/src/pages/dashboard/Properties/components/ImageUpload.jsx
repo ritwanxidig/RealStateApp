@@ -47,7 +47,7 @@ const ImageUpload = ({ formik }) => {
         return new Promise((resolve, reject) => {
             const storage = getStorage(app);
             const fileName = new Date().getTime() + file.name;
-            const storageRef = ref(storage, fileName);
+            const storageRef = ref(storage, `/properties/${fileName}`);
             const uploadTask = uploadBytesResumable(storageRef, file);
 
             uploadTask.on('state_changed', (snapshot) => {
@@ -114,7 +114,7 @@ const ImageUpload = ({ formik }) => {
                             >
                                 <img
                                     src={image}
-                                    alt={image}
+                                    alt={'property image'}
                                     style={{ width: '100%', height: '100px', objectFit: 'cover', borderRadius: '10px' }}
                                     loading="lazy"
                                 />
