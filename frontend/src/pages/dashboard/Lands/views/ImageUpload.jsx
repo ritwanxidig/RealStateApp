@@ -41,7 +41,7 @@ const ImageUpload = ({ formik }) => {
     const uploadTask = (image) => {
         return new Promise((resolve, reject) => {
             const storage = getStorage(app);
-            const storageRef = ref(storage, image.name);
+            const storageRef = ref(storage, `/lands/${image.name}${Date.now()}`);
             const uploadTask = uploadBytesResumable(storageRef, image);
             uploadTask.on('state_changed', (snapshot) => {
                 const perc = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
