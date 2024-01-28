@@ -33,6 +33,7 @@ const Router = () => {
     const EditProperty = Loadable(lazy(() => import('src/pages/dashboard/Properties/EditProperty')));
     // lands
     const LandsList = Loadable(lazy(() => import('src/pages/dashboard/Lands/index')));
+    const UserLands = Loadable(lazy(() => import('src/pages/dashboard/Lands/UserLandsList')));
     const NewLand = Loadable(lazy(() => import('src/pages/dashboard/Lands/CreateLand')));
     const EditLand = Loadable(lazy(() => import('src/pages/dashboard/Lands/EditLand')));
     // addresses
@@ -76,6 +77,7 @@ const Router = () => {
                         {/* only for user */}
                         <Route path='/app/' element={<PrivateRoute allowedRoles={['user']} />}>
                             <Route path='/app/my-properties' element={<MyProperties_List />} />
+                            <Route path='/app/my-lands' element={<UserLands />} />
                         </Route>
 
                         {/* only for admin */}
