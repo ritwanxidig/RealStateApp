@@ -56,7 +56,7 @@ const MyProperties_List = () => {
         },
     ]
 
-    const rows = properties?.map(property => ({ ...property, id: property._id })) || [];
+    const rows = properties?.map(property => ({ ...property, id: property?._id })) || [];
 
     const handleDeleteOpen = (params) => {
 
