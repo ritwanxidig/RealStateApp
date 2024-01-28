@@ -49,7 +49,7 @@ export const getSingleLand = async (
 
     const land = await changeToLandInterface(data);
 
-    return res.status(200).json(land);
+    return res.status(200).json({ row: data, structured: land });
   } catch (error) {
     next(error);
   }
@@ -84,7 +84,12 @@ export const addNewLand = async (
   try {
     const { size, price, address, images } = req.body;
     if (!size || !price || !address || !images)
-      return next(errorHandler(400, "Please provide all required fields: size, price, address, images"));
+      return next(
+        errorHandler(
+          400,
+          "Please provide all required fields: size, price, address, images"
+        )
+      );
 
     const requestedUser = get(req, "identity") as Record<string, any>;
     const userRef = requestedUser._id;
