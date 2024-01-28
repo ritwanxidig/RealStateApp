@@ -10,20 +10,9 @@ import LandForm from './views/LandForm'
 import { useAddLandMutation } from 'src/app/services/api'
 import { toast } from 'react-hot-toast'
 import { useNavigate } from 'react-router'
+import { LandFormValidation } from 'src/validations/validations'
 
-const validations = yup.object().shape({
-    width: yup.number().required('Width is required').min(1, 'Width must be greater than 0'),
-    height: yup.number().required('Height is required').min(1, 'Height must be greater than 0'),
-    unit: yup.string().required('Unit is required'),
-    images: yup.array().min(1, 'At least one image is required'),
-    description: yup.string(),
-    address: yup.object().shape({
-        country: yup.string('Enter the country').required('Country is required'),
-        city: yup.string('Enter the city').required('City is required'),
-        location: yup.string('Enter the location').required('Location is required'),
-    }),
-    price: yup.number().required('Price is required').min(1, 'Price must be greater than 0'),
-})
+
 
 const CreateLand = () => {
     const { darkMode } = useSelector(state => state.theme);
@@ -41,7 +30,7 @@ const CreateLand = () => {
             },
             price: 0
         },
-        validationSchema: validations,
+        validationSchema: LandFormValidation,
         onSubmit: async (values, { resetForm }) => {
             const toSendData = {
                 size: `${values.width}x${values.height} ${values.unit.trim()}`,
