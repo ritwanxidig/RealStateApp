@@ -10,7 +10,7 @@ const Landing = () => {
 
     React.useEffect(() => { setPathname(location.pathname) }, [location.pathname])
     return (
-        <Container maxWidth="xl">
+        <Container>
             < Navbar pathname={pathname} />
             <Box sx={{ marginTop: '100px', width: '100%', height: '100%' }}>
                 <Outlet />
