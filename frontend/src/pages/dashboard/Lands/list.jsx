@@ -11,11 +11,10 @@ import { useGetLandsQuery } from 'src/app/services/api'
 import StyledDataGrid from 'src/components/StyledDataGrid'
 import DeleteLand from './views/DeleteLand'
 
-const Lands_List = () => {
+const Lands_List = ({ data, isFetching }) => {
 
   const [deleteOpen, setDeleteOpen] = React.useState(false);
   const [selectedLand, setSelectedLand] = React.useState(null);
-  const { data, isFetching } = useGetLandsQuery();
 
   const handleDeleteOpen = (params) => {
     setDeleteOpen(true);
