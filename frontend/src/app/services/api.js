@@ -48,7 +48,7 @@ const api = createApi({
     getLands: QueryEndpoint(builder, "lands"),
     // searchLand: QueryParamsEndpoint(builder, "lands"),
     getLand: QueryParamsEndpoint(builder, "lands"),
-    getMyLands: QueryEndpoint(builder, "lands/my-lands"),
+    getMyLands: QueryEndpoint(builder, "lands/mylands"),
     addLand: PostEndpoint(builder, "lands"),
     updateLand: UpdateEndpoint(builder, "lands"),
     deleteLand: DeleteEndpoint(builder, "lands"),
