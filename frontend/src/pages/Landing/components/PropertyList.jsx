@@ -18,7 +18,7 @@ const PropertyList = ({ loading, properties, filterComponent }) => {
                 sx={{
                     display: 'grid',
                     gridTemplateColumns: {
-                        lg: 'repeat(4, 1fr)',
+                        lg: 'repeat(3, 1fr)',
                         md: 'repeat(3, 1fr)',
                         sm: 'repeat(2, 1fr)',
                         xs: 'repeat(1, 1fr)',
@@ -36,6 +36,8 @@ const PropertyList = ({ loading, properties, filterComponent }) => {
                         price: 1200,
                         discount: 50,
                         beds: 2,
+                        type: 'rent',
+                        property: true,
                         baths: 2,
                         area: '1200 sqft',
                         parking: true,
@@ -52,6 +54,7 @@ const PropertyList = ({ loading, properties, filterComponent }) => {
                             price: p?.price,
                             discount: p?.discount,
                             beds: p?.beds,
+                            property: true,
                             type: p?.type,
                             baths: p?.baths,
                             area: p?.area,
