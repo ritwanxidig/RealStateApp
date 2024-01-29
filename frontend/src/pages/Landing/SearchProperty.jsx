@@ -73,8 +73,8 @@ const SearchProperty = () => {
 
     return (
 
-        <Container maxWidth={xlUp ? 'xl' : lgUp ? 'lg' : smUp ? 'sm' : xsUp ? 'xs' : 'md'} >
-            <PropertyList loading={isFetching} properties={data} filterComponent={<Box sx={{ display: 'flex', width: '100%', justifyContent: 'end', mx: 4, alignItems: 'center' }}>
+        <Container>
+            <PropertyList loading={isFetching} properties={data} filterComponent={<Box sx={{ display: 'flex', width: '100%', justifyContent: 'end', alignItems: 'center' }}>
                 <StyledButton variant="contained" color="primary" type="button" onClick={() => setDrawerOpen(true)}>Filter</StyledButton>
             </Box>} />
             <DrawerContainer
