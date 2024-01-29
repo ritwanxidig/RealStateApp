@@ -5,8 +5,10 @@ import Lands_List from './list'
 import { IconButton } from '@mui/material'
 import { IconPlus } from '@tabler/icons-react'
 import { Link } from 'react-router-dom'
+import { useGetLandsQuery } from 'src/app/services/api'
 
 const index = () => {
+    const { data, isFetching } = useGetLandsQuery();
     return (
         <PageContainer title='Admin | Lands' description=''>
             <PageCard title='Lands' headtitle="Lands Management" headsubtitle="Page"
@@ -21,7 +23,7 @@ const index = () => {
                     </IconButton>
                 }
             >
-                <Lands_List />
+                <Lands_List data={data} isFetching={isFetching} />
             </PageCard>
         </PageContainer>
     )
