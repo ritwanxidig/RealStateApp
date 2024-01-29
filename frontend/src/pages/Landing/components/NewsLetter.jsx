@@ -1,9 +1,16 @@
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Button, Typography, useMediaQuery } from '@mui/material'
 import React from 'react'
 import { NewSletterBackg } from '../../../assets'
 import CustomInput from '../../../components/form/CustomInput'
+import StyledButton from 'src/components/shared/StyledButton'
+import { Md10K } from 'react-icons/md'
 
 const NewsLetter = () => {
+
+    const smUp = useMediaQuery((theme) => theme.breakpoints.up('sm'));
+    const mdUp = useMediaQuery((theme) => theme.breakpoints.up('md'));
+    const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
+    const xlUp = useMediaQuery((theme) => theme.breakpoints.up('xl'));
 
     return (
         <Box
@@ -39,23 +46,20 @@ const NewsLetter = () => {
                 <Box
                     sx={{
                         display: 'flex',
-                        width: '50%',
+                        flexDirection: lgUp || mdUp ? 'row' : 'column',
+                        width: '100%',
+                        gap: 2,
                         justifyContent: 'center',
-                        alignItems: 'center',
+                        alignItems: 'end',
                     }}
                 >
-                <CustomInput placeholder="Enter your email" />
-                <Button variant="contained" sx={{ 
-                    py: 1.5,
-                    backgroundColor: 'primary.main', 
-                    color: 'common.white', 
-                    ml: 2,
-                 }}>
-                    Subscribe
-                </Button>
+                    <CustomInput placeholder="Enter your email" />
+                    <StyledButton variant="contained">
+                        Subscribe
+                    </StyledButton>
                 </Box>
             </Box>
-        </Box>
+        </Box >
     )
 }
 
