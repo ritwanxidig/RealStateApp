@@ -8,8 +8,8 @@ const Properties = () => {
     const { data: properties, isFetching: loading } = useGetPropertiesQuery();
     return (
         <Container maxWidth="">
-            <PropertyList loading={loading} properties={properties} filterComponent={<Box sx={{ mb: 1, display: 'flex', justifyContent: 'end', mx: 4, alignItems: 'center' }}>
-                <Link to='/properties/search' style={{ fontFamily: 'Plus Jakarta Sans' }}>All Filters</Link>
+            <PropertyList loading={loading} properties={properties} filterComponent={<Box sx={{ mb: 1, display: 'flex', justifyContent: 'end', alignItems: 'center' }}>
+                <Link to='/properties/search' style={{ fontFamily: 'Plus Jakarta Sans', fontWeight: '500' }}>All Filters</Link>
             </Box>} />
         </Container>
     )
