@@ -13,7 +13,7 @@ const HomePage = () => {
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
   const xlUp = useMediaQuery((theme) => theme.breakpoints.up('xl'));
   return (
-    <Container maxWidth={xlUp ? 'xl' : lgUp ? 'lg' : smUp ? 'sm' : xsUp ? 'xs' : 'md'} >
+    <Container>
       <Hero />
       <Services />
       <NewListings />
