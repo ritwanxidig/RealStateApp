@@ -14,14 +14,19 @@ const validations = yup.object().shape({
     body: yup.string().required('Enter body of your message')
 })
 
-const ContactAgentForm = ({ onOpen, setOnOpen, data }) => {
+const ContactAgentForm = ({ onOpen, setOnOpen, data, ...props }) => {
     const formik = useFormik({
         initialValues: {
             subject: '',
             body: ''
         },
         onSubmit: (values) => {
-            const emailLink = `mailto:${data?.user?.email}?subject=${values.subject}&body=${values.body}`;
+            const emailLink = `mailto:${data?.user?.email}?subject=${values.subject}
+                &body=${props?.property ?
+                    `Referencing your property: *${data?.property?.name || `Property for ${data?.type} - ${data?.price}${data?.type === 'rent' ? '/month' : ''}`} \n  *`
+                    :
+                    `Referencing your land at: *${data?.location}* \n`} \n\n 
+                    ${values.body} `;
             window.location.href = emailLink;
             setOnOpen(false);
             toast.success("message sent, please complete process in your email app");
