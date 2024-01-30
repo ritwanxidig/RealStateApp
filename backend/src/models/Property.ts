@@ -71,12 +71,12 @@ const propertySchema = new mongoose.Schema(
 export const PropertyModel = mongoose.model("Property", propertySchema);
 
 // CRUD for property
-export const getAll = () => PropertyModel.find();
+export const getAll = () => PropertyModel.find().sort({ createdAt: -1 });
 
 export const getByPropertyId = (id: string) => PropertyModel.findById(id);
 
 export const getUserProperties = (id: ObjectId) =>
-  PropertyModel.find({ userRef: id });
+  PropertyModel.find({ userRef: id }).sort({ createdAt: -1 });
 
 export const createProperty = (property: Record<string, any>) =>
   new PropertyModel(property).save();
