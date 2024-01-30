@@ -3,8 +3,10 @@ import React from 'react'
 import ListingCard from './ListingCard'
 import SectionTitle from './SectionTitle'
 import { Product1 } from 'src/assets'
+import StyledButton from 'src/components/shared/StyledButton'
 
 const LandsList = ({ loading, lands, filterComponent }) => {
+    const [length, setLength] = React.useState(6);
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }} mx="auto">
             <SectionTitle title='Lands' />
@@ -25,7 +27,7 @@ const LandsList = ({ loading, lands, filterComponent }) => {
                 }}
             >
                 {lands && !loading && lands?.length > 0 ?
-                    lands?.slice(0, 20)
+                    lands?.slice(0, length)
                         ?.sort((a, b) => new Date(b?._createdAt) - new Date(a?._createdAt))
                         ?.map(p => (
                             <ListingCard key={p?._id} card={{
@@ -45,7 +47,7 @@ const LandsList = ({ loading, lands, filterComponent }) => {
                             }} />
                         )) :
                     // static rendering
-                    Array(4).fill(0).map((_, i) => (
+                    Array(3).fill(0).map((_, i) => (
                         <ListingCard key={i + Math.random()} card={{
                             name: `Land ${i + 1}`,
                             location: 'USA',
@@ -61,6 +63,9 @@ const LandsList = ({ loading, lands, filterComponent }) => {
                     ))
                 }
             </Box>
+            {!loading && lands?.length > 0 && lands?.length > length &&
+                <StyledButton variant="contained" sx={{ mx: 'auto' }} onClick={() => setLength(length + 6)}>View More</StyledButton>
+            }
         </Box>
     )
 }
