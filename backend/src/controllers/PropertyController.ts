@@ -19,7 +19,6 @@ import {
   getCountryById,
   getLocationById,
 } from "../models/Address";
-import { getById } from "../models/User";
 
 export const getAllProperties = async (
   req: Request,
@@ -89,7 +88,7 @@ export const searchProperty = async (
       "address.country": countryCondition,
       "address.city": cityCondition,
       type: type,
-    });
+    }).sort({ createdAt: -1 });
     const properties = await Promise.all(
       data.map(async (property) => {
         return await changeToPropertyInterface(property);
