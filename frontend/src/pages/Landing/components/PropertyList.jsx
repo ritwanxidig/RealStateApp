@@ -50,7 +50,6 @@ const PropertyList = ({ loading, properties, filterComponent }) => {
 
                 {properties && !loading && properties?.length > 0 ?
                     properties?.slice(0, length)
-                        ?.sort((a, b) => new Date(b?._createdAt) - new Date(a?._createdAt))
                         ?.map(p => (
                             <ListingCard key={p?._id} card={{
                                 name: p?.name,
