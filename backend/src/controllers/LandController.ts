@@ -53,6 +53,7 @@ export const SearchLand = async (
       sort && typeof sort === "string"
         ? { [sort]: order === "asc" ? "asc" : "desc" }
         : { createdAt: "desc" };
+        
 
     const data = await LandModel.find({
       "address.country": countryCondition,
