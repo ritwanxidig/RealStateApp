@@ -22,11 +22,6 @@ const SearchProperty = () => {
     const [selectedCountry, setSelectedCountry] = React.useState(null);
     const [urlParams, setUrlParams] = React.useState(location.search);
 
-    const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
-    const xlUp = useMediaQuery((theme) => theme.breakpoints.up('xl'));
-    const smUp = useMediaQuery((theme) => theme.breakpoints.up('sm'));
-    const xsUp = useMediaQuery((theme) => theme.breakpoints.up('xs'));
-
     const { data: countries, isFetching: loading } = useGetCountriesQuery();
     const { data, isFetching } = useSearchPropertyQuery(`search?${urlParams}`);
 
