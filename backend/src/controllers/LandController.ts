@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { ILandDDO } from "../interfaces/ILandDDO";
 import { get } from "lodash";
 import {
+  LandModel,
   createLand,
   deleteLandById,
   getAll,
@@ -22,6 +23,44 @@ export const getAllLands = async (
 
     const lands: ILandDDO[] = await Promise.all(
       data?.map(async (land) => {
+        return await changeToLandInterface(land);
+      })
+    );
+
+    return res.status(200).json(lands);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const SearchLand = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const countryId = req.query.countryId || "";
+    const cityId = req.query.cityId || "";
+    const sort = req.query.sort || "";
+    const order = req.query.order || "asc";
+
+    const countryCondition = countryId
+      ? { $in: [countryId] }
+      : { $exists: true };
+    const cityCondition = cityId ? { $eq: cityId } : { $exists: true };
+
+    const sortCondition: { [key: string]: "asc" | "desc" } =
+      sort && typeof sort === "string"
+        ? { [sort]: order === "asc" ? "asc" : "desc" }
+        : { createdAt: "desc" };
+
+    const data = await LandModel.find({
+      "address.country": countryCondition,
+      "address.city": cityCondition,
+    }).sort(sortCondition);
+
+    const lands = await Promise.all(
+      data.map(async (land) => {
         return await changeToLandInterface(land);
       })
     );
