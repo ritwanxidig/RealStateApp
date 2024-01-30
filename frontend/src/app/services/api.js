@@ -46,7 +46,7 @@ const api = createApi({
 
     // lands endpoints
     getLands: QueryEndpoint(builder, "lands"),
-    // searchLand: QueryParamsEndpoint(builder, "lands"),
+    searchLand: QueryParamsEndpoint(builder, "lands"),
     getLand: QueryParamsEndpoint(builder, "lands"),
     getMyLands: QueryEndpoint(builder, "lands/mylands"),
     addLand: PostEndpoint(builder, "lands"),
@@ -101,6 +101,7 @@ export const {
 
   // hooks for lands
   useGetLandsQuery,
+  useSearchLandQuery,
   useGetLandQuery,
   useGetMyLandsQuery,
   useAddLandMutation,
