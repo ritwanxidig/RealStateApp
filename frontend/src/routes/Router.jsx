@@ -2,10 +2,6 @@ import React, { lazy, Fragment } from 'react'
 import { Navigate, Routes, Route } from 'react-router'
 import Loadable from '../components/shared/Loadable'
 import MainLayout from '../Layout/Main/MainLayout';
-import HomePage from '../pages/Landing/Home';
-import Landing from '../pages/Landing/Landing';
-import About from '../pages/Landing/About';
-import Contact from '../pages/Landing/Contact';
 import Error400 from '../views/authentication/Error400';
 import { useSelector } from 'react-redux';
 import ErrorModal from '../views/utilities/ErrorModal';
@@ -13,11 +9,22 @@ import AccessDenied from '../pages/authPages/AccessDenied'
 import PrivateRoute from './PrivateRoute'
 import { Toaster } from 'react-hot-toast'
 
+
+
+import HomePage from '../pages/Landing/Home';
+import Landing from '../pages/Landing/Landing';
+import About from '../pages/Landing/About';
+import Contact from '../pages/Landing/Contact';
+
+
 const Router = () => {
 
     const Properties = Loadable(lazy(() => import('src/pages/Landing/Properties')));
     const SearchPropery = Loadable(lazy(() => import('src/pages/Landing/SearchProperty')));
-    const SpecifictProperty = Loadable(lazy(() => import('src/pages/Landing/PropertyPage')))
+    const SpecifictProperty = Loadable(lazy(() => import('src/pages/Landing/PropertyPage')));
+
+    // Lands
+    const Lands = Loadable(lazy(() => import('src/pages/Landing/Lands')));
 
     const Login = Loadable(lazy(() => import('src/pages/authPages/Login')));
     const Register = Loadable(lazy(() => import('src/pages/authPages/Register')));
@@ -58,6 +65,7 @@ const Router = () => {
                     <Route path='/about' element={<About />} />
                     <Route path='/contact' element={<Contact />} />
                     <Route path='/properties' element={<Properties />} />
+                    <Route path='/lands' element={<Lands />} />
                     <Route path='/properties/search' element={<SearchPropery />} />
                     <Route path='/properties/:id' element={<SpecifictProperty />} />
 
