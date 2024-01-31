@@ -50,11 +50,13 @@ export const LandModel = mongoose.model("Land", landSchema);
 
 // CRUD operations for land
 
-export const getAll = () => LandModel.find();
+export const getAll = () => LandModel.find().sort({ createdAt: -1 });
 
 export const getSpecificLands = async (userId: string) => {
   try {
-    const lands = await LandModel.find({ userRef: userId });
+    const lands = await LandModel.find({ userRef: userId }).sort({
+      createdAt: -1,
+    });
     return lands;
   } catch (error) {
     throw error;
