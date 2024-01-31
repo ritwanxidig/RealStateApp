@@ -26,6 +26,7 @@ const Router = () => {
     // Lands
     const Lands = Loadable(lazy(() => import('src/pages/Landing/Lands')));
     const SearchLand = Loadable(lazy(() => import('src/pages/Landing/SearchLand')));
+    const SepecificLand = Loadable(lazy(() => import('src/pages/Landing/LandPage')));
 
     const Login = Loadable(lazy(() => import('src/pages/authPages/Login')));
     const Register = Loadable(lazy(() => import('src/pages/authPages/Register')));
@@ -70,6 +71,7 @@ const Router = () => {
                     <Route path='/properties/search' element={<SearchPropery />} />
                     <Route path='/lands/search' element={<SearchLand />} />
                     <Route path='/properties/:id' element={<SpecifictProperty />} />
+                    <Route path='/lands/:id' element={<SepecificLand />} />
 
                 </Route>
 
