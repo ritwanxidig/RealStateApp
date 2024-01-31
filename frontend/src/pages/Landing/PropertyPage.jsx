@@ -19,10 +19,9 @@ const PropertyPage = () => {
     const [contactFormOpen, setContactFormOpen] = React.useState(false);
     const { data, isFetching: loading } = useGetPropertyQuery(propertyId);
     const property = data?.structured;
-    console.log(property);
     return (
         <>
-            {contactFormOpen && <ContactAgentForm onOpen={contactFormOpen} setOnOpen={setContactFormOpen} data={property} />}
+            {contactFormOpen && <ContactAgentForm onOpen={contactFormOpen} setOnOpen={setContactFormOpen} data={{ ...property }} property={true} />}
             <ImageSlider imageUrls={property?.imageUrls || []} />
             <Box sx={{
                 display: 'flex', flexDirection: 'column', width: '100%', height: '100%',
