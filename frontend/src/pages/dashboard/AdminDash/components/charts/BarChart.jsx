@@ -1,121 +1,103 @@
 import { useTheme } from '@emotion/react';
-import { Box, List, ListItem, ListItemText, Typography } from '@mui/material';
-import { Colors } from 'chart.js';
-import Chart from 'chart.js/auto';
-import React from 'react';
-import { Bar } from 'react-chartjs-2';
+import { Box } from '@mui/material'
+import React from 'react'
+import { Area, BarChart, Bar, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 
-const BarChart = () => {
+const BarChartComponent = () => {
     const theme = useTheme();
-    // State for chart labels
-    const [labels, setLabels] = React.useState(["January", "February", "March", "April", "May", "June", "July"]);
-    Chart.register(Colors);
-
-    // Data for the bar chart
-    const data = {
-        labels: labels,
-        datasets: [
-            {
-                label: "Homes",
-                data: [10, 10, 5, 45, 20, 30, 40],
-                backgroundColor: theme?.palette?.primary?.main,
-                barThickness: 15,
-                borderRadius: 20,
-                barPercentage: 0.7,  // Adjusted bar percentage
-                categoryPercentage: 0.7,
-            },
-            {
-                label: "Lands",
-                data: [5, 15, 10, 30, 15, 20, 25],
-                backgroundColor: theme?.palette?.secondary?.main,
-                barThickness: 15,
-                borderRadius: 20,
-                barPercentage: 0.7,  // Adjusted bar percentage
-                categoryPercentage: 0.7, 
-            },
-        ],
-    };
-
-    // Options for the bar chart
-    const options = {
-        layout: {
-            padding: {
-                top: 0,
-                right: 10,
-                bottom: 0,
-                left: 10
-            },
+    // Data for the pie chart
+    const data = [
+        {
+            name: 'Jan',
+            homes: 4000,
+            lands: 2400,
+            amt: 2400,
         },
-        responsive: true,
-        scales: {
-            x: {
-                grid: {
-                    display: false
-                },
-            },
-            y: {
-                grid: {
-
-                },
-
-            },
-
+        {
+            name: 'Feb',
+            homes: 3000,
+            lands: 1398,
+            amt: 2210,
         },
-        plugins: {
-            legend: {
-                display: true,
-
-            },
-            tooltip: {
-                callbacks: {
-                    label: (context) => {
-                        const labelIndex = context.dataIndex;
-                        return `${labels[labelIndex]}: ${context.formattedValue}`;
-                    },
-                },
-            },
+        {
+            name: 'Mar',
+            homes: 2000,
+            lands: 9800,
+            amt: 2290,
         },
-        bars: {
-            categoryPercentage: 0.6,
-            barPercentage: 0.8,
-        }
-    }
+        {
+            name: 'Apr',
+            homes: 2780,
+            lands: 3908,
+            amt: 2000,
+        },
+        {
+            name: 'May',
+            homes: 2780,
+            lands: 3908,
+            amt: 2000,
+        },
+        {
+            name: 'Jun',
+            homes: 1890,
+            lands: 4800,
+            amt: 2181,
+        },
+        {
+            name: 'Jul',
+            homes: 2390,
+            lands: 3800,
+            amt: 2500,
+        },
+        {
+            name: 'Aug',
+            homes: 3490,
+            lands: 4300,
+            amt: 2100,
+        },
 
-    // Styles for the legend
-    const legendStyles = {
-        display: 'grid',
-        gridTemplateColumns: 'repeat(7, 1fr)',
-        listStyle: 'none',
-        justifyContent: 'center',
-        gap: 2,
-        padding: '1rem',
-    };
+        {
+            name: 'Sep',
+            homes: 1890,
+            lands: 4800,
+            amt: 2181,
+        },
+        {
+            name: 'Oct',
+            homes: 2390,
+            lands: 3800,
+            amt: 2500,
+        },
+        {
+            name: 'Nov',
+            homes: 3490,
+            lands: 4300,
+            amt: 2100,
+        },
 
-    // Render the BarChart component
+        {
+            name: 'Dec',
+            homes: 3490,
+            lands: 4300,
+            amt: 2100,
+        },
+    ];
     return (
-        <Box sx={{ width: '100%', height: '100%' }}>
-            {/* Legend for the chart */}
-            <List style={legendStyles}>
-                {labels.map((label, index) => (
-                    // Clicking a label removes it from the chart
-                    <ListItem onClick={() => {
-                        const newLabels = [...labels];
-                        newLabels.splice(index, 1);
-                        setLabels(newLabels);
-                    }} key={index} style={{
-                        margin: '0 0', borderRadius: '25px', background: theme?.palette?.primary?.main,
-                        cursor: 'pointer',
-                    }}>
-                        <ListItemText style={{ margin: '0', padding: '0' }}>
-                            <Typography variant="body2" fontSize={12} style={{ color: '#fff' }}>{label}</Typography>
-                        </ListItemText>
-                    </ListItem>
-                ))}
-            </List>
-            {/* Bar chart component */}
-            <Bar data={data} options={options} />
-        </Box>
-    );
+        // <Box sx={{ width: '100%' }}>
+        <ResponsiveContainer>
+            <BarChart
+                data={data}
+
+            >
+                {/* <CartesianGrid strokeDasharray="4 4" /> */}
+                <XAxis dataKey="name" />
+                <Tooltip />
+                <Bar dataKey="homes" barSize={9} fill={theme?.palette?.primary?.main || "#8884d8"} />
+                <Bar dataKey="lands" barSize={9} fill={theme?.palette?.secondary?.main || "#82ca9d"} />
+            </BarChart>
+        </ResponsiveContainer>
+        // </Box>
+    )
 };
 
-export default BarChart;
+export default BarChartComponent;
