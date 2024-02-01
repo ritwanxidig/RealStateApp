@@ -32,7 +32,7 @@ const Router = () => {
     const Register = Loadable(lazy(() => import('src/pages/authPages/Register')));
 
     // protected routes
-    const Home = Loadable(lazy(() => import('src/pages/dashboard/Home')));
+    const Home = Loadable(lazy(() => import('src/pages/dashboard/AdminDash/Home')));
     const ProfilePage = Loadable(lazy(() => import('src/pages/dashboard/Profile')));
     const Users_List = Loadable(lazy(() => import('src/pages/dashboard/users/list')));
     // properties
