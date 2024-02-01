@@ -1,28 +1,23 @@
-import Chart from 'chart.js/auto'
-import { Colors } from 'chart.js'
-import { useTheme } from '@emotion/react'
-import { Box, Typography, useMediaQuery } from '@mui/material'
-import { IconHome, IconHomeStar } from '@tabler/icons-react'
+import { Box, useMediaQuery } from '@mui/material'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import PageContainer from 'src/Layout/Main/Containers/PageContainer'
-import DashboardCard from './components/DashboardCard'
-import StatsCard1 from './components/StatsCard1'
-import { Line, Pie } from 'react-chartjs-2'
-import PieChart from './components/charts/PieChart'
-import BarChart from './components/charts/BarChart'
+import OverviewAnalaysis from './components/OverviewAnalaysis'
+import RevenueAnalaysis from './components/RevenueAnalaysis'
+import LastYearListings from './components/LastYearListings'
+import MostActiveCities from './components/MostActiveCities'
+import PropertyAnalaysis from './components/PropertyAnalaysis'
+import LatestListings from './components/LatestListings'
+import LastYearRevenue from './components/LastYearRevenue'
+import MostActiveUsers from './components/MostActiveUsers'
 
 
 
 
 const Home = () => {
-  const theme = useTheme();
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
-  const mdUp = useMediaQuery((theme) => theme.breakpoints.up('md'));
-  const smUp = useMediaQuery((theme) => theme.breakpoints.up('sm'));
-  const xsUp = useMediaQuery((theme) => theme.breakpoints.up('xs'));
 
-  const { darkMode } = useSelector((state) => state.theme);
+  useSelector((state) => state.theme);
   return (
     <PageContainer title='Dashboard' description=''>
       <Box>
@@ -32,33 +27,41 @@ const Home = () => {
           width: '100%',
           gap: 2,
         }}>
-
-          <DashboardCard width={lgUp ? null : '100%'} title="Overview" subtitle="Overview of all the updates">
-            <Box sx={{ mt: 2, display: 'grid', gridTemplateColumns: { lg: 'repeat(4, 1fr)', md: 'repeat(3, 1fr)', xs: 'repeat(2, 1fr)' }, gap: 3, width: '100%', }}>
-              <StatsCard1 bgColor={darkMode ? 'red.main' : 'red.100'} IconColor={darkMode ? 'red.light' : 'red.800'} />
-              <StatsCard1 bgColor={darkMode ? "primary.main" : "primary.100"} IconColor={theme.palette.primary.dark} />
-              <StatsCard1 bgColor={darkMode ? 'secondary.main' : "secondary.100"} IconColor={darkMode ? theme.palette.secondary[700] : theme.palette.secondary.dark} textColor={darkMode ? 'grey.800' : 'grey.600'} />
-              <StatsCard1 bgColor={darkMode ? 'red.main' : 'red.100'} IconColor={darkMode ? 'red.light' : 'red.800'} />
-            </Box>
-          </DashboardCard>
-
-          <Box >
-            <DashboardCard title="Insights" subtitle="Overview of all the updates" >
-              <Box sx={{ overflow: 'hidden', display: 'flex', justifyContent: 'center', height: '13rem' }}>
-                <PieChart />
-              </Box>
-            </DashboardCard>
-
+          <Box sx={{ width: '100%' }}>
+            <OverviewAnalaysis />
+          </Box>
+          <Box sx={{ width: '100%' }}>
+            <RevenueAnalaysis />
           </Box>
         </Box>
-        <Box sx={{ display: 'flex', gap: 2, width: '100%', mt: 2 }}>
-          <DashboardCard title="Insights in Last year" subtitle="Overview of all the updates in last year">
-            <BarChart />
-          </DashboardCard>
-          <DashboardCard title="Insights in Last year" subtitle="Overview of all the updates in last year">
-            <BarChart />
-          </DashboardCard>
+
+        <Box sx={{ width: '100%', mt: 2 }}>
+          <LastYearRevenue />
         </Box>
+
+        <Box sx={{ display: 'flex', flexDirection: lgUp ? 'row' : 'column', gap: 2, width: '100%', mt: 2 }}>
+          <Box sx={{ width: '100%' }}>
+            <LastYearListings />
+          </Box>
+          <Box sx={{ width: '100%' }}>
+            <MostActiveCities />
+          </Box>
+        </Box>
+        <Box sx={{ display: 'flex', flexDirection: lgUp ? 'row' : 'column', gap: 2, width: '100%', mt: 2 }}>
+          <Box className={`${lgUp ? 'w-1/4' : 'w-full'}`}>
+            <PropertyAnalaysis />
+          </Box>
+          <Box className={`${lgUp ? 'flex-1 w-1/3' : 'w-full'}`}>
+            <LatestListings />
+          </Box>
+        </Box>
+
+        <Box sx={{ display: 'flex', flexDirection: lgUp ? 'row' : 'column', gap: 2, width: '100%', mt: 2 }}>
+          <Box className={`${lgUp ? 'w-1/3' : 'w-full'}`}>
+            <MostActiveUsers />
+          </Box>
+        </Box>
+
       </Box>
     </PageContainer >
   )
