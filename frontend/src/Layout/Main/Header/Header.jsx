@@ -97,8 +97,8 @@ const Header = (props) => {
             <IconMenu width="20" height="20" />
           </IconButton>
           <Box className="flex w-full items-center" sx={{ display: { lg: 'flex', xs: 'none' }, }}>
-            <Typography sx={{ fontWeight: 'bold', fontSize: '20px' }}>
-              Admin Dashboard
+            <Typography sx={{ fontWeight: 'bold', fontSize: '20px', fontFamily: 'Plus Jakarta Sans' }}>
+              RealEstate Dashboard
             </Typography>
           </Box>
           <Box className="flex w-full items-center" sx={{ display: { lg: 'flex', xs: 'none' } }}>
