@@ -12,7 +12,10 @@ const DashboardCard = (props) => {
                 p: 2,
                 backgroundColor: darkMode ? 'primary.800' : 'white',
                 borderRadius: 2,
-                width: props?.width || 'contain'
+                width: props?.width || 'contain',
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column',
             }} >
                 <Typography variant='h6' sx={{ fontWeight: '600', fontFamily: 'Plus Jakarta Sans' }}>{props?.title || "Title"}</Typography>
                 <Typography sx={{
@@ -21,7 +24,9 @@ const DashboardCard = (props) => {
                 }}>
                     {props?.subtitle || "Subtitle"}
                 </Typography>
-                {props?.children}
+                <Box sx={{ flexGrow: 1, display: 'flex', mt: 2, width: '100%' }}>
+                    {props?.children}
+                </Box>
             </Box>
         </Box>
     )
