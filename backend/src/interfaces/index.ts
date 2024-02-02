@@ -5,3 +5,17 @@ export class AppError extends Error {
     this.status = status;
   }
 }
+
+export interface UserDetail {
+  name: string;
+  properties: number;
+  lands: number;
+  revenue?: number;
+}
+
+export interface CityDetail {
+  name: string;
+  properties: number;
+  lands: number;
+  revenue: number;
+}
