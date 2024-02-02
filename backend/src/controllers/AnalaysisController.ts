@@ -1,96 +1,22 @@
 import express, { Request, Response, NextFunction } from "express";
 import { get } from "lodash";
-import { errorHandler } from "../utils";
+import {
+  errorHandler,
+  getCityDetails,
+  getLatestPropertiesAndLands,
+  getPropertiesAnalaysis,
+  getTopCities,
+  getTopUsers,
+  getUserDetails,
+} from "../utils";
 import { LandModel } from "../models/Land";
 import { PropertyModel } from "../models/Property";
-import { UserModel, getById as getUserById } from "../models/User";
-
-interface UserDetail {
-  name: string;
-  properties: number;
-  lands: number;
-  revenue?: number;
-}
 
 // Helper function to get the top 5 users with the most sum of published properties and lands
-const getTopUsers = async (): Promise<
-  Map<string, { properties?: number; lands?: number }>
-> => {
-  const topUsers = await UserModel.aggregate([
-    {
-      $lookup: {
-        from: "properties", // Assuming the name of the properties collection
-        localField: "_id",
-        foreignField: "userRef",
-        as: "properties",
-      },
-    },
-    {
-      $lookup: {
-        from: "lands", // Assuming the name of the lands collection
-        localField: "_id",
-        foreignField: "userRef",
-        as: "lands",
-      },
-    },
-    {
-      $addFields: {
-        totalProperties: { $size: "$properties" },
-        totalLands: { $size: "$lands" },
-        revenue: {
-          $sum: [{ $sum: "$properties.price" }, { $sum: "$lands.price" }],
-        },
-      },
-    },
-    {
-      $sort: { totalProperties: -1, totalLands: -1 },
-    },
-    {
-      $limit: 5,
-    },
-    {
-      $project: {
-        _id: 1,
-        properties: "$totalProperties",
-        lands: "$totalLands",
-        revenue: "$revenue",
-      },
-    },
-  ]);
-
-  const combinedUsers = new Map<
-    string,
-    { properties?: number; lands?: number; revenue?: number }
-  >();
-  topUsers.forEach((user: Record<string, any>) => {
-    combinedUsers.set(user._id, {
-      properties: user.properties || 0,
-      lands: user.lands || 0,
-      revenue: user.revenue || 0,
-    });
-  });
-
-  return combinedUsers;
-};
 
 // Helper function to get user details based on userRef
-const getUserDetails = async (
-  topUsers: Map<string, { properties?: number; lands?: number, revenue?: number }>
-): Promise<UserDetail[]> => {
-  const userDetailsPromises = Array.from(topUsers.keys()).map(
-    async (userId) => {
-      const userDetail = await getUserById(userId);
-      return {
-        name: userDetail.name, // Assuming there is a 'name' field in the User model
-        properties: get(topUsers.get(userId), "properties", 0),
-        lands: get(topUsers.get(userId), "lands", 0),
-        revenue: get(topUsers.get(userId), "revenue", 0),
-      };
-    }
-  );
 
-  return Promise.all(userDetailsPromises);
-};
+// Helper function to get the top 3 cities with the most sum of published properties and lands
 
 export default {
   getOverviewAnalaysis: async (
@@ -224,6 +150,14 @@ export default {
       // Get user details for the top users
       const topUsersDetails = await getUserDetails(topUsers);
 
+      const topCities = await getTopCities();
+
+      const topCitiesDetails = await getCityDetails(topCities);
+
+      const propertyAnalaysis = await getPropertiesAnalaysis();
+
+      const latestListings = await getLatestPropertiesAndLands();
+
       return res.status(200).json({
         overview: {
           properties,
@@ -237,6 +171,9 @@ export default {
         monthlyRevenue,
         monthlyPublished,
         topUsersDetails,
+        topCitiesDetails,
+        propertyAnalaysis,
+        latestListings,
       });
     } catch (error) {
       next(error);
