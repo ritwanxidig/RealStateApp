@@ -152,34 +152,7 @@ export const addProperty = async (
       address.city,
       address.location
     );
-    const propertyDDO: IPropertyDDO = {
-      _id: property._id.toString(),
-      _createdAt: property.createdAt,
-      _updatedAt: property.updatedAt,
-      name: property.name,
-      description: property.description,
-      price: property.price,
-      discount: property.discount,
-      imageUrls: property.imageUrls,
-      type: property.type,
-      beds: property.beds,
-      baths: property.baths,
-      furnished: property.furnished,
-      parking: property.parking,
-      area: property.area,
-      address: {
-        country: country.name,
-        city: city.cities[0].name,
-        location: location.cities[0].locations[0].name,
-      },
-      user: {
-        name: loggedInUser.name,
-        username: loggedInUser.username,
-        email: loggedInUser.email,
-        roles: loggedInUser.roles,
-        profilePic: loggedInUser.profilePic,
-      },
-    };
+    const propertyDDO = await changeToPropertyInterface(property);
 
     return res.status(200).json(propertyDDO);
   } catch (error) {
