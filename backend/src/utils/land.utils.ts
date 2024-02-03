@@ -24,8 +24,8 @@ export const changeToLandInterface = async (land: Record<string, any>) => {
     size: land.size,
     address: {
       country: country.name,
-      city: city.cities[0].name,
-      location: location?.cities[0]?.locations[0]?.name,
+      city: city.name,
+      location: location?.name,
     },
     images: land.images,
     price: land.price,
