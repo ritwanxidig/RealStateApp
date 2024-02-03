@@ -20,7 +20,7 @@ const CitiesList = ({ country, loading }) => {
 
     const { data, isFetching } = useGetCitiesQuery(country?._id);
 
-    const rows = data?.cities?.map((item, i) => ({ ...item, index: i + 1, id: item._id }));
+    const rows = data?.map((item, i) => ({ ...item, index: i + 1, id: item._id }));
 
     const handleDetailOpen = (params) => {
         setDetailOpen(true);
