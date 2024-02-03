@@ -1,6 +1,6 @@
-import { Box, Typography, useMediaQuery } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import React, { useEffect } from 'react'
-import { useGetCitiesQuery, useGetCountriesQuery, useGetLocationsQuery } from 'src/app/services/api'
+import { useGetCountriesQuery } from 'src/app/services/api'
 import CustomField from 'src/components/form/CustomField'
 import StyledButton from 'src/components/shared/StyledButton'
 import Loader from 'src/views/utilities/Loader'
@@ -14,10 +14,6 @@ const NewPropertyForm = ({ formik, ...props }) => {
   const [locations, setLocations] = React.useState(props?.targetCity?.locations || null);
   const [selectedCountry, setSelectedCountry] = React.useState(null);
   const [selectedCity, setSelectedCity] = React.useState(null);
-  const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
-  const mdUp = useMediaQuery((theme) => theme.breakpoints.up('md'));
-  const smUp = useMediaQuery((theme) => theme.breakpoints.up('sm'));
-  const xsUp = useMediaQuery((theme) => theme.breakpoints.up('xs'));
 
 
 
