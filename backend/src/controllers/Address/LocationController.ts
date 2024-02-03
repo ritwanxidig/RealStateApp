@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import {
   addLocation,
+  countryModel,
   deleteLocation,
   getCityById,
   getCountryById,
@@ -88,8 +89,8 @@ export const addNewLocation = async (
       );
     }
     // add the location to the city
-    const city = await addLocation(countryId, cityId, location);
-    return res.status(200).json(city);
+    const targetC = await addLocation(countryId, cityId, location);
+    return res.status(200).json(targetC.cities.id(cityId).locations);
   } catch (error) {
     next(error);
   }
@@ -132,8 +133,10 @@ export const editLocation = async (
     }
 
     // update the location
-    const city = await updateLocation(locationId, countryId, cityId, name);
-    return res.status(200).json(city);
+    const targetC = await updateLocation(locationId, countryId, cityId, name);
+    return res
+      .status(200)
+      .json(targetC.cities.id(cityId).locations.id(locationId));
   } catch (error) {
     next(error);
   }
@@ -163,9 +166,10 @@ export const removeLocation = async (
     if (!existLocation) {
       return next(errorHandler(400, "this location dos not exists"));
     }
-    // remove the location
-    const city = await deleteLocation(locationId, countryId, cityId);
-    return res.status(200).json(city);
+    const targetC = await countryModel.findById(countryId);
+    targetC.cities.id(cityId).locations.id(locationId).deleteOne();
+    await targetC.save();
+    return res.status(200).json(targetC.cities.id(cityId).locations);
   } catch (error) {
     next(error);
   }
