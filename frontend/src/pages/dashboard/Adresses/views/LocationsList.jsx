@@ -20,7 +20,7 @@ const LocationsList = ({ country, loading, city }) => {
 
   const { data, isFetching } = useGetLocationsQuery(`${country?._id}/${city?._id}`);
 
-  const rows = data?.cities[0]?.locations?.map((item, i) => ({ ...item, index: i + 1, id: item._id }));
+  const rows = data?.map((item, i) => ({ ...item, index: i + 1, id: item._id }));
 
   const handleEditOpen = (params) => {
     setEditOpen(true);
