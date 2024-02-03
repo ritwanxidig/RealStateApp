@@ -27,8 +27,8 @@ export const getAllCities = async (
     if (!existCountry) {
       return next(errorHandler(400, "Country not found"));
     }
-    const cities = await getCities(countryId);
-    return res.status(200).json(cities);
+    const targetC = await getCities(countryId);
+    return res.status(200).json(targetC.cities);
   } catch (error) {
     next(error);
   }
@@ -45,7 +45,7 @@ export const getSingleCity = async (
   if (!mongoose.isValidObjectId(countryId))
     return next(errorHandler(400, "Please provide valid country id"));
   try {
-    const city = (await getCityById(id, countryId))?.cities[0];
+    const city = await getCityById(id, countryId);
     return res.status(200).json(city);
   } catch (error) {
     next(error);
@@ -88,7 +88,7 @@ export const createNewCity = async (
     }
 
     const city = await createCity({ id: countryId }, cityName);
-    return res.status(200).json(city);
+    return res.status(200).json(city.cities);
   } catch (error) {
     next(error);
   }
@@ -126,7 +126,7 @@ export const EditCity = async (
     }
 
     const city = await updateCity(cityId, countryId, name);
-    return res.status(200).json(city);
+    return res.status(200).json(city.cities);
   } catch (error) {
     next(error);
   }
@@ -161,7 +161,7 @@ export const DeleteCity = async (
     }
 
     const city = await removeCity(cityId, countryId);
-    return res.status(200).json(city);
+    return res.status(200).json(city.cities);
   } catch (error) {
     next(error);
   }
