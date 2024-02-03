@@ -1,8 +1,14 @@
 import { IPropertyDDO } from "../interfaces/IPropertyDDO";
-import { getCityById, getCountryById, getLocationById } from "../models/Address";
+import {
+  getCityById,
+  getCountryById,
+  getLocationById,
+} from "../models/Address";
 import { getById } from "../models/User";
 
-export const changeToPropertyInterface = async (property: Record<string, any>) => {
+export const changeToPropertyInterface = async (
+  property: Record<string, any>
+) => {
   const createdUser = await getById(property.userRef.toString());
   const country = await getCountryById(property.address.country);
   // city holds an object of one country with array of single city:
@@ -35,8 +41,8 @@ export const changeToPropertyInterface = async (property: Record<string, any>) =
     area: property.area,
     address: {
       country: country.name,
-      city: city.cities[0].name,
-      location: location?.cities[0]?.locations[0]?.name,
+      city: city.name,
+      location: location?.name,
     },
     user: {
       name: createdUser?.name,
