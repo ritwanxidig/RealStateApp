@@ -1,6 +1,19 @@
-import {AdminAnalaysisController} from "../controllers/AnalaysisController";
+import { IsAuthenticated } from "../middleware";
+import {
+  AdminAnalaysisController,
+  UserAnalaysisController,
+} from "../controllers/AnalaysisController";
 import { Router } from "express";
 
 export default (router: Router) => {
-  router.get("/analaysis", AdminAnalaysisController.getOverviewAnalaysis);
+  router.get(
+    "/analaysis",
+    IsAuthenticated,
+    AdminAnalaysisController.getOverviewAnalaysis
+  );
+  router.get(
+    "/user/analaysis",
+    IsAuthenticated,
+    UserAnalaysisController.getUserAnalaysis
+  );
 };
