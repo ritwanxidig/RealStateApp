@@ -1,6 +1,6 @@
 import { get } from "lodash";
 import { UserModel, getById as getUserById } from "../models/User";
-import { countryModel } from "../models/Address";
+import { countryModel, getCityById, getCountryById } from "../models/Address";
 import { NextFunction, Request, Response } from "express";
 import { PropertyModel } from "../models/Property";
 import { LandModel } from "../models/Land";
@@ -207,17 +207,28 @@ export const getLatestPropertiesAndLands = async () => {
     .slice(0, 4) as Array<Record<string, any>>;
 
   // returning array of {type: property/land, _id, createdAt, price, address, image}
-  const formattedListings = latestListings.map((listing) => {
-    const type = listing.baths ? "property" : "land";
-    return {
-      type,
-      _id: listing._id,
-      createdAt: listing.createdAt,
-      price: listing.price,
-      address: listing.address,
-      image: type === "land" ? listing.images[0] : listing.imageUrls[0],
-    };
-  });
+  const formattedListings = await Promise.all(
+    latestListings.map(async (listing) => {
+      const type = listing.baths ? "property" : "land";
+      const country = await getCountryById(listing.address.country);
+      const city = await getCityById(
+        listing.address.city,
+        listing.address.country
+      );
+      const location = `${country.name}, ${city.name}`;
+      const owner = await getUserById(listing.userRef.toString());
+      return {
+        type,
+        _id: listing._id,
+        createdAt: listing.createdAt,
+        price: listing.price,
+        location,
+        owner,
+        address: listing.address,
+        image: type === "land" ? listing.images[0] : listing.imageUrls[0],
+      };
+    })
+  );
 
   return formattedListings;
 };
