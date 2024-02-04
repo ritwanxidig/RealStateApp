@@ -6,6 +6,7 @@ import errorSlice from "./slices/errorSlice";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import alertSlice from "./slices/alertSlice";
+import analaysisReducer from "./slices/analaysis";
 
 const rootReducer = combineReducers({
   [api.reducerPath]: api.reducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   error: errorSlice,
   alert: alertSlice,
+  analaysis: analaysisReducer,
 });
 
 const persistConfig = {
