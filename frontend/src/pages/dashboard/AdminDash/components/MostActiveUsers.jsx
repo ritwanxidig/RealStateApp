@@ -2,9 +2,10 @@ import React from 'react'
 import DashboardCard from './DashboardCard'
 import { Box, Chip } from '@mui/material'
 import { useTheme } from '@emotion/react';
+import { tbmkFormatter } from 'src/constants';
 
-const MostActiveUsers = () => {
-    const users = [
+const MostActiveUsers = (props) => {
+    const users = props.data || [
         {
             name: 'ritwan',
             properties: 2,
@@ -55,7 +56,7 @@ const MostActiveUsers = () => {
                                 <td className='py-4 text-start pl-4 font-medium capitalize'>{user.properties}</td>
                                 <td className='py-4 text-start pl-4 font-medium capitalize'>{user.lands}</td>
                                 <td className='py-4 text-start pl-4 font-medium capitalize'>
-                                    <Chip color='success' size='small' label={`$ ${user.revenue}`} />
+                                    <Chip color='success' size='small' label={`$ ${tbmkFormatter(user.revenue)}`} />
                                 </td>
                             </tr>
                         ))}
