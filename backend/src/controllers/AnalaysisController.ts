@@ -18,7 +18,7 @@ import { PropertyModel } from "../models/Property";
 
 // Helper function to get the top 3 cities with the most sum of published properties and lands
 
-export default {
+export const AdminAnalaysisController = {
   getOverviewAnalaysis: async (
     req: Request,
     res: Response,
