@@ -2,8 +2,8 @@ import { useTheme } from '@emotion/react';
 import React from 'react'
 import { RadialBarChart, Pie, RadialBar, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis, PieChart, Cell } from 'recharts'
 
-const RadialBarChartComponent = () => {
-    const data = [
+const RadialBarChartComponent = (props) => {
+    const data = props?.data || [
         {
             name: 'properties',
             value: 80
