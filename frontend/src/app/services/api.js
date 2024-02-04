@@ -27,6 +27,9 @@ const api = createApi({
     logout: PostEndpoint(builder, "auth/logout"),
     register: PostEndpoint(builder, "auth/register"),
 
+    // admin dashboard analysis
+    getAnalaysis: QueryEndpoint(builder, "analaysis"),
+
     // users endpoints
     getUsers: QueryEndpoint(builder, "users"),
     getUser: QueryParamsEndpoint(builder, "users"),
@@ -82,6 +85,10 @@ export const {
   useSignInWithGoogleMutation,
   useLogoutMutation,
   useRegisterMutation,
+
+  // hooks for admin dashboard
+  useGetAnalaysisQuery,
+
   // hooks for users
   useGetUsersQuery,
   useGetUserQuery,
