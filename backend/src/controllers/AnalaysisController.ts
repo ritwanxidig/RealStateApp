@@ -12,12 +12,6 @@ import {
 import { LandModel } from "../models/Land";
 import { PropertyModel } from "../models/Property";
 
-// Helper function to get the top 5 users with the most sum of published properties and lands
-
-// Helper function to get user details based on userRef
-
-// Helper function to get the top 3 cities with the most sum of published properties and lands
-
 export const AdminAnalaysisController = {
   getOverviewAnalaysis: async (
     req: Request,
@@ -180,3 +174,5 @@ export const AdminAnalaysisController = {
     }
   },
 };
+
+export * from "./Analaysis/UserAnalaysisController";
