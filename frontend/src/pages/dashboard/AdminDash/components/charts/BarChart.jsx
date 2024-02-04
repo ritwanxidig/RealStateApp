@@ -3,80 +3,80 @@ import { Box } from '@mui/material'
 import React from 'react'
 import { Area, BarChart, Bar, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 
-const BarChartComponent = () => {
+const BarChartComponent = (props) => {
     const theme = useTheme();
     // Data for the pie chart
-    const data = [
+    const data = props?.data || [
         {
-            name: 'Jan',
+            month: 'Jan',
             homes: 4000,
             lands: 2400,
             amt: 2400,
         },
         {
-            name: 'Feb',
+            month: 'Feb',
             homes: 3000,
             lands: 1398,
             amt: 2210,
         },
         {
-            name: 'Mar',
+            month: 'Mar',
             homes: 2000,
             lands: 9800,
             amt: 2290,
         },
         {
-            name: 'Apr',
+            month: 'Apr',
             homes: 2780,
             lands: 3908,
             amt: 2000,
         },
         {
-            name: 'May',
+            month: 'May',
             homes: 2780,
             lands: 3908,
             amt: 2000,
         },
         {
-            name: 'Jun',
+            month: 'Jun',
             homes: 1890,
             lands: 4800,
             amt: 2181,
         },
         {
-            name: 'Jul',
+            month: 'Jul',
             homes: 2390,
             lands: 3800,
             amt: 2500,
         },
         {
-            name: 'Aug',
+            month: 'Aug',
             homes: 3490,
             lands: 4300,
             amt: 2100,
         },
 
         {
-            name: 'Sep',
+            month: 'Sep',
             homes: 1890,
             lands: 4800,
             amt: 2181,
         },
         {
-            name: 'Oct',
+            month: 'Oct',
             homes: 2390,
             lands: 3800,
             amt: 2500,
         },
         {
-            name: 'Nov',
+            month: 'Nov',
             homes: 3490,
             lands: 4300,
             amt: 2100,
         },
 
         {
-            name: 'Dec',
+            month: 'Dec',
             homes: 3490,
             lands: 4300,
             amt: 2100,
@@ -90,7 +90,7 @@ const BarChartComponent = () => {
 
             >
                 {/* <CartesianGrid strokeDasharray="4 4" /> */}
-                <XAxis dataKey="name" />
+                <XAxis dataKey="month" />
                 <Tooltip />
                 <Bar dataKey="homes" barSize={9} fill={theme?.palette?.primary?.main || "#8884d8"} />
                 <Bar dataKey="lands" barSize={9} fill={theme?.palette?.secondary?.main || "#82ca9d"} />
