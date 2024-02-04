@@ -91,25 +91,32 @@ export const getTopCities = async (): Promise<
   Map<string, { properties?: number; lands?: number; revenue: number }>
 > => {
   const topCities = await countryModel.aggregate([
-    {
-      $unwind: "$cities",
-    },
-    {
-      $unwind: "$cities.locations",
-    },
+    { $unwind: "$cities" },
     {
       $lookup: {
-        from: "lands", // Assuming the name of the lands collection
-        localField: "cities.locations._id",
-        foreignField: "address.city",
+        from: "lands",
+        let: { cityId: "$cities._id" },
+        pipeline: [
+          {
+            $match: {
+              $expr: { $eq: [{ $toObjectId: "$address.city" }, "$$cityId"] },
+            },
+          },
+        ],
         as: "lands",
       },
     },
     {
       $lookup: {
-        from: "properties", // Assuming the name of the properties collection
-        localField: "cities.locations._id",
-        foreignField: "address.city",
+        from: "properties",
+        let: { cityId: "$cities._id" },
+        pipeline: [
+          {
+            $match: {
+              $expr: { $eq: [{ $toObjectId: "$address.city" }, "$$cityId"] },
+            },
+          },
+        ],
         as: "properties",
       },
     },
@@ -130,7 +137,7 @@ export const getTopCities = async (): Promise<
     },
     {
       $project: {
-        _id: 0,
+        _id: "$cities._id",
         city: "$cities.name",
         totalProperties: 1,
         totalLands: 1,
