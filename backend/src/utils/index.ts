@@ -4,7 +4,7 @@ import crypto from "crypto";
 
 export * from "./land.utils";
 export * from "./property.utils";
-export * from "./analaysis.utils";
+export * from "./adminAnalaysis.utils";
 
 export const errorHandler = (statusCode: number, message: string) => {
   const error = new AppError(message, statusCode);
