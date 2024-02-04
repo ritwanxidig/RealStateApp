@@ -28,8 +28,6 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  console.log("Domain", import.meta.env.DOMAIN);
-
   const formik = useFormik({
     initialValues: {
       email: '',

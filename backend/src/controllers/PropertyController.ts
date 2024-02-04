@@ -108,7 +108,6 @@ export const getMyProperty = async (
 ) => {
   try {
     const requestedUser = get(req, "identity") as Record<string, any>;
-    console.log(requestedUser);
     const data = await getUserProperties(requestedUser._id);
 
     const properties = await Promise.all(
