@@ -26,6 +26,12 @@ const ImageUpload = ({ formik }) => {
             setUploading(true);
             const promises = [];
             for (const file of e.target.files) {
+                // checking the file size before upload
+                if (file.size >= 2 * 1024 * 1024) {
+                    formik.setFieldError('imageUrls', "Images must be under 2MB");
+                    setSelectedImages(null);
+                    setUploading(false);
+                }
                 promises.push(storeImage(file));
             }
 
@@ -36,7 +42,7 @@ const ImageUpload = ({ formik }) => {
                     setUploading(false);
                 }).catch(er => {
                     console.log("firebase image upload error: ", er);
-                    formik.setFieldError('imageUrls', "Images must be under 3MB");
+                    formik.setFieldError('imageUrls', "Images must be under 2MB");
                     setSelectedImages(null);
                     setUploading(false);
                 })
