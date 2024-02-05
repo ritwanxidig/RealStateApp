@@ -44,10 +44,11 @@ const LatestListings = (props) => {
         <DashboardCard width='100%' title="Latest Listings" subtitle="Latest Listings added" >
             <Box sx={{
                 display: 'grid',
-                gridTemplateColumns: { lg: 'repeat(4, 1fr)', md: 'repeat(3, 1fr)', sm: 'repeat(3, 1fr)', xs: 'repeat(1, 1fr)' },
+                gridTemplateColumns: { lg: 'repeat(4, 1fr)', md: 'repeat(4, 1fr)', sm: 'repeat(3, 1fr)', xs: 'repeat(2, 1fr)' },
                 gap: 2, width: '100%',
                 justifyContent: 'center',
                 alignItems: 'center',
+                overflow: 'auto',
             }}>
                 {
                     data?.map((item, index) => (
