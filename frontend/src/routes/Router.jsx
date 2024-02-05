@@ -33,6 +33,7 @@ const Router = () => {
 
     // protected routes
     const Home = Loadable(lazy(() => import('src/pages/dashboard/AdminDash/Home')));
+    const UserHome = Loadable(lazy(() => import('src/pages/dashboard/UserDash/UserHome')));
     const ProfilePage = Loadable(lazy(() => import('src/pages/dashboard/Profile')));
     const Users_List = Loadable(lazy(() => import('src/pages/dashboard/users/list')));
     // properties
@@ -48,8 +49,8 @@ const Router = () => {
     // addresses
     const Address_List = Loadable(lazy(() => import('src/pages/dashboard/Adresses/list')));
 
-    // accessing error slice
-    useSelector((state) => state.error);
+    // accessing auth slice
+    const { authenticatedUser } = useSelector((state) => state.auth)
 
     return (
         <Fragment>
@@ -79,25 +80,28 @@ const Router = () => {
                 <Route path='/app' element={<PrivateRoute allowedRoles={['admin', 'user']} />}>
                     <Route path='/app' element={<MainLayout />} >
                         <Route path='/app/' element={<Navigate to="/app/home" />} />
-                        <Route path='/app/home' element={<Home />} />
+                        <Route path='/app/home' element={authenticatedUser?.roles[0] === 'admin' ? <Home /> : <UserHome />} />
                         <Route path='/app/profile' element={<ProfilePage />} />
                         <Route path='/app/properties/new' element={<NewPropertiesList />} />
                         <Route path='/app/lands/new' element={<NewLand />} />
                         <Route path='/app/properties/edit/:id' element={<EditProperty />} />
                         <Route path='/app/lands/edit/:id' element={<EditLand />} />
+                        <Route path='/app/properties' element={authenticatedUser?.roles[0] === 'admin' ? <Properties_List /> : <MyProperties_List />} />
+                        <Route path='/app/lands' element={ authenticatedUser?.roles[0] === 'admin' ? <LandsList /> : <UserLands />} />
 
                         {/* only for user */}
                         <Route path='/app/' element={<PrivateRoute allowedRoles={['user']} />}>
-                            <Route path='/app/my-properties' element={<MyProperties_List />} />
-                            <Route path='/app/my-lands' element={<UserLands />} />
+                            <Route path='/app/home' element={<UserHome />} />
+                            <Route path='/app/lands' element={<UserLands />} />
                         </Route>
 
                         {/* only for admin */}
                         <Route path='/app/' element={<PrivateRoute allowedRoles={['admin']} />}>
+                            <Route path='/app/home' element={<Home />} />
                             <Route path='/app/users' element={<Users_List />} />
                             <Route path='/app/addresses' element={<Address_List />} />
-                            <Route path='/app/all-properties' element={<Properties_List />} />
-                            <Route path='/app/all-lands' element={<LandsList />} />
+                            <Route path='/app/properties' element={<Properties_List />} />
+                            <Route path='/app/lands' element={<LandsList />} />
                         </Route>
                     </Route>
                 </Route>
