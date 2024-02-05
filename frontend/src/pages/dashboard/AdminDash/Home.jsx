@@ -67,7 +67,7 @@ const Home = () => {
         </Box>
 
         <Box sx={{ display: 'flex', flexDirection: lgUp ? 'row' : 'column', gap: 2, width: '100%', mt: 2 }}>
-          <Box className={`${lgUp ? 'w-1/3' : 'w-full'}`}>
+          <Box className={`${lgUp ? 'w-2/3' : 'w-full'}`}>
             <MostActiveUsers data={analaysis?.topUsersDetails} />
           </Box>
         </Box>
