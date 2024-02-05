@@ -45,7 +45,7 @@ export const UserAnalaysisController = {
     ]);
 
     const totalRevenue =
-      revenuFromLands[0].total + revenueFromProperties[0].total;
+      revenuFromLands[0]?.total + revenueFromProperties[0]?.total;
 
     const currentYear = new Date().getFullYear();
 
@@ -56,13 +56,13 @@ export const UserAnalaysisController = {
 
     return res.status(200).json({
       overview: {
-        lands: lands.length,
-        properties: properties.length,
+        lands: lands?.length,
+        properties: properties?.length,
         totalRevenue,
       },
       revenueAnalaysis: {
-        revenueFromProperties: revenueFromProperties[0].total,
-        revenueFromLands: revenuFromLands[0].total,
+        revenueFromProperties: revenueFromProperties[0]?.total,
+        revenueFromLands: revenuFromLands[0]?.total,
         totalRevenue,
       },
       monthlyRevenue,
