@@ -60,12 +60,18 @@ const ImageUpload = ({ formik }) => {
     }
 
     const handleUploadImage = (e) => {
-        const selectedImgs = e.target.files;
+        let selectedImgs = e.target.files;
         if (selectedImgs.length + values.images.length <= 2) {
             setUploading(true);
             setFieldError("images", "")
             const promises = [];
             for (const file of selectedImgs) {
+                //   checking the file size before upload
+                if (file.size >= 2 * 1024 * 1024) {
+                    setFieldError('images', "Images must be under 2MB");
+                    selectedImgs = [];
+                    setUploading(false);
+                }
                 promises.push(uploadTask(file));
             }
 
