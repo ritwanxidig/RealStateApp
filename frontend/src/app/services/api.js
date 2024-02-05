@@ -30,6 +30,9 @@ const api = createApi({
     // admin dashboard analysis
     getAnalaysis: QueryEndpoint(builder, "analaysis"),
 
+    // user dashboard
+    getUserAnalaysis: QueryEndpoint(builder, "user/analaysis"),
+
     // users endpoints
     getUsers: QueryEndpoint(builder, "users"),
     getUser: QueryParamsEndpoint(builder, "users"),
@@ -88,6 +91,8 @@ export const {
 
   // hooks for admin dashboard
   useGetAnalaysisQuery,
+  // hoook for user dashboard
+  useGetUserAnalaysisQuery,
 
   // hooks for users
   useGetUsersQuery,
