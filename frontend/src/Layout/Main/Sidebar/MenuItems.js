@@ -34,13 +34,13 @@ export const AdminMenuItems = [
     id: uniqueId(),
     title: "Properties",
     icon: IconHome,
-    href: "/app/all-properties",
+    href: "/app/properties",
   },
   {
     id: uniqueId(),
     title: "Lands",
     icon: IconPaperclip,
-    href: "/app/all-lands",
+    href: "/app/lands",
   },
   {
     id: uniqueId(),
@@ -69,13 +69,13 @@ export const UserMenuItems = [
     id: uniqueId(),
     title: "My Properties",
     icon: IconHome,
-    href: "/app/my-properties",
+    href: "/app/properties",
   },
   {
     id: uniqueId(),
     title: "My Lands",
     icon: IconPaperclip,
-    href: "/app/my-lands",
+    href: "/app/lands",
   },
 ];
 
