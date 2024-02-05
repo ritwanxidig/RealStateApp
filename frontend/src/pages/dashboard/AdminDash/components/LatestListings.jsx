@@ -28,7 +28,7 @@ const ListingCard = ({ data }) => {
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center', width: '100%', mt: 1 }}>
                 <IconMapPin size={18} />
-                <Typography variant='h6' sx={{ fontWeight: '500', display: 'flex', fontSize: '.9rem', fontFamily: 'Plus Jakarta Sans' }}>
+                <Typography variant='h6' sx={{ fontWeight: '500', display: 'flex', fontSize: '.78rem', fontFamily: 'Plus Jakarta Sans' }}>
                     {data?.location || "Lagos, Nigeria"}
                 </Typography>
             </Box>
