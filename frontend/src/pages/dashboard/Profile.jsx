@@ -35,30 +35,36 @@ const Profile = () => {
 
     const handleUpload = async (event) => {
         if (event.target.files.length > 0) {
-            setUploading(true);
-            formik.setFieldError('profilePic', "");
             const file = event.target.files[0];
-            setSelectedImage(file);
+            if (file.size >= 2 * 1024 * 1024) {
+                formik.setFieldError('profilePic', "Images must be under 2MB");
+            }
+            else {
+                setUploading(true);
+                formik.setFieldError('profilePic', "");
+                setSelectedImage(file);
 
-            const storage = getStorage(app);
-            const fileName = new Date().getTime() + file.name;
-            const storageRef = ref(storage, `/users/${fileName}`);
-            const uploadTask = uploadBytesResumable(storageRef, file);
+                const storage = getStorage(app);
+                const fileName = new Date().getTime() + file.name;
+                const storageRef = ref(storage, `/users/${fileName}`);
+                const uploadTask = uploadBytesResumable(storageRef, file);
 
-            uploadTask.on('state_changed', (snapshot) => {
-                const perc = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-                setProgress(perc);
-            }, (error) => {
-                console.log(error);
-                formik.setFieldError('profilePic', "Images must be under 3MB");
-                setSelectedImage(null);
-                setUploading(false);
-            }, () => {
-                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                    formik.setFieldValue('profilePic', downloadURL);
+                uploadTask.on('state_changed', (snapshot) => {
+                    const perc = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+                    setProgress(perc);
+                }, (error) => {
+                    console.log(error);
+                    formik.setFieldError('profilePic', "Images must be under 2MB");
+                    setSelectedImage(null);
                     setUploading(false);
+                }, () => {
+                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                        formik.setFieldValue('profilePic', downloadURL);
+                        setUploading(false);
+                    });
                 });
-            });
+            }
+
         }
     };
 
