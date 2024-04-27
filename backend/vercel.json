@@ -1,0 +1,8 @@
+{
+    "buildCommand": "npm start",
+    "outputDirectory": ".",
+    "rewrites": {
+        "source": "/(.*)",
+        "destination": "/"
+    }
+}
