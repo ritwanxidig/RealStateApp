@@ -18,11 +18,11 @@ const PropertyAnalaysis = (props) => {
     const data = formattedData || [
         {
             name: 'rent',
-            value: 52
+            value: 0
         },
         {
             name: 'sale',
-            value: 28
+            value: 0
         },
     ]
 
