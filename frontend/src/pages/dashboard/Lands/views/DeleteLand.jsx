@@ -49,7 +49,7 @@ const DeleteLand = ({ onOpen, setOnOpen, data }) => {
                 Are you sure you want to delete <span className='font-bold capitalize'>{data?.name}</span> land?
             </Typography>
             <Typography variant="body2" fontFamily={"Plus Jakarta Sans"} fontWeight="400" fontSize="13px" color="grey.400">
-                This action will remove all the cities and their locations associated with this land. and it is irreversible
+                This action will remove the selected land. and it is irreversible
             </Typography>
         </CustomModal>
     )
