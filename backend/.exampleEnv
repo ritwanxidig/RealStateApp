@@ -1,0 +1,5 @@
+APP_SECRET="REALSTATE'S-FOR-HARGEISA-DEVELOPED-BY-ME"
+DB_URL="mongodb+srv://root:root@realstatedb.kcqxmgp.mongodb.net/?retryWrites=true&w=majority"
+PORT="3010"
+VITE_API_URL="3010"
+TEST_ENV="production"
