@@ -73,7 +73,7 @@ const AuthPage = (props) => {
                 }}
                 >
                     <GoogleOAuth />
-                    <AppleOAuth />
+                    {/* <AppleOAuth /> */}
                 </Box>
 
                 <Box sx={{ width: '100%', mt: 5 }}>
