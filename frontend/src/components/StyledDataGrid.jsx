@@ -155,7 +155,7 @@ const StyledDataGrid = ({ data, columns, loading }) => {
           />
         </Box>
       ) : (
-        <p className="text-sm p-4" >There is no data, please check your connection</p>
+        <p className="text-sm p-4" >There is no data.</p>
       )}
     </div>
   );
