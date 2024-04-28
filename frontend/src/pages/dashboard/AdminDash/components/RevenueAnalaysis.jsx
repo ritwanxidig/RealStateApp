@@ -9,8 +9,8 @@ const RevenueAnalaysis = (props) => {
     const theme = useTheme();
 
     const data = props?.data || {
-        revenueFromProperties: 5000,
-        revenueFromLands: 2000,
+        revenueFromProperties: 0,
+        revenueFromLands: 0,
     }
 
     const chatData = [
