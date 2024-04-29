@@ -56,6 +56,7 @@ export const login = async (
       expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 0.5),
       httpOnly: true,
       secure: process.env.NODE_ENV === "production" ? true : false,
+      sameSite: process.env.NODE_ENV === "production" ? "none" : undefined,
     });
 
     const {
@@ -155,6 +156,7 @@ export const signInWithGoogle = async (
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 0.5),
         httpOnly: true,
         secure: true,
+        sameSite: "none",
       });
 
       const {
@@ -204,6 +206,7 @@ export const signInWithGoogle = async (
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 0.5),
         httpOnly: true,
         secure: true,
+        sameSite: "none",
       });
 
       const {
