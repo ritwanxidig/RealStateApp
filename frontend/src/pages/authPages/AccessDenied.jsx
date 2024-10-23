@@ -22,7 +22,7 @@ const AccessDenied = () => {
           Oops!
         </Typography>
         <Typography variant="h6" sx={{ fontFamily: 'Plus Jakarta Sans' }}>
-          You don't have permission to access this page
+          You don't have the permission to access this page
         </Typography>
         <StyledButton
           color="primary"
